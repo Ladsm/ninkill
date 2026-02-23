@@ -27,7 +27,7 @@
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
  /* On Windows use the built-in Beep() function from <utilapiset.h> */
-int blop(int freq, int ms) { return Beep(freq, ms); }
+inline int blop(int freq, int ms) { return Beep(freq, ms); }
 #elif __linux__
  /* On Linux use alsa in synchronous mode, open "default" device in signed 8-bit
   * mode at 8kHz, mono, request for 20ms latency. Device is opened on first call

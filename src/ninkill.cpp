@@ -9,6 +9,7 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #endif
+#include "beep.h"
 
 std::string menuops[2] = {"Forum Index     ", "News     "};
 static int langthofopts() {
@@ -96,8 +97,11 @@ void printMenuLine(int row, const std::string& leftText, const std::string& righ
 void initforum() {
     ensureConsoleInitialized();
     orangebk();
+    blop(1000, 500);
     loadingSpinnerCentered(3000, false);
+    blop(100, 500);
     loadingSpinnerCentered(1000, true);
+    blop(10, 500);
     printBlackBar(2);
     printMenuLine(3, menuops[0], menuops[1]);
     printBlackBar(4);
