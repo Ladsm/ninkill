@@ -11,7 +11,7 @@
 #endif
 #include "beep.h"
 
-std::string menuops[2] = {"Forum Index     ", "News     "};
+std::string menuops[2] = {"   1-Forum Index     2-", "News     "};
 static int langthofopts() {
     int langth = 0;
     for (int i = 0; i < 2; i++) {
