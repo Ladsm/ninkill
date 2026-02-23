@@ -1,4 +1,5 @@
 #include <iostream>
+#include "userinput.hpp"
 #if defined(_WIN32)
 #include <conio.h>
 #endif
@@ -24,79 +25,46 @@ int getchThred() {
 |   1   | Diagram of GetPlayerInput() for future me
 +-------+
 */
-
-int GetPlayerInput() {
-    enum {
-        down = 1,
-        up = 2,
-        left = -1,
-        right = -2
-    };
+InputType GetPlayerInput() {
     int ch =
 #ifdef _WIN32
         _getch();
 #else
         getchThred();
 #endif
-    int returner = 0;
 #ifdef _WIN32
     if (ch == 0 || ch == 0xE0) {
         switch (_getch()) {
-        case 72: returner = up;    break;
-        case 80: returner = down;  break;
-        case 75: returner = left;  break;
-        case 77: returner = right; break;
-        case 48: returner = 10;    break;
-        case 49: returner = 11;    break;
-        case 50: returner = 12;    break;
-        case 51: returner = 13;    break;
-        case 52: returner = 14;    break;
-        case 53: returner = 15;    break;
-        case 54: returner = 16;    break;
-        case 55: returner = 17;    break;
-        case 56: returner = 18;    break;
-        case 57: returner = 19;    break;
+        case 72: return InputType::MoveUp;
+        case 80: return InputType::MoveDown;
+        case 75: return InputType::MoveLeft;
+        case 77: return InputType::MoveRight;
         }
-    }
-    else {
-        switch (ch) {
-        case 'w': case 'W': returner = up;    break;
-        case 's': case 'S': returner = down;  break;
-        case 'a': case 'A': returner = left;  break;
-        case 'd': case 'D': returner = right; break;
-        default: break;
-        }
+        return InputType::None;
     }
 #else
     if (ch == 27) {
         if (getchThred() == 91) {
             switch (getchThred()) {
-            case 'A': returner = up;    break;
-            case 'B': returner = down;  break;
-            case 'C': returner = right; break;
-            case 'D': returner = left;  break;
+            case 'A': return InputType::MoveUp;
+            case 'B': return InputType::MoveDown;
+            case 'C': return InputType::MoveRight;
+            case 'D': return InputType::MoveLeft;
             }
         }
-    }
-    else {
-        switch (ch) {
-        case 'w': case 'W': returner = up;    break;
-        case 's': case 'S': returner = down;  break;
-        case 'a': case 'A': returner = left;  break;
-        case 'd': case 'D': returner = right; break;
-        case 48: returner = 10;    break;
-        case 49: returner = 11;    break;
-        case 50: returner = 12;    break;
-        case 51: returner = 13;    break;
-        case 52: returner = 14;    break;
-        case 53: returner = 15;    break;
-        case 54: returner = 16;    break;
-        case 55: returner = 17;    break;
-        case 56: returner = 18;    break;
-        case 57: returner = 19;    break;
-        default: break;
-        }
+        return InputType::None;
     }
 #endif
-    return returner;
+    if (ch >= '0' && ch <= '9') {
+        return static_cast<InputType>(
+            static_cast<int>(InputType::Top0) + (ch - '0')
+            );
+    }
+    switch (ch) {
+    case 'w': case 'W': return InputType::MoveUp;
+    case 's': case 'S': return InputType::MoveDown;
+    case 'a': case 'A': return InputType::MoveLeft;
+    case 'd': case 'D': return InputType::MoveRight;
+    }
+    return InputType::None;
 }

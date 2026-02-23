@@ -10,12 +10,13 @@
 #include <unistd.h>
 #endif
 #include "beep.h"
+#include "userinput.hpp"
 
-std::string menuops[2] = {"   1-Forum Index     2-", "News     "};
+std::string menuops[2] = {"   1-Forum Index     ", "2-News     "};
 static int langthofopts() {
-    int langth = 0;
+    size_t langth = 0;
     for (int i = 0; i < 2; i++) {
-        langth =+ menuops[i].size();
+        langth += menuops[i].size();
     }
     return langth;
 }
@@ -95,6 +96,7 @@ void printMenuLine(int row, const std::string& leftText, const std::string& righ
 }
 
 void initforum() {
+    std::cout << "\033[?25l";
     ensureConsoleInitialized();
     orangebk();
     blop(1000, 500);
@@ -105,5 +107,66 @@ void initforum() {
     printBlackBar(2);
     printMenuLine(3, menuops[0], menuops[1]);
     printBlackBar(4);
-    std::this_thread::sleep_for(std::chrono::seconds(5));
+}
+int activeTopTab = 0;
+int forumSelection = 0;
+bool running = true;
+void drawForum() {
+    std::cout << "\033[H";
+    printBlackBar(2);
+    std::string left = menuops[0];
+    std::string right = menuops[1];
+    if (activeTopTab == 0)
+        left = "> " + left;
+    else
+        right = "> " + right;
+    printMenuLine(3, left, right);
+    printBlackBar(4);
+    int startRow = 6;
+    std::vector<std::string> fakePosts = {
+        "Welcome to NINKILL Forum",
+        "General Discussion",
+        "Suggestions",
+        "Bug Reports"
+    };
+    for (size_t i = 0; i < fakePosts.size(); i++) {
+        std::cout << "\033[" << (startRow + i) << ";5H";
+        if ((int)i == forumSelection)
+            std::cout << "\033[7m";
+        std::cout << fakePosts[i] << "\033[0m";
+    }
+    std::cout.flush();
+}
+void forum()
+{
+    drawForum();
+    while (running)
+    {
+        InputType input = GetPlayerInput();
+
+        if (input != InputType::None)
+        {
+            switch (input)
+            {
+            case InputType::Top1:
+                activeTopTab = 0;
+                break;
+            case InputType::Top2:
+                activeTopTab = 1;
+                break;
+            case InputType::MoveUp:
+                if (forumSelection > 0)
+                    forumSelection--;
+                break;
+
+            case InputType::MoveDown:
+                if (forumSelection < 3)
+                    forumSelection++;
+                break;
+            default:
+                break;
+            }
+            drawForum();
+        }
+    }
 }

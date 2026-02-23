@@ -16,6 +16,8 @@ src/ninkill.cpp
 src/ninkill.hpp
 src/userinput.cpp
 src/userinput.hpp
+src/page.cpp
+src/page.hpp
 )
 add_executable(ninkill ${PROJECT_SOURCES})
 if(NOT WIN32)

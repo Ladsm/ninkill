@@ -3,7 +3,8 @@
 #include "consolestart.hpp"
 #include "ninkill.hpp"
 
-int main() {
+int main() {/*
+	//start
 	std::cout << "booting"; threedot();
 	std::cout << "\ninitramfs"; threedot();
 	cls();
@@ -18,5 +19,8 @@ int main() {
 		std::cout << "Sorry... That name or password is incorect.\n";
 		goto login;
 	}
+	*/
 	initforum();
+	//real forum
+	forum();
 }
