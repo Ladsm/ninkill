@@ -22,7 +22,7 @@ struct Post {
         poster = y;
         replies = z;
         if (locked == true) {
-            title.append("  ");
+            title.append(" [LOCKED] ");
         }
     }
     Post(std::string x, user y, std::vector<reply> z, bool f) {

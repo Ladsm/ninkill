@@ -231,3 +231,65 @@ void forum(std::vector<Page>& forumPages) {
         }
     }
 }
+int isAddress(const std::string& address) {
+    if (address == "www.Nuebine.com" || address == "www.nuebine.com")
+        return 1;
+    else if (address.empty())
+        return 2;
+    else if (address == "exit")
+        return 3;
+    return 0;
+}
+void clscls() {
+#if defined(_WIN32)
+    system("cls");
+#endif
+#if defined(__linux__)
+    system("clear");
+#endif
+}
+void conecting(std::string address, bool fail) {
+    Center() << "Connecting to " << address;
+    std::this_thread::sleep_for(std::chrono::milliseconds(800));
+    if (fail == true) {
+        Center() << "404 - No website at that address";
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        return;
+    }
+    Center() << "Resolving host...";
+    std::this_thread::sleep_for(std::chrono::milliseconds(800));
+    Center() << "Connected.";
+    clscls();
+}
+void internet() {
+    std::string site;
+    std::string choice;
+    loadingSpinnerCentered(1000, false);
+    loadingSpinnerCentered(3000, true);
+    while (true) {
+        clscls();
+        Center() << "Network Internet Navigator";
+        Center() << "Enter Internet address (or type 'exit'):";
+        std::cout << std::string(getConsoleWidth() / 2 - 15, ' ');
+        std::getline(std::cin, site);
+        int z = isAddress(site);
+        switch (z) {
+        case 0:
+            conecting(site, true);
+            break;
+        case 1:
+            conecting("www.Nuebine.com", false);
+            std::cout << "Welcome to Nuebine Incorporated!\n";
+            std::cout << "Innovating the Network Since 1990\n";
+            std::cout << "[1] About\n";
+            std::cout << "[2] Projects\n";
+            std::cout << "[3] Back\n";
+            std::getline(std::cin, choice);
+            break;
+        case 2:
+            break;
+        case 3:
+            return;
+        }
+    }
+}
