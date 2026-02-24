@@ -2,9 +2,7 @@
 #include <string>
 #include <vector>
 #include "usrAndPass.hpp"
-
-std::vector<user> list = { nin ,john ,hoikgrew ,testmem ,jorin };
-
+extern std::vector<user> list;
 bool whoiswantingin() {
 	std::string nameget;
 	std::string passget;

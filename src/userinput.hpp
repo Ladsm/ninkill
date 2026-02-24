@@ -14,6 +14,8 @@ enum class InputType {
     Top6,
     Top7,
     Top8,
-    Top9
+    Top9,
+    Enter,
+    Escape
 };
 InputType GetPlayerInput();

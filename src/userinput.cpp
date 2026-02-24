@@ -33,6 +33,8 @@ InputType GetPlayerInput() {
         getchThred();
 #endif
 #ifdef _WIN32
+    if (ch == 13) return InputType::Enter;
+    if (ch == 27) return InputType::Escape;
     if (ch == 0 || ch == 0xE0) {
         switch (_getch()) {
         case 72: return InputType::MoveUp;
@@ -43,6 +45,8 @@ InputType GetPlayerInput() {
         return InputType::None;
     }
 #else
+    if (ch == 10 || ch == 13) return InputType::Enter;
+    if (ch == 27) return InputType::Escape;
     if (ch == 27) {
         if (getchThred() == 91) {
             switch (getchThred()) {

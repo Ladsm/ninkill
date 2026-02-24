@@ -11,6 +11,7 @@
 #endif
 #include "beep.h"
 #include "userinput.hpp"
+#include "page.hpp"
 
 std::string menuops[2] = {"   1-Forum Index     ", "2-News     "};
 static int langthofopts() {
@@ -108,65 +109,99 @@ void initforum() {
     printMenuLine(3, menuops[0], menuops[1]);
     printBlackBar(4);
 }
+void redrawall() {
+    orangebk();
+    printBlackBar(2);
+    printMenuLine(3, menuops[0], menuops[1]);
+    printBlackBar(4);
+}
 int activeTopTab = 0;
 int forumSelection = 0;
+int currentPage = 0;
+int selectedPost = 0;
 bool running = true;
-void drawForum() {
-    std::cout << "\033[H";
-    printBlackBar(2);
-    std::string left = menuops[0];
-    std::string right = menuops[1];
-    if (activeTopTab == 0)
-        left = "> " + left;
-    else
-        right = "> " + right;
-    printMenuLine(3, left, right);
-    printBlackBar(4);
+void drawPage(const Page& page, int selectedPost) {
+    int width = getConsoleWidth();
     int startRow = 6;
-    std::vector<std::string> fakePosts = {
-        "Welcome to NINKILL Forum",
-        "General Discussion",
-        "Suggestions",
-        "Bug Reports"
-    };
-    for (size_t i = 0; i < fakePosts.size(); i++) {
+    std::cout << "\033[H";
+    std::cout << "\033[1m" << page.title << "\033[0m\n";
+    for (size_t i = 0; i < page.posts.size(); i++) {
+        const Post& p = page.posts[i];
         std::cout << "\033[" << (startRow + i) << ";5H";
-        if ((int)i == forumSelection)
+        if ((int)i == selectedPost)
             std::cout << "\033[7m";
-        std::cout << fakePosts[i] << "\033[0m";
+        std::cout << p.title << " (by " << p.poster.name
+            << ", " << p.replies.size() << " replies)"
+            << "\033[0m";
     }
     std::cout.flush();
 }
-void forum()
-{
-    drawForum();
-    while (running)
-    {
+void drawPost(const Post& post) {
+    int width = getConsoleWidth();
+    std::cout << "\033[H";
+    std::cout << "\033[48;2;255;165;0m";
+    std::cout << "\033[30m";
+    std::cout << "\033[2J";
+    std::cout << "\033[1;0H\033[40m\033[38;2;255;165;0m"
+        << std::string(width, ' ')
+        << "\033[0m\n";
+    int padding = (width - post.title.size()) / 2;
+    if (padding < 0) padding = 0;
+    std::cout << std::string(padding, ' ')
+        << "\033[1m" << post.title << "\033[0m\n";
+    std::cout << "\033[38;2;200;200;200m"
+        << "By: " << post.poster.name
+        << "\033[0m\n\n";
+    if (post.replies.empty())
+        std::cout << "No replies yet.\n";
+    else
+        for (size_t i = 0; i < post.replies.size(); i++) {
+            const reply& r = post.replies[i];
+            std::cout << i + 1 << ". \033[38;2;180;180;255m"
+                << r.paragraph
+                << "\033[0m - " << r.replyer.name << "\n";
+        }
+    std::cout.flush();
+}
+
+void forum(std::vector<Page>& forumPages) {
+    int currentPage = 0;
+    int selectedPost = 0;
+    bool inPostView = false;
+    drawPage(forumPages[currentPage], selectedPost);
+    while (true) {
         InputType input = GetPlayerInput();
-
-        if (input != InputType::None)
-        {
-            switch (input)
-            {
-            case InputType::Top1:
-                activeTopTab = 0;
-                break;
-            case InputType::Top2:
-                activeTopTab = 1;
-                break;
+        if (!inPostView) {
+            switch (input) {
             case InputType::MoveUp:
-                if (forumSelection > 0)
-                    forumSelection--;
+                if (selectedPost > 0) selectedPost--;
                 break;
-
             case InputType::MoveDown:
-                if (forumSelection < 3)
-                    forumSelection++;
+                if (selectedPost < (int)forumPages[currentPage].posts.size() - 1)
+                    selectedPost++;
                 break;
-            default:
+            case InputType::Top1:
+                currentPage = 0; selectedPost = 0; break;
+            case InputType::Top2:
+                currentPage = 1; selectedPost = 0; break;
+            case InputType::Enter:
+                inPostView = true;
+                drawPost(forumPages[currentPage].posts[selectedPost]);
                 break;
+            default: break;
             }
-            drawForum();
+            if (!inPostView)
+                drawPage(forumPages[currentPage], selectedPost);
+        }
+        else {
+            switch (input) {
+            case InputType::Escape:
+                redrawall();
+                drawPage(forumPages[currentPage], selectedPost);
+                inPostView = false;
+                break;
+            default: break;
+            }
         }
     }
 }
