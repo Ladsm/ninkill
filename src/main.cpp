@@ -17,9 +17,9 @@ reply Nthree = reply("Nuebine incorporated Network is releaseing a new version o
 std::vector<reply> NINKILLOSNEWarr = { Nthree };
 Post NINKILLOSNEW = Post("NINKILL v1.3 releaseing!", Ladsm, NINKILLOSNEWarr);
 std::vector<reply> NINKILLPinnedarr = { Gone };
-Post NINKILLPinned = Post("PINNED Ninkill is takeing a break", nin, NINKILLPinnedarr);
+Post NINKILLPinned = Post("PINNED Ninkill is takeing a break", nin, NINKILLPinnedarr, true);
 std::vector<reply> Imsickarr = { Gtwo };
-Post Imsick = Post("Im sick of this", nin, Imsickarr);
+Post Imsick = Post("Im sick of this", nin, Imsickarr, true);
 //pages
 std::vector<Post> indexarr = { NINKILLPinned, Imsick };
 std::vector<Post> Newsarr = { NINKILLOSNEW };
@@ -46,7 +46,7 @@ int main() {
 	std::cout << "\033[32m";
 	bootanim();
 	cls();
-	console();
+	consolefirst();
 	cls();
 	login:
 	bool usr = whoiswantingin();
@@ -54,6 +54,15 @@ int main() {
 		std::cout << "Sorry... That name or password is incorect.\n";
 		goto login;
 	}
-	initforum();
-	forum(FoRuM);
+	while (true) {
+		initforum();
+		forum(FoRuM);
+#if defined(_WIN32)
+		system("cls");
+#endif
+#if defined(__linux__)
+		system("clear");
+#endif
+		console();
+	}
 }

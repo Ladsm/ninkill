@@ -213,7 +213,7 @@ void forum(std::vector<Page>& forumPages) {
                 drawPost(forumPages[currentPage].posts[selectedPost]);
                 break;
             case InputType::Escape:
-                std::exit(0);
+                return;
             default: break;
             }
             if (!inPostView)

@@ -11,13 +11,24 @@ struct reply {
     }
 };
 struct Post {
-    std::string title;
+    bool locked = false;
+    std::string title = "DEBUG";
     user poster;
     std::vector<reply> replies;
+    Post() = default;
     Post(std::string x, user y, std::vector<reply> z) {
         title = x;
         poster = y;
         replies = z;
+        if (locked == true) {
+            title.append("  ");
+        }
+    }
+    Post(std::string x, user y, std::vector<reply> z, bool f) {
+        title = x;
+        poster = y;
+        replies = z;
+        locked = f;
     }
 };
 struct Page {
