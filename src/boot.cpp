@@ -105,7 +105,7 @@ void MenuUse(std::string ItemsToUse[], const std::vector<std::function<void()>>&
 #elif defined(__linux__)
     int selected = 1;
     while (true) {
-        DisplayMenu(ItemsToUse, selected, amountofItems);
+        DisplayMenu(ItemsToUse, selected, amountofItems, "BOOT MANAGER");
         int ch = getch();
         if (ch == 'x' || ch == 'X') {
             std::exit(0);
@@ -127,15 +127,20 @@ void MenuUse(std::string ItemsToUse[], const std::vector<std::function<void()>>&
     }
 #endif
 }
+void cls() {
+	std::cout << "\033[2J\033[H";
+}
 void openOS() {
     std::cout << "\033[2J\033[H";
-    std::cout << "Booting NINKILL OS 1.3 "; threedot();
+    std::cout << "Booting NINKILL OS 1.3 "; threedot(); std::cout << '\n';
     std::this_thread::sleep_for(std::chrono::seconds(1));
+    cls();
 }
 void backToBIOS() {
     std::cout << "\033[2J\033[H";
-    std::cout << "Returning to BIOS "; threedot();
+    std::cout << "Returning to BIOS "; threedot(); std::cout << '\n';
     std::this_thread::sleep_for(std::chrono::seconds(1));
+    cls();
     std::exit(0);
 }
 void showBootMenu() {
@@ -156,9 +161,6 @@ void threedot(){
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 	return;
-}
-void cls() {
-	std::cout << "\033[2J\033[H";
 }
 void ensureConsoleInitialized() {
 	static bool initialized = false;

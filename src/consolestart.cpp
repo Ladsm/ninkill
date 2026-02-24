@@ -196,8 +196,8 @@ rocessHeapVirtualQueryװFreeLibrary@@}@g@g@g
 	}
 	else if (command == "lsblk") {
 		std::cout << "NAME  SIZE  TYPE  MOUNTPOINTS\n";
-		std::cout << "hda  5.05GB disk        /    \n";
-		std::cout << "fd0  10.3MB flopy     /mnt   \n";
+		std::cout << "hda  5.05GB disk      /mnt   \n";
+		std::cout << "fd0  10.3MB flopy       /    \n";
 		std::cout << "vdc   5MB   loop      /dev   \n";
 	}
 	else {
