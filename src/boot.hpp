@@ -15,7 +15,7 @@ void threedot();
 void cls();
 void bootanim();
 void ensureConsoleInitialized();
-
+void showBootMenu();
 class Center {
 public:
     static int getWidth() {

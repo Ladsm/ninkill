@@ -72,12 +72,13 @@ int main() {
 	}
 	FoRuM = loadForum(list);
 	init();
-	//std::cout << "booting"; threedot();
-	//std::cout << "\ninitramfs"; threedot();
-	//clear();
-	//std::cout << "\033[32m";
-	//bootanim();
-	//clear();
+	showBootMenu();
+	std::cout << "booting"; threedot();
+	std::cout << "\ninitramfs"; threedot();
+	clear();
+	std::cout << "\033[32m";
+	bootanim();
+	clear();
 	bool usr = false;
 	std::cout << "Welcome to NINKILLos!\nWrite \'help\' for more info\n";
 	while (true) {
