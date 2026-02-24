@@ -110,6 +110,11 @@ void initforum() {
     printBlackBar(4);
 }
 void redrawall() {
+#if defined(_WIN32)
+    system("cls");
+#else
+    system("clear");
+#endif
     orangebk();
     printBlackBar(2);
     printMenuLine(3, menuops[0], menuops[1]);
@@ -136,34 +141,51 @@ void drawPage(const Page& page, int selectedPost) {
     }
     std::cout.flush();
 }
-void drawPost(const Post& post) {
+void drawPost(Post& post) {
+    redrawall();
     int width = getConsoleWidth();
-    std::cout << "\033[H";
-    std::cout << "\033[48;2;255;165;0m";
-    std::cout << "\033[30m";
-    std::cout << "\033[2J";
-    std::cout << "\033[1;0H\033[40m\033[38;2;255;165;0m"
-        << std::string(width, ' ')
-        << "\033[0m\n";
-    int padding = (width - post.title.size()) / 2;
-    if (padding < 0) padding = 0;
-    std::cout << std::string(padding, ' ')
-        << "\033[1m" << post.title << "\033[0m\n";
-    std::cout << "\033[38;2;200;200;200m"
-        << "By: " << post.poster.name
-        << "\033[0m\n\n";
-    if (post.replies.empty())
-        std::cout << "No replies yet.\n";
-    else
-        for (size_t i = 0; i < post.replies.size(); i++) {
-            const reply& r = post.replies[i];
-            std::cout << i + 1 << ". \033[38;2;180;180;255m"
-                << r.paragraph
-                << "\033[0m - " << r.replyer.name << "\n";
+    int height = getConsoleHeight();
+    printBlackBar(1);
+    printMenuLine(2, "           ", post.title);
+    printMenuLine(3, "           ", "by: " + post.poster.name);
+    printBlackBar(4);
+    int row = 5;
+    for (size_t i = 0; i < post.replies.size(); i++) {
+        const reply& r = post.replies[i];
+        std::string prefix = std::to_string(i + 1) + ". ";
+        size_t maxLen = width - prefix.length() - 1;
+        size_t pos = 0;
+        bool firstLine = true;
+        while (pos < r.paragraph.length() && row <= height) {
+            std::string line = r.paragraph.substr(pos, maxLen);
+            std::cout << "\033[" << row << ";0H" << "\033[48;2;255;165;0m"<< "\033[30m";
+
+            if (firstLine) {
+                std::cout << prefix << line;
+                firstLine = false;
+            }
+            else {
+                std::cout << std::string(prefix.length(), ' ') << line;
+            }
+            int remaining = width - ((firstLine) ? prefix.length() + line.length() : prefix.length() + line.length());
+            if (remaining > 0)
+                std::cout << std::string(remaining, ' ');
+            std::cout << "\033[0m";
+            pos += maxLen;
+            row++;
         }
+        if (row <= height) {
+            std::cout << "\033[" << row << ";0H"
+                << "\033[48;2;255;165;0m\033[30m"
+                << " - " << r.replyer.name
+                << std::string(width - 4 - r.replyer.name.length(), ' ')
+                << "\033[0m";
+            row++;
+        }
+    }
+
     std::cout.flush();
 }
-
 void forum(std::vector<Page>& forumPages) {
     int currentPage = 0;
     int selectedPost = 0;
@@ -181,13 +203,17 @@ void forum(std::vector<Page>& forumPages) {
                     selectedPost++;
                 break;
             case InputType::Top1:
+                redrawall();
                 currentPage = 0; selectedPost = 0; break;
             case InputType::Top2:
+                redrawall();
                 currentPage = 1; selectedPost = 0; break;
             case InputType::Enter:
                 inPostView = true;
                 drawPost(forumPages[currentPage].posts[selectedPost]);
                 break;
+            case InputType::Escape:
+                std::exit(0);
             default: break;
             }
             if (!inPostView)

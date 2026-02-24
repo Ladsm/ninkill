@@ -1,4 +1,6 @@
 #include "ninkill.hpp"
+#include "boot.hpp"
+#include "consolestart.hpp"
 
 //users
 user nin = user("nin", "XxAdMiN123xX", 4);
@@ -8,21 +10,25 @@ user hoikgrew = user("hoikgrew", "HoknGrew", 3);
 user testmem = user("TEST", "TESTSTART", 1);
 user jorin = user("jorin", "dfsjhjiof", -1);
 //replies
-reply one = reply("After two years of work, fun and more. The Ninkill forums is shuting down.", nin);
-reply two = reply("Im done with the harasment, you assholes cant dox me and expect me to continue running this shit", nin);
+reply Gone = reply("After two years of work, fun and more. The Ninkill forums is shuting down.", nin);
+reply Gtwo = reply("Im done with the harasment, you assholes can’t dox me and expect me to continue running this shit", nin);
+reply Nthree = reply("Nuebine incorporated Network is releaseing a new version of NINKILL!!!\nWhat do you want them to add? Because I may add them >:).", Ladsm);
 //posts
-std::vector<reply> NINKILLPinnedarr = { one };
+std::vector<reply> NINKILLOSNEWarr = { Nthree };
+Post NINKILLOSNEW = Post("NINKILL v1.3 releaseing!", Ladsm, NINKILLOSNEWarr);
+std::vector<reply> NINKILLPinnedarr = { Gone };
 Post NINKILLPinned = Post("PINNED Ninkill is takeing a break", nin, NINKILLPinnedarr);
-std::vector<reply> Imsickarr = { two };
+std::vector<reply> Imsickarr = { Gtwo };
 Post Imsick = Post("Im sick of this", nin, Imsickarr);
 //pages
 std::vector<Post> indexarr = { NINKILLPinned, Imsick };
+std::vector<Post> Newsarr = { NINKILLOSNEW };
+Page News = Page{ "News", Newsarr };
 Page Index = Page{ "Index", indexarr };
-std::vector<Page> FoRuM = { Index };
+std::vector<Page> FoRuM = { Index, News };
 std::vector<user> list = { nin ,john ,hoikgrew ,testmem ,jorin };
 
 void init() {
-	//users
 	nin = user("nin", "XxAdMiN123xX", 4);
 	john = user("john", "12345678910mod", 3);
 	Ladsm = user("Ladsm", "no...youarenotgetingmypassword", 3);
@@ -30,24 +36,10 @@ void init() {
 	testmem = user("TEST", "TESTSTART", 1);
 	jorin = user("jorin", "dfsjhjiof", -1);
 	list = { nin ,john ,hoikgrew ,testmem ,jorin };
-	//replies
-	one = reply("After two years of work, fun and more. The Ninkill forums is shuting down.", nin);
-	two = reply("Im done with the harasment, you assholes cant dox me and expect me to continue running this shit", nin);
-	//posts
-	NINKILLPinnedarr = { one };
-	NINKILLPinned = Post("PINNED Ninkill is takeing a break", nin, NINKILLPinnedarr);
-	Imsickarr = { two };
-	Imsick = Post("Im sick of this", nin, Imsickarr);
-	//pages
-	indexarr = { NINKILLPinned, Imsick };
-	Index = Page{ "Index", indexarr };
-	FoRuM = { Index };
 }
 
 int main() {
 	init();
-	/*
-	//start
 	std::cout << "booting"; threedot();
 	std::cout << "\ninitramfs"; threedot();
 	cls();
@@ -62,8 +54,6 @@ int main() {
 		std::cout << "Sorry... That name or password is incorect.\n";
 		goto login;
 	}
-	*/
 	initforum();
-	//real forum
 	forum(FoRuM);
 }

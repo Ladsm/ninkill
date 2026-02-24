@@ -17,12 +17,13 @@ void listdir() {
 }
 
 void help() {
-	std::cout << "(c)Nuebine Incorperated Network\n";
-	std::cout << "Thank you for using the Nuebine Incorperated Network operating system.\n";
+	std::cout << "(c)Nuebine incorperated Network\n";
+	std::cout << "Thank you for using the Nuebine incorperated Network operating system.\n";
 	std::cout << "We hope you enjoy your stay!\n";
 	std::cout << R"(To open the operating system write : "exc-nin")" << '\n';
-	std::cout << "You are right now in the live envirement, you cant do anything right now exept start the os,\nbut heres some commands you can try:";
-	std::cout << "\nhelp: displays the help screen.\nexit: exits the live envirement.\nls & dir: lists the directory you're in.\n";
+	std::cout << "You are right now in the live environment, you can’t do much right now exept start the forum,\nbut heres some commands you can try:";
+	std::cout << "\nhelp: displays the help screen.\nexit: exits the live environment.\nls & dir: lists the directory you're in.\n";
+	std::cout << "cls & clear: clears the console\ncat [filename]: reads file to you.\n";
 }
 
 int readcommand(std::string command) {
@@ -55,17 +56,20 @@ int readcommand(std::string command) {
 		return 0;
 	}
 	else {
-		std::cout << "\033[31m" << command << " : The term " << R"(')" << command << R"(')" << "is not recognized as the name of a function.\nCheck if the spelling of the command is correct and try again.\n\033[32m";
-		return 0;
+		std::cout << "\033[31m" << "'" << command << "' is not recognized as a valid command.\n" << "Please check your spelling and try again.\n" << "\033[0m";
 	}
 	return 0;
 }
 
 void console() {
 	std::cout << "\033[?25h";
-	std::cout << "[root@ninkill-live]# ";
-	std::string command = getcommand();
-	int z = readcommand(command);
-	if (z == 0) { console(); }
-	else if (z == 1) { return; }
+	std::cout << "Welcome to NINKILLos!\nWrite \'help\' for more info\n";
+	while (true) {
+		std::cout << "[root@ninkill-live]# " << std::flush;
+		std::string command = getcommand();
+		int z = readcommand(command);
+		if (z == 1) {
+			break;
+		}
+	}
 }
