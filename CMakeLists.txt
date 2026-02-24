@@ -18,6 +18,8 @@ src/userinput.cpp
 src/userinput.hpp
 src/page.cpp
 src/page.hpp
+src/savefile.cpp
+src/savefile.hpp
 )
 add_executable(ninkill ${PROJECT_SOURCES})
 if(NOT WIN32)
