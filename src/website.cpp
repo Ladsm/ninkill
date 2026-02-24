@@ -61,7 +61,7 @@ void wwwNuebinedotcom() {
         case 3:
             std::cout << "Our projects:\n - NINKILL os\nNINKILL os is a small linux based operating system made for home users, load it with a flopy drive like a DOS\n";
             std::cout << " - NINKILL forums\nThe forums are an acsessable way for people to talk online, no portforwarding or weird manual installs. Just load it up and enter the chat\n";
-            std::cout << " - NINKILL internet Navigator\nA way to see things in a without needing to download it, just a temperary and when you finish using the content, the files get deleted\n";
+            std::cout << " - NINKILL internet Navigator\nA way to see things in a without needing to download it, just some temperary files and when you finish using the content, the files get deleted\n";
             std::cout << "[1] Back\n";
             std::cin >> choice;
             if (choice == 1) {

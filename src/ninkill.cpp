@@ -160,7 +160,6 @@ void drawPost(Post& post) {
         while (pos < r.paragraph.length() && row <= height) {
             std::string line = r.paragraph.substr(pos, maxLen);
             std::cout << "\033[" << row << ";0H" << "\033[48;2;255;165;0m"<< "\033[30m";
-
             if (firstLine) {
                 std::cout << prefix << line;
                 firstLine = false;
