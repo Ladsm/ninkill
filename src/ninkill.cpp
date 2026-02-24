@@ -12,6 +12,7 @@
 #include "beep.h"
 #include "userinput.hpp"
 #include "page.hpp"
+#include "website.hpp"
 
 std::string menuops[2] = {"   1-Forum Index     ", "2-News     "};
 static int langthofopts() {
@@ -52,16 +53,16 @@ int getConsoleHeight() {
     return 25;
 }
 
-void loadingSpinnerCentered(int duration_ms = 3000, bool loadorconect = false) {
+void loadingSpinnerCentered(int duration_ms = 3000, std::string nexttospin = "Loading") {
     const char spinner[] = { '|', '/', '-', '\\' };
-    std::string LoadorConecting = "Loading ";
-    if(loadorconect == true){ LoadorConecting = "Conecting "; }
+    std::string LoadorConecting = nexttospin;
     size_t numFrames = sizeof(spinner) / sizeof(spinner[0]);
     int frame = 0;
     int consoleWidth = getConsoleWidth();
+    int textsizedtwo = nexttospin.size() / 2;
     int consoleHeight = getConsoleHeight();
     int topPadding = consoleHeight / 2;
-    int leftPadding = consoleWidth / 2 - 7;
+    int leftPadding = consoleWidth / 2 - textsizedtwo;
     int iterations = duration_ms / 100;
     for (int i = 0; i < iterations; i++) {
         std::cout << "\033[H";
@@ -101,9 +102,9 @@ void initforum() {
     ensureConsoleInitialized();
     orangebk();
     blop(1000, 500);
-    loadingSpinnerCentered(3000, false);
+    loadingSpinnerCentered(3000, "Loading");
     blop(100, 500);
-    loadingSpinnerCentered(1000, true);
+    loadingSpinnerCentered(1000, "Conecting");
     blop(10, 500);
     printBlackBar(2);
     printMenuLine(3, menuops[0], menuops[1]);
@@ -249,25 +250,26 @@ void clscls() {
 #endif
 }
 void conecting(std::string address, bool fail) {
-    Center() << "Connecting to " << address;
-    std::this_thread::sleep_for(std::chrono::milliseconds(800));
+    mkbg();
+    loadingSpinnerCentered(800, "Connecting to " + address + ' ');
+    mkbg();
     if (fail == true) {
         Center() << "404 - No website at that address";
         std::this_thread::sleep_for(std::chrono::seconds(2));
         return;
     }
-    Center() << "Resolving host...";
-    std::this_thread::sleep_for(std::chrono::milliseconds(800));
-    Center() << "Connected.";
-    clscls();
+    loadingSpinnerCentered(800, "Resolving host... ");
+    mkbg();
+    loadingSpinnerCentered(100, "Connected. ");
 }
 void internet() {
     std::string site;
-    std::string choice;
-    loadingSpinnerCentered(1000, false);
-    loadingSpinnerCentered(3000, true);
+    int choice = 0;
+    loadingSpinnerCentered(1000, "Loading");
+    loadingSpinnerCentered(3000, "Conecting");
     while (true) {
         clscls();
+        mkbg();
         Center() << "Network Internet Navigator";
         Center() << "Enter Internet address (or type 'exit'):";
         std::cout << std::string(getConsoleWidth() / 2 - 15, ' ');
@@ -279,17 +281,15 @@ void internet() {
             break;
         case 1:
             conecting("www.Nuebine.com", false);
-            std::cout << "Welcome to Nuebine Incorporated!\n";
-            std::cout << "Innovating the Network Since 1990\n";
-            std::cout << "[1] About\n";
-            std::cout << "[2] Projects\n";
-            std::cout << "[3] Back\n";
-            std::getline(std::cin, choice);
+            Nuebinedotcom.siteAction();
             break;
         case 2:
             break;
         case 3:
+            std::cout << "\033[32;40m";
             return;
+            break;
         }
     }
+    return;
 }

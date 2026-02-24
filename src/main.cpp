@@ -3,6 +3,16 @@
 #include "consolestart.hpp"
 #include "savefile.hpp"
 #include <filesystem>
+#ifdef _WIN32
+#include <windows.h>
+void enableANSI() {
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	DWORD dwMode = 0;
+	GetConsoleMode(hOut, &dwMode);
+	dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+	SetConsoleMode(hOut, dwMode);
+}
+#endif
 
 void clear() {
 #if defined(_WIN32)
@@ -53,6 +63,9 @@ void initForumData(const std::vector<user>& users, const std::vector<Page>& page
 	FoRuM = pages;
 }
 int main() {
+#ifdef _WIN32
+	enableANSI();
+#endif
 	if (!loadForumIfExists(list, FoRuM)) {
 		initForumData(list, FoRuM);
 		saveForum(FoRuM);

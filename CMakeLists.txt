@@ -20,6 +20,8 @@ src/page.cpp
 src/page.hpp
 src/savefile.cpp
 src/savefile.hpp
+src/website.cpp
+src/website.hpp
 )
 add_executable(ninkill ${PROJECT_SOURCES})
 if(NOT WIN32)
