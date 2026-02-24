@@ -4,7 +4,7 @@
 
 std::string getcommand() {
 	std::string getstring = "";
-	std::getline(std::cin >> std::ws, getstring);
+	std::getline(std::cin, getstring);
 	return getstring;
 }
 
@@ -46,7 +46,7 @@ int readcommand(std::string command) {
 		help();
 		return 0;
 	}
-	else if (command == " cat NINKill.forum") {
+	else if (command == "cat NINKill.forum") {
 		std::string randombinary = R"(
 קְ׀”8*צ¸‚vjbL>2ˆ
 צלאײ־ֶ¼´
@@ -118,9 +118,8 @@ void consolefirst() {
 		std::cout << "[root@ninkill-live]# " << std::flush;
 		std::string command = getcommand();
 		int z = readcommand(command);
-		if (z == 1) {
+		if (z == 1)
 			break;
-		}
 	}
 }
 
@@ -128,13 +127,10 @@ void console() {
 	std::cout << "\033[32m";
 	std::cout << "\033[?25h";
 	while (true) {
-		std::cout << "\033[32m";
-		std::cout << "\033[?25h";
 		std::cout << "[root@ninkill-live]# " << std::flush;
 		std::string command = getcommand();
 		int z = readcommand(command);
-		if (z == 1) {
+		if (z == 1)
 			break;
-		}
 	}
 }
