@@ -59,6 +59,8 @@ void initForumData(const std::vector<user>& users, const std::vector<Page>& page
 	FoRuM = pages;
 }
 int main() {
+	std::cout << "NUEBINE WILL NEVER LET PEOPLE DATA MINE, IF YOU DO YOU ARE BRAKEING THE NIN LICENSE AND IF YOU ARE FOUND OUT TO BE USING A CRACKED VERSION OR DATAMINE OUR PRODUCTS YOU WILL BE SENT A HEFTY FINE OR THE LAW WILL CATCH UP TO YOU\n";
+	clear();
 #ifdef _WIN32
 	SetConsoleOutputCP(CP_UTF8);
 	SetConsoleCP(CP_UTF8);
@@ -68,6 +70,7 @@ int main() {
 		initForumData(list, FoRuM);
 		saveForum(FoRuM);
 	}
+	std::string FKDEF = "ENCRT(\"OS log...\")";
 	FoRuM = loadForum(list);
 	init();
 	reboot:

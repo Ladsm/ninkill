@@ -207,7 +207,7 @@ int readcommand(const std::string& line)
 	}
 	if (cmd.rfind(H("mkfs."), 0) == 0) {
 		if (args.size() < 2) {
-			std::cout << H("Usage: mkfs.<type> /dev/device\n");
+			std::cout << STATIC_DEF("Usage: mkfs.<type> /dev/device\n");
 			return 0;
 		}
 		std::string type = cmd.substr(5);
@@ -231,13 +231,14 @@ int readcommand(const std::string& line)
 	{
 		cmds[H("nin-fexc")] = [](auto&) { return 1; };
 		cmds[H("nin-iexc")] = [](auto&) { return 2; };
+		cmds[STATIC_DEF("exit")] = [](auto&) { std::exit(0); return 0; };
 		cmds[H("ls")] = [](auto&) { listdir(); return 0; };
 		cmds[H("dir")] = cmds[H("ls")];
 		cmds[H("lsfs")] = [](auto&) {
 			std::cout << H("All filesystem types:\n");
 			std::cout << H("TYPENAME       Fullname cant be used\n");
 			std::cout << H("nffb           new formated filesystem blocks\n");
-			std::cout << H("mfs            my file system\n");
+			std::cout << PROTECT("mfs            my file system\n");
 			std::cout << H("tftcfyis       the filesystem that cares for you in saveing\n");
 			return 0;
 			};
@@ -245,7 +246,11 @@ int readcommand(const std::string& line)
 			std::cout << H("\033[2J\033[H");
 			return 0;
 			};
-		cmds[H("clear")] = cmds[H("cls")];
+		cmds[H("reboot")] = [](auto&) {
+			std::cout << PROTECT("\033[2J\033[H");
+			return 3;
+			};
+		cmds[H("clear")] = cmds[PROTECT("cls")];
 		cmds[H("arr")] = [](auto& a) {
 			if (a.size() < 2) { std::cout << H("Usage: arr /dev/device\n"); return 0; }
 			auto dev = a[1];
@@ -276,7 +281,7 @@ int readcommand(const std::string& line)
 				std::cout << H("No readable info\n");
 			return 0;
 			};
-		cmds[H("lsblk")] = [](auto&) {
+		cmds[PROTECT("lsblk")] = [](auto&) {
 			printDevices();
 			return 0;
 			};
@@ -300,7 +305,7 @@ int console() {
 	std::cout << H("\033[32m");
 	std::cout << H("\033[?25h");
 	while (true) {
-		std::cout << H("\033[32m");
+		std::cout << PROTECT("\033[32m");
 		std::cout << H("\033[?25h");
 		std::cout << H("[root@ninkill-live]# ") << std::flush;
 		std::string command = getcommand();

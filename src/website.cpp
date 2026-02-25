@@ -101,7 +101,7 @@ void wwwJackwddotcom() {
         case 2:
             std::cout << H("My portfolio:\n - Internet Explorer\nThis is a piece of software I made that temporarily downloads files from a server, then after 10 minutes the files get wiped from your computer.\n");
             std::cout << H("To protect from ACE, it uses a proxy server. This is a diagram of how it works:\n");
-            std::cout << H("                    .-----.         .-----------.    ") << '\n';
+   std::cout << STATIC_DEF("                    .-----.         .-----------.    ") << '\n';
             std::cout << H("   .----.     Fire  |  P  |         |   Server  + - +") << '\n';
             std::cout << H("   |$>_ | - - - - - |  R  |         `-----+-----'   |") << '\n';
             std::cout << H(" __|____|__   Wall  |  O  | - - - - - - - |         |") << '\n';
@@ -110,7 +110,7 @@ void wwwJackwddotcom() {
             std::cout << H(" `--------'       | `-----' |       `-----+-----'   |") << '\n';
             std::cout << H("      |           |         |             |         |") << '\n';
             std::cout << H("      + - - - - - +         + - - - - - - + - - - - +") << '\n';
-            std::cout << H("Software Employment:\n1990–1997 - Jack's Software Products\n1997–now - Head Software Engineer at Nuebine Incorporated Network\n");
+   std::cout << STATIC_DEF("Software Employment:\n1990–1997 - Jack's Software Products\n1997–now - Head Software Engineer at Nuebine Incorporated Network\n");
             std::cout << H("[1] Back\n");
             std::cin >> choice;
             if (choice == 1) {
@@ -126,7 +126,7 @@ void wwwJackwddotcom() {
             std::cout << H("I contacted them and they lied to me. They told me they started working on it in 1996 and that I was making a false claim.\n");
             std::cout << H("I know they lied because the proxy servers were getting requests from Nuebine.co.us.\n");
             std::cout << H("I filed a legal notice demanding they show me their code. At first they told me no, but then decided to let me come in.\n");
-            std::cout << H("On that day I went into their office. After I saw my code on their computers, I told them I demanded a cut of the profit.\n");
+            std::cout << STATIC_DEF("On that day I went into their office. After I saw my code on their computers, I told them I demanded a cut of the profit.\n");
             std::cout << H("And you know what? They agreed. They told me it was fine and let me get a job. (My self-employed ass took this as fast as I could.)\n");
             std::cout << H("I now work as the head software engineer with them.\nMoral of the story: Don’t steal.\n");
             std::cout << H("[1] Back\n");

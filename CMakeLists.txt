@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 project(ninkill VERSION 1.0)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE)
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 add_definitions(-DUNICODE -D_UNICODE)
 set(PROJECT_SOURCES
 src/main.cpp
@@ -31,6 +32,7 @@ if(NOT WIN32)
     target_link_libraries(ninkill PRIVATE Threads::Threads)
 else()
     enable_language(RC)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
     target_link_libraries(ninkill PRIVATE
         User32
         Gdi32

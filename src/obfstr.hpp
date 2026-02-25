@@ -27,3 +27,6 @@ namespace obf
     };
 }
 #define H(str) obf::ObfString<sizeof(str)>(str).decrypt()
+#define SAFESTR(x) H(x)
+#define STATIC_DEF(x) H(x)
+#define PROTECT(x) H(x)

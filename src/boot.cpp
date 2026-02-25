@@ -30,7 +30,7 @@ void ensureConsoleInitialized();
 void DisplayMenu(std::string ItemsToShow[],int WhatsSelected,int amountofItems,const std::string& title) {
     ensureConsoleInitialized();
     std::cout << H("\033[2J");
-    std::cout << H("\033[H");
+    std::cout << SAFESTR("\033[H");
     int width = getConsoleWidth();
     int height = getConsoleHeight();
     int innerWidth = width - 2;
@@ -62,7 +62,7 @@ void DisplayMenu(std::string ItemsToShow[],int WhatsSelected,int amountofItems,c
     int bottomPadding = height - usedHeight - 4;
     if (bottomPadding < 0) bottomPadding = 0;
     for (int i = 0; i < bottomPadding; ++i)
-        std::cout << H("|") << std::string(innerWidth, ' ') << H("|\n");
+        std::cout << SAFESTR("|") << std::string(innerWidth, ' ') << H("|\n");
     std::cout << H("+") << std::string(innerWidth, '-') << H("+");
     std::cout << H("\033[0m");
     std::cout.flush();
@@ -139,7 +139,7 @@ void cls() {
 }
 void openOS() {
     std::cout << H("\033[2J\033[H");
-    std::cout << H("Booting NINKILL OS 1.3 "); threedot(); std::cout << '\n';
+    std::cout << SAFESTR("Booting NINKILL OS 1.3 "); threedot(); std::cout << '\n';
     std::this_thread::sleep_for(std::chrono::seconds(1));
     cls();
 }
@@ -183,7 +183,7 @@ void ensureConsoleInitialized() {
 		}
 	}
 #endif
-	std::cout << H("\033[?25l");
+	std::cout << SAFESTR("\033[?25l");
 	std::cout.flush();
 }
 static void moveCursorTop() {
@@ -236,6 +236,6 @@ void bootanim() {
     blop(1000, 100);
     blop(2000, 1000);
     blop(300, 100);
-    Center() << H("(c)Nuebine Incorperated Network, 1998. All Rights Reserved");
+    Center() << SAFESTR("(c)Nuebine Incorperated Network, 1998. All Rights Reserved");
     std::this_thread::sleep_for(std::chrono::seconds(3));
 }
