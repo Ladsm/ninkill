@@ -72,6 +72,7 @@ int main() {
 	}
 	FoRuM = loadForum(list);
 	init();
+	reboot:
 	showBootMenu();
 	std::cout << "booting"; threedot();
 	std::cout << "\ninitramfs"; threedot();
@@ -100,6 +101,12 @@ int main() {
 			clear();
 			internet();
 			clear();
+			break;
+		case 3:
+			std::cout << "Rebooting"; threedot();
+			clear();
+			goto reboot;
+			break;
 		}
 	}
 	saveForum(FoRuM);

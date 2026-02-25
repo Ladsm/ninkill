@@ -14,7 +14,7 @@ void listdir() {
 	std::cout << " ----     -------------       ----         ----   \n";
 	std::cout << "-a----  3/24/1998 6:28 PM  NINKill.exc   2,865kb  \n";
 	std::cout << "-a----  1/14/1998 3:04 AM    help.txt      1kb    \n";
-	std::cout << "-a----  4/26/1996 8:02 PM   NINEX.exc    6,462kb  \n";
+	std::cout << "-a----  4/26/1997 8:02 PM   NINEX.exc    6,462kb  \n";
 }
 
 void help() {
@@ -162,6 +162,7 @@ Fitness for a particular purpose and noninfringement. You may not try to: data m
 By viewing this text here, you are infringeing on my license, you may turn back and forget about this.
 This software is only owned due to a legel battle, please: visit www.jackwd.com for more info
 -------------------------------------------------------------------------------------------------------------
+
 ַ‏ טw״H‹א   ט׃H‹…א   H‹ָט ־H‹…א   H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּL‰D$ˆT$H‰L$UWHלט   Hl$ H
 R‏ ט״H‹…א   H‹ָט0H‹…א   H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּH‰T$H‰L$UWHלט   Hl$ H
 צ‎ ט¦׳H‹…א   H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּL‰D$ˆT$H‰L$UWHלט   Hl$ H
@@ -215,7 +216,7 @@ N ט¸H‹…א   H‹ H¥ָ   _]ֳּּּּּּּּּּּּּּּ
 		std::cout << " nffb, mfs, tnftcfy\n";
 	}
 	else if (command == "help arr") {
-		std::cout << "arr aranges your filesystem for use.\nMUST BE ON A FORMATED DRIVE! Usage on a non formated drive could cause permenent damage to the drive, we have safe gaurds for this but be carefull.\nUsage: /dev/{optical drive}.\n";
+		std::cout << "arr aranges your filesystem for use.\nMUST BE ON A FORMATED DRIVE! Usage on a non formated drive could cause permenent damage to the drive, we have safe gaurds for this but be carefull.\nUsage: arr /dev/{optical drive}.\n";
 	}
 	else if (command == "arr /dev/vdc") {
 		if (stateOfvdc == 1) {
@@ -224,6 +225,9 @@ N ט¸H‹…א   H‹ H¥ָ   _]ֳּּּּּּּּּּּּּּּ
 		else {
 			std::cout << "device not formated, please format it\n";
 		}
+	}
+	else if (command == "help ifo") {
+		std::cout << "Writes info about optical drive. Usage: ifo /dev/{optical drive}.\n";
 	}
 	else if (command == "ifo /dev/vdc") {
 		if (stateOfvdc == 2) {
@@ -237,6 +241,9 @@ N ט¸H‹…א   H‹ H¥ָ   _]ֳּּּּּּּּּּּּּּּ
 	}
 	else if (command == "exit") {
 		std::exit(0);
+	}
+	else if (command == "reboot") {
+		return 3;
 	}
 	else if (command == "") {
 		return 0;
@@ -273,5 +280,7 @@ int console() {
 			return 1;
 		if (z == 2)
 			return 2;
+		if (z == 3)
+			return 3;
 	}
 }

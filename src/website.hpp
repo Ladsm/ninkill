@@ -12,3 +12,4 @@ struct website {
 };
 void mkbg();
 extern website Nuebinedotcom;
+extern website jackwddotcom;

@@ -238,7 +238,8 @@ int isAddress(const std::string& address) {
         return 2;
     else if (address == "exit")
         return 3;
-    return 0;
+    else if (address == "www.jackwd.com")
+        return 4;
 }
 void clscls() {
 #if defined(_WIN32)
@@ -287,6 +288,10 @@ void internet() {
         case 3:
             std::cout << "\033[32;40m";
             return;
+            break;
+        case 4:
+            conecting(jackwddotcom.Address, false);
+            jackwddotcom.siteAction();
             break;
         }
     }
