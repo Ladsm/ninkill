@@ -1,3 +1,4 @@
+#include "obfstr.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -7,10 +8,10 @@ extern std::vector<user> list;
 bool whoiswantingin() {
 	std::string nameget;
 	std::string passget;
-	std::cout << "Normal Inside Net by Nuebine Incorperated Network\nIf you only want to view the site and not post, use the name BANDIT and password ENVELOPE\nname: ";
-	std::getline(std::cin >> std::ws, nameget); std::cout << "password: ";
+	std::cout << H("Normal Inside Net by Nuebine Incorperated Network\nIf you only want to view the site and not post, use the name BANDIT and password ENVELOPE\nname: ");
+	std::getline(std::cin >> std::ws, nameget); std::cout << H("password: ");
 	std::getline(std::cin >> std::ws, passget);
-	if (nameget == "BANDIT" && passget == "ENVELOPE") {
+	if (nameget == H("BANDIT") && passget == H("ENVELOPE")) {
 		BANDIT = true;
 		return true;
 	}

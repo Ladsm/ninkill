@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(ninkill VERSION 1.0)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 add_definitions(-DUNICODE -D_UNICODE)
 set(PROJECT_SOURCES
@@ -22,6 +23,7 @@ src/savefile.cpp
 src/savefile.hpp
 src/website.cpp
 src/website.hpp
+src/obfstr.hpp
 )
 add_executable(ninkill ${PROJECT_SOURCES})
 if(NOT WIN32)
@@ -37,3 +39,10 @@ else()
     )
 endif()
 target_include_directories(ninkill PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_compile_options(ninkill PRIVATE
+    $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:GNU,Clang>>:-O2 -s>
+    $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:MSVC>>:/O2 /GL>
+)
+target_link_options(ninkill PRIVATE
+    $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:GNU,Clang>>:-s>
+)

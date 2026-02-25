@@ -1,3 +1,4 @@
+#include "obfstr.hpp"
 #include "boot.hpp"
 #include <iostream>
 #include <thread>
@@ -14,7 +15,7 @@
 #include "page.hpp"
 #include "website.hpp"
 
-std::string menuops[2] = {"   1-Forum Index     ", "2-News     "};
+std::string menuops[2] = {H("   1-Forum Index     "), H("2-News     ")};
 static int langthofopts() {
     size_t langth = 0;
     for (int i = 0; i < 2; i++) {
@@ -24,11 +25,11 @@ static int langthofopts() {
 }
 
 static void orangebk() {
-    std::cout << "\033[48;2;255;165;0m";
-    std::cout << "\033[30m";
-    std::cout << "\033[2J";
-    for (int i = 0; i < 1000; i++) std::cout << " ";
-    std::cout << "\033[H";
+    std::cout << H("\033[48;2;255;165;0m");
+    std::cout << H("\033[30m");
+    std::cout << H("\033[2J");
+    for (int i = 0; i < 1000; i++) std::cout << H(" ");
+    std::cout << H("\033[H");
 }
 int getConsoleWidth() {
 #ifdef _WIN32
@@ -53,7 +54,7 @@ int getConsoleHeight() {
     return 25;
 }
 
-void loadingSpinnerCentered(int duration_ms = 3000, std::string nexttospin = "Loading") {
+void loadingSpinnerCentered(int duration_ms = 3000, std::string nexttospin = H("Loading")) {
     const char spinner[] = { '|', '/', '-', '\\' };
     std::string LoadorConecting = nexttospin;
     size_t numFrames = sizeof(spinner) / sizeof(spinner[0]);
@@ -65,27 +66,27 @@ void loadingSpinnerCentered(int duration_ms = 3000, std::string nexttospin = "Lo
     int leftPadding = consoleWidth / 2 - textsizedtwo;
     int iterations = duration_ms / 100;
     for (int i = 0; i < iterations; i++) {
-        std::cout << "\033[H";
-        for (int k = 0; k < topPadding; k++) std::cout << "\n";
+        std::cout << H("\033[H");
+        for (int k = 0; k < topPadding; k++) std::cout << H("\n");
         std::cout << std::string(leftPadding, ' ')
             << LoadorConecting << spinner[frame % numFrames] << std::flush;
         frame++;
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-    std::cout << "\033[H";
+    std::cout << H("\033[H");
 }
 void printBlackBar(int row) {
     int width = getConsoleWidth();
-    std::cout << "\033[" << row << ";0H";
-    std::cout << "\033[40m\033[38;2;255;165;0m";
+    std::cout << H("\033[") << row << H(";0H");
+    std::cout << H("\033[40m\033[38;2;255;165;0m");
     std::cout << std::string(width, ' ');
-    std::cout << "\033[0m";
+    std::cout << H("\033[0m");
 }
 
 void printMenuLine(int row, const std::string& leftText, const std::string& rightText) {
     int width = getConsoleWidth();
-    std::cout << "\033[" << row << ";0H";
-    std::cout << "\033[40m\033[38;2;255;165;0m";
+    std::cout << H("\033[") << row << H(";0H");
+    std::cout << H("\033[40m\033[38;2;255;165;0m");
     std::string line = leftText + rightText;
     if ((int)line.length() > width) {
         line = line.substr(0, width);
@@ -94,24 +95,24 @@ void printMenuLine(int row, const std::string& leftText, const std::string& righ
         line += std::string(width - line.length(), ' ');
     }
     std::cout << line;
-    std::cout << "\033[0m";
+    std::cout << H("\033[0m");
 }
 
 void initforum() {
-    std::cout << "\033[?25l";
+    std::cout << H("\033[?25l");
     ensureConsoleInitialized();
     orangebk();
     blop(1000, 500);
-    loadingSpinnerCentered(3000, "Loading");
+    loadingSpinnerCentered(3000, H("Loading"));
     blop(100, 500);
-    loadingSpinnerCentered(1000, "Conecting");
+    loadingSpinnerCentered(1000, H("Conecting"));
     blop(10, 500);
     printBlackBar(2);
     printMenuLine(3, menuops[0], menuops[1]);
     printBlackBar(4);
 }
 void redrawall() {
-    std::cout << "\033[2J\033[H";
+    std::cout << H("\033[2J\033[H");
     orangebk();
     printBlackBar(2);
     printMenuLine(3, menuops[0], menuops[1]);
@@ -125,16 +126,16 @@ bool running = true;
 void drawPage(const Page& page, int selectedPost) {
     int width = getConsoleWidth();
     int startRow = 6;
-    std::cout << "\033[H";
-    std::cout << "\033[1m" << page.title << "\033[0m\n";
+    std::cout << H("\033[H");
+    std::cout << H("\033[1m") << page.title << H("\033[0m\n");
     for (size_t i = 0; i < page.posts.size(); i++) {
         const Post& p = page.posts[i];
-        std::cout << "\033[" << (startRow + i) << ";5H";
+        std::cout << H("\033[") << (startRow + i) << H(";5H");
         if ((int)i == selectedPost)
-            std::cout << "\033[7m";
-        std::cout << p.title << " (by " << p.poster.name
-            << ", " << p.replies.size() << " replies)"
-            << "\033[0m";
+            std::cout << H("\033[7m");
+        std::cout << p.title << H(" (by ") << p.poster.name
+            << H(", ") << p.replies.size() << H(" replies)")
+            << H("\033[0m");
     }
     std::cout.flush();
 }
@@ -143,19 +144,19 @@ void drawPost(Post& post) {
     int width = getConsoleWidth();
     int height = getConsoleHeight();
     printBlackBar(1);
-    printMenuLine(2, "           ", post.title);
-    printMenuLine(3, "           ", "by: " + post.poster.name);
+    printMenuLine(2, H("           "), post.title);
+    printMenuLine(3, H("           "), H("by: ") + post.poster.name);
     printBlackBar(4);
     int row = 5;
     for (size_t i = 0; i < post.replies.size(); i++) {
         const reply& r = post.replies[i];
-        std::string prefix = std::to_string(i + 1) + ". ";
+        std::string prefix = std::to_string(i + 1) + H(". ");
         size_t maxLen = width - prefix.length() - 1;
         size_t pos = 0;
         bool firstLine = true;
         while (pos < r.paragraph.length() && row <= height) {
             std::string line = r.paragraph.substr(pos, maxLen);
-            std::cout << "\033[" << row << ";0H" << "\033[48;2;255;165;0m"<< "\033[30m";
+            std::cout << H("\033[") << row << H(";0H") << H("\033[48;2;255;165;0m")<< H("\033[30m");
             if (firstLine) {
                 std::cout << prefix << line;
                 firstLine = false;
@@ -166,16 +167,16 @@ void drawPost(Post& post) {
             int remaining = width - ((firstLine) ? prefix.length() + line.length() : prefix.length() + line.length());
             if (remaining > 0)
                 std::cout << std::string(remaining, ' ');
-            std::cout << "\033[0m";
+            std::cout << H("\033[0m");
             pos += maxLen;
             row++;
         }
         if (row <= height) {
-            std::cout << "\033[" << row << ";0H"
-                << "\033[48;2;255;165;0m\033[30m"
-                << " - " << r.replyer.name
+            std::cout << H("\033[") << row << H(";0H")
+                << H("\033[48;2;255;165;0m\033[30m")
+                << H(" - ") << r.replyer.name
                 << std::string(width - 4 - r.replyer.name.length(), ' ')
-                << "\033[0m";
+                << H("\033[0m");
             row++;
         }
     }
@@ -228,41 +229,41 @@ void forum(std::vector<Page>& forumPages) {
     }
 }
 int isAddress(const std::string& address) {
-    if (address == "www.Nuebine.com" || address == "www.nuebine.com")
+    if (address == H("www.Nuebine.com") || address == H("www.nuebine.com"))
         return 1;
     else if (address.empty())
         return 2;
-    else if (address == "exit")
+    else if (address == H("exit"))
         return 3;
-    else if (address == "www.jackwd.com")
+    else if (address == H("www.jackwd.com"))
         return 4;
 }
 void clscls() {
-    std::cout << "\033[2J\033[H";
+    std::cout << H("\033[2J\033[H");
 }
 void conecting(std::string address, bool fail) {
     mkbg();
-    loadingSpinnerCentered(800, "Connecting to " + address + ' ');
+    loadingSpinnerCentered(800, H("Connecting to ") + address + ' ');
     mkbg();
     if (fail == true) {
-        Center() << "404 - No website at that address";
+        Center() << H("404 - No website at that address");
         std::this_thread::sleep_for(std::chrono::seconds(2));
         return;
     }
-    loadingSpinnerCentered(800, "Resolving host... ");
+    loadingSpinnerCentered(800, H("Resolving host... "));
     mkbg();
-    loadingSpinnerCentered(100, "Connected. ");
+    loadingSpinnerCentered(100, H("Connected. "));
 }
 void internet() {
     std::string site;
     int choice = 0;
-    loadingSpinnerCentered(1000, "Loading");
-    loadingSpinnerCentered(3000, "Conecting");
+    loadingSpinnerCentered(1000, H("Loading"));
+    loadingSpinnerCentered(3000, H("Conecting"));
     while (true) {
         clscls();
         mkbg();
-        Center() << "Network Internet Navigator";
-        Center() << "Enter Internet address (or type 'exit'):";
+        Center() << H("Network Internet Navigator");
+        Center() << H("Enter Internet address (or type 'exit'):");
         std::cout << std::string(getConsoleWidth() / 2 - 15, ' ');
         std::getline(std::cin, site);
         int z = isAddress(site);
@@ -271,13 +272,13 @@ void internet() {
             conecting(site, true);
             break;
         case 1:
-            conecting("www.Nuebine.com", false);
+            conecting(H("www.Nuebine.com"), false);
             Nuebinedotcom.siteAction();
             break;
         case 2:
             break;
         case 3:
-            std::cout << "\033[32;40m";
+            std::cout << H("\033[32;40m");
             return;
             break;
         case 4:

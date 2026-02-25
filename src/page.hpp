@@ -1,9 +1,10 @@
 #pragma once
+#include "obfstr.hpp"
 #include <vector>
 #include <string>
 #include "usrAndPass.hpp"
 struct reply {
-    std::string paragraph = "";
+    std::string paragraph = H("");
     user replyer;
     reply() = default;
     reply(std::string x, user y) {
@@ -13,7 +14,7 @@ struct reply {
 };
 struct Post {
     bool locked = false;
-    std::string title = "DEBUG";
+    std::string title = H("DEBUG");
     user poster;
     std::vector<reply> replies;
     Post() = default;
@@ -22,7 +23,7 @@ struct Post {
         poster = y;
         replies = z;
         if (locked == true) {
-            title.append(" [LOCKED] ");
+            title.append(H(" [LOCKED] "));
         }
     }
     Post(std::string x, user y, std::vector<reply> z, bool f) {

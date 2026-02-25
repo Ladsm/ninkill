@@ -1,3 +1,4 @@
+#include "obfstr.hpp"
 const char* NINKILL_EXC_TEXT = R"(
 NINKILL forum software owned by Nuebine incorperated Network
 קְ׀”8*צ¸‚vjbL>2ˆ
@@ -99,7 +100,7 @@ rocessHeapVirtualQueryװFreeLibrary@@}@g@g@g
 const char* NINEX_EXC_TEXT = R"(
 NINKILL Internet software owned by Jack Wilder Dean and Nuebine incorperated Network
 License by Jack Wilder Dean:
-The software is provided "As is", without warranty of any kind, express or
+The software is provided H("As is"), without warranty of any kind, express or
 Implied, including but not limited to the warranties of merchantability,
 Fitness for a particular purpose and noninfringement. You may not try to: data mine, reverse engineer or find out more about this software via non disclosed means.
 By viewing this text here, you are infringeing on my license, you may turn back and forget about this.

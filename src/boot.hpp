@@ -1,4 +1,5 @@
 #pragma once
+#include "obfstr.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -66,7 +67,7 @@ public:
             if (padding > 0) std::cout << std::string(padding, ' ');
             std::cout << s;
             if (hasCarriageReturn) {
-                std::cout << "\r" << std::flush;
+                std::cout << H("\r") << std::flush;
             }
             else {
                 std::cout << std::endl;

@@ -1,3 +1,4 @@
+#include "obfstr.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -33,12 +34,12 @@ std::string getAppDataPath() {
         CoTaskMemFree(pszPath);
     }
 #elif defined(__linux__)
-    const char* home = std::getenv("HOME");
+    const char* home = std::getenv(H("HOME"));
     if (!home) {
         home = getpwuid(getuid())->pw_dir;
     }
     if (home) {
-        path = std::string(home) + "/.local/share";
+        path = std::string(home) + H("/.local/share");
     }
 #endif
     return path;
@@ -46,16 +47,16 @@ std::string getAppDataPath() {
 
 void saveForum(const std::vector<Page>& pages) {
     std::string baseDir = getAppDataPath();
-    fs::path filePath = fs::path(baseDir) / "NINKILL" / "NINKILLforumdata.bin";
+    fs::path filePath = fs::path(baseDir) / H("NINKILL") / H("NINKILLforumdata.bin");
     fs::create_directories(filePath.parent_path());
     std::string data;
     for (const auto& page : pages) {
-        data += "PAGE|" + page.title + "\n";
+        data += H("PAGE|") + page.title + H("\n");
         for (const auto& post : page.posts) {
-            data += "POST|" + post.title + "|" + post.poster.name + "\n";
+            data += H("POST|") + post.title + H("|") + post.poster.name + H("\n");
 
             for (const auto& rep : post.replies) {
-                data += "REPLY|" + rep.replyer.name + "|" + rep.paragraph + "\n";
+                data += H("REPLY|") + rep.replyer.name + H("|") + rep.paragraph + H("\n");
             }
         }
     }
@@ -66,7 +67,7 @@ void saveForum(const std::vector<Page>& pages) {
 std::vector<Page> loadForum(const std::vector<user>& users) {
     std::vector<Page> pages;
     std::string baseDir = getAppDataPath();
-    fs::path filePath = fs::path(baseDir) / "NINKILL" / "NINKILLforumdata.bin";
+    fs::path filePath = fs::path(baseDir) / H("NINKILL") / H("NINKILLforumdata.bin");
     std::ifstream in(filePath, std::ios::binary);
     if (!in.is_open())
         return pages;
@@ -81,13 +82,13 @@ std::vector<Page> loadForum(const std::vector<user>& users) {
         std::istringstream linestream(line);
         std::string type;
         std::getline(linestream, type, '|');
-        if (type == "PAGE") {
+        if (type == H("PAGE")) {
             std::string title;
             std::getline(linestream, title);
             pages.emplace_back(title, std::vector<Post>{});
             currentPage = &pages.back();
         }
-        else if (type == "POST" && currentPage) {
+        else if (type == H("POST") && currentPage) {
             std::string title, posterName;
             std::getline(linestream, title, '|');
             std::getline(linestream, posterName);
@@ -98,7 +99,7 @@ std::vector<Page> loadForum(const std::vector<user>& users) {
             currentPage->posts.emplace_back(title, poster, std::vector<reply>{});
             currentPost = &currentPage->posts.back();
         }
-        else if (type == "REPLY" && currentPost) {
+        else if (type == H("REPLY") && currentPost) {
             std::string name, paragraph;
             std::getline(linestream, name, '|');
             std::getline(linestream, paragraph);
@@ -115,7 +116,8 @@ std::vector<Page> loadForum(const std::vector<user>& users) {
 }
 bool loadForumIfExists(const std::vector<user>& users, std::vector<Page>& pages) {
     std::string baseDir = getAppDataPath();
-    fs::path filePath = fs::path(baseDir) / "NINKILL" / "NINKILLforumdata.bin";
+
+    fs::path filePath = fs::path(baseDir) / H("NINKILL") / H("NINKILLforumdata.bin");
     if (!fs::exists(filePath))
         return false;
     pages = loadForum(users);

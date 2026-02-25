@@ -1,9 +1,10 @@
 #pragma once
+#include "obfstr.hpp"
 #include <iostream>
 
 struct user {
-	std::string name = "Deleted";
-	std::string password = "-";
+	std::string name = H("Deleted");
+	std::string password = H("-");
 	int level = 1;
 	user() = default;
 	user(std::string x, std::string y, int z) { name = x; password = y; level = z; }
