@@ -15,12 +15,7 @@ void enableANSI() {
 #endif
 
 void clear() {
-#if defined(_WIN32)
-	system("cls");
-#endif
-#if defined(__linux__)
-	system("clear");
-#endif
+	std::cout << "\033[2J\033[H";
 }
 //users
 user nin = user("nin", "XxAdMiN123xX", 4);
@@ -29,12 +24,12 @@ user Jack = user("Jack Wilder Dean", "no...youarenotgetingmypassword", 3);
 user hoikgrew = user("hoikgrew", "HoknGrew", 3);
 user testmem = user("TEST", "TESTSTART", 1);
 user jorin = user("jorin", "dfsjhjiof", -1);
+reply Gone1 = reply("After two years of work, fun, and more, the Ninkill forums are shutting down.", nin);
 //replies
-reply Gone1 = reply("After two years of work, fun and more. The Ninkill forums is shuting down.", nin);
-reply Gtwo1 = reply("Im done with the harasment, you assholes can’t dox me and expect me to continue running this shit", nin);
-reply Nthree1 = reply("Nuebine incorporated Network is releaseing a new version of NINKILL!!!What do you want us to add? Because I may add them >:).", Jack);
-reply Gone2 = reply("What? why? This is dumb, dont let the words of shity people stop your fun.", Jack);
-reply Gone3 = reply("Because I cant take this shit no more. Im done working with dumbasses that want more and more, and for what? To get more people to hurt me?", nin);
+reply Gtwo1 = reply("I'm done with the harassment. You assholes can’t dox me and expect me to continue running this shit.", nin);
+reply Nthree1 = reply("Nuebine Incorporated Network is releasing a new version of NINKILL!!! What do you want us to add? Because I may add it >:).", Jack);
+reply Gone2 = reply("What? Why? This is dumb. Don’t let the words of shitty people stop your fun.", Jack);
+reply Gone3 = reply("Because I can’t take this shit anymore. I'm done working with dumbasses that want more and more—and for what? To get more people to hurt me?", nin);
 //posts
 std::vector<reply> NINKILLOSNEWarr = { Nthree1 };
 Post NINKILLOSNEW = Post("NINKILL v1.3 releaseing!", Jack, NINKILLOSNEWarr);
@@ -64,6 +59,8 @@ void initForumData(const std::vector<user>& users, const std::vector<Page>& page
 }
 int main() {
 #ifdef _WIN32
+	SetConsoleOutputCP(CP_UTF8);
+	SetConsoleCP(CP_UTF8);
 	enableANSI();
 #endif
 	if (!loadForumIfExists(list, FoRuM)) {
@@ -73,13 +70,13 @@ int main() {
 	FoRuM = loadForum(list);
 	init();
 	reboot:
-	showBootMenu();
-	std::cout << "booting"; threedot();
-	std::cout << "\ninitramfs"; threedot();
-	clear();
-	std::cout << "\033[32m";
-	bootanim();
-	clear();
+	//showBootMenu();
+	//std::cout << "booting"; threedot();
+	//std::cout << "\ninitramfs"; threedot();
+	//clear();
+	//std::cout << "\033[32m";
+	//bootanim();
+	//clear();
 	bool usr = false;
 	std::cout << "Welcome to NINKILLos!\nWrite \'help\' for more info\n";
 	while (true) {

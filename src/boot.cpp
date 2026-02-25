@@ -104,24 +104,30 @@ void MenuUse(std::string ItemsToUse[], const std::vector<std::function<void()>>&
     }
 #elif defined(__linux__)
     int selected = 1;
+
     while (true) {
         DisplayMenu(ItemsToUse, selected, amountofItems, "BOOT MANAGER");
         int ch = getch();
-        if (ch == 'x' || ch == 'X') {
+        if (ch == 'x' || ch == 'X')
             std::exit(0);
-        }
-        switch (ch) {
-        case 65:
-            selected--;
-            break;
-        case 66:
-            selected++;
-            break;
-        case 10:
-            int idx = selected - 1;
-            if (idx >= 0 && idx < static_cast<int>(callbacks.size()) && callbacks[idx]) {
-                callbacks[idx]();
+        if (ch == 27) {
+            int c2 = getch();
+            if (c2 == '[') {
+                int c3 = getch();
+                switch (c3) {
+                case 'A':
+                    if (selected > 1) selected--;
+                    break;
+                case 'B':
+                    if (selected < amountofItems) selected++;
+                    break;
+                }
             }
+        }
+        else if (ch == 10 || ch == 13) {
+            int idx = selected - 1;
+            if (idx >= 0 && idx < (int)callbacks.size() && callbacks[idx])
+                callbacks[idx]();
             return;
         }
     }

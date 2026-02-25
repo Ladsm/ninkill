@@ -30,11 +30,11 @@
 inline int blop(int freq, int ms) { return Beep(freq, ms); }
 #elif __linux__
 inline int blop(int freq, int ms) {
-	return 0;
+	return -1;
 }
 #elif __APPLE__
 inline int blop(int freq, int ms) {
-	return 0;
+	return -1;
 }
 #else
 #error "unknown platform"

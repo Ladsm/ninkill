@@ -111,11 +111,7 @@ void initforum() {
     printBlackBar(4);
 }
 void redrawall() {
-#if defined(_WIN32)
-    system("cls");
-#else
-    system("clear");
-#endif
+    std::cout << "\033[2J\033[H";
     orangebk();
     printBlackBar(2);
     printMenuLine(3, menuops[0], menuops[1]);
@@ -242,12 +238,7 @@ int isAddress(const std::string& address) {
         return 4;
 }
 void clscls() {
-#if defined(_WIN32)
-    system("cls");
-#endif
-#if defined(__linux__)
-    system("clear");
-#endif
+    std::cout << "\033[2J\033[H";
 }
 void conecting(std::string address, bool fail) {
     mkbg();

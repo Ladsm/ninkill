@@ -33,7 +33,6 @@ void wwwNuebinedotcom() {
             std::cout << "[1] About\n";
             std::cout << "[2] Projects\n";
             std::cout << "[3] Exit\n";
-            std::cin >> choice;
             if (choice == 1) {
                 page = 2;
             }
@@ -48,7 +47,7 @@ void wwwNuebinedotcom() {
             }
             break;
         case 2:
-            std::cout << "About Nuebine:\nWe make all things tech, software, hardware and more...\nWe started in 1990 in Washington and over the years, we have goten larger and larger, from a two man team, to over fifty employees.\n";
+            std::cout << "About Nuebine:\nWe make all things tech—software, hardware, and more...\nWe started in 1990 in Washington, and over the years we have grown larger and larger, from a two-man team to over fifty employees.\n";
             std::cout << "[1] Back\n";
             std::cin >> choice;
             if (choice == 1) {
@@ -59,9 +58,9 @@ void wwwNuebinedotcom() {
             }
             break;
         case 3:
-            std::cout << "Our projects:\n - NINKILL os\nNINKILL os is a small linux based operating system made for home users, load it with a flopy drive like a DOS\n";
-            std::cout << " - NINKILL forums\nThe forums are an acsessable way for people to talk online, no portforwarding or weird manual installs. Just load it up and enter the chat\n";
-            std::cout << " - NINKILL internet Navigator\nA way to see things in a without needing to download it, just some temperary files and when you finish using the content, the files get deleted\n";
+            std::cout << "Our projects:\n - NINKILL OS\nNINKILL OS is a small Linux-based operating system made for home users. Load it with a floppy drive like DOS.\n";
+            std::cout << " - NINKILL Forums\nThe forums are an accessible way for people to talk online—no port forwarding or weird manual installs. Just load it up and enter the chat.\n";
+            std::cout << " - NINKILL Internet Navigator\nA way to see things without needing to download them—just some temporary files, and when you finish using the content, the files get deleted.\n";
             std::cout << "[1] Back\n";
             std::cin >> choice;
             if (choice == 1) {
@@ -99,8 +98,8 @@ void wwwJackwddotcom() {
             }
             break;
         case 2:
-            std::cout << "My portfolio:\n - Internet Exlorer\nThis is a piece of software I made that temperarly downloads files from a server, then after 10 minutes, the files get wiped from your computer.\n";
-            std::cout << "To pretect from ACE, it uses a proxy server, this is a diagram on how it works:\n";
+            std::cout << "My portfolio:\n - Internet Explorer\nThis is a piece of software I made that temporarily downloads files from a server, then after 10 minutes the files get wiped from your computer.\n";
+            std::cout << "To protect from ACE, it uses a proxy server. This is a diagram of how it works:\n";
             std::cout << R"(                    .-----.         .-----------.     )" << '\n';
             std::cout << R"(   .----.     Fire  |  P  |         |   Server  + - + )" << '\n';
             std::cout << R"(   |$>_ | - - - - - |  R  |         `-----+-----'   | )" << '\n';
@@ -111,7 +110,7 @@ void wwwJackwddotcom() {
             std::cout << R"(      |           |         |             |         | )" << '\n';
             std::cout << R"(      + - - - - - +         + - - - - - - + - - - - + )" << '\n';
             std::cout << R"(                                                      )" << '\n';
-            std::cout << "Software Employment:\n1990-1997 - Jack's Software Products\n1997-now - head software engineering at Nuebine Incorporated Network\n";
+            std::cout << "Software Employment:\n1990–1997 - Jack's Software Products\n1997–now - Head Software Engineer at Nuebine Incorporated Network\n";
             std::cout << "[1] Back\n";
             std::cin >> choice;
             if (choice == 1) {
@@ -122,11 +121,14 @@ void wwwJackwddotcom() {
             }
             break;
         case 3:
-            std::cout << "You may have come here due to a legle notice you may have found in Nuebine's Network Internet Navigator\n";
-            std::cout << "This all started after I made Internet Exlorer in 1997, it was a piece of software I liked a lot.\nBut after two months, Nuebine made a new product named \"Network Internet Navigator\", it looked the same as my software, just with so extra Nuebine stuff.\n";
-            std::cout << "I contacted them and they lied to me, told me that they started working on it in 1996 and that im makeing a false clam.\nI know that they lied due to the proxy servers getting reqests from Nuebine.co.us.\n";
-            std::cout << "I filed a legle notice to them to show me there code, they at first told me no, but then disided to let me come in.\nOn that day, I went into there office, after I saw my code on there computers, I told them that I demand a cut of the profit.\nAnd you know what? They aggred, told me that its fine and let me get a job.(My selfemployed ass took this as fast as I could)\n";
-            std::cout << "I now work as the head software engineering with them.\nMoral of the story: Dont steal.\n";
+            std::cout << "You may have come here due to a legal notice you found in Nuebine's Network Internet Navigator.\n";
+            std::cout << "This all started after I made Internet Explorer in 1997. It was a piece of software I liked a lot.\nBut after two months, Nuebine made a new product named \"Network Internet Navigator\". It looked the same as my software, just with some extra Nuebine stuff.\n";
+            std::cout << "I contacted them and they lied to me. They told me they started working on it in 1996 and that I was making a false claim.\n";
+            std::cout << "I know they lied because the proxy servers were getting requests from Nuebine.co.us.\n";
+            std::cout << "I filed a legal notice demanding they show me their code. At first they told me no, but then decided to let me come in.\n";
+            std::cout << "On that day I went into their office. After I saw my code on their computers, I told them I demanded a cut of the profit.\n";
+            std::cout << "And you know what? They agreed. They told me it was fine and let me get a job. (My self-employed ass took this as fast as I could.)\n";
+            std::cout << "I now work as the head software engineer with them.\nMoral of the story: Don’t steal.\n";
             std::cout << "[1] Back\n";
             std::cin >> choice;
             if (choice == 1) {

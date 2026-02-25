@@ -46,17 +46,18 @@ InputType GetPlayerInput() {
     }
 #else
     if (ch == 10 || ch == 13) return InputType::Enter;
-    if (ch == 27) return InputType::Escape;
     if (ch == 27) {
-        if (getchThred() == 91) {
+        int next = getchThred();
+        if (next == 91) {
             switch (getchThred()) {
             case 'A': return InputType::MoveUp;
             case 'B': return InputType::MoveDown;
             case 'C': return InputType::MoveRight;
             case 'D': return InputType::MoveLeft;
             }
+            return InputType::None;
         }
-        return InputType::None;
+        return InputType::Escape;
     }
 #endif
     if (ch >= '0' && ch <= '9') {
