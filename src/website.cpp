@@ -2,6 +2,10 @@
 #include "website.hpp"
 #include "ninkill.hpp"
 #include <iostream>
+#include <unordered_map>
+#include <functional>
+#include <string>
+#include <algorithm>
 void printgrayeBar(int row) {
     int width = getConsoleWidth();
     std::cout << H("\033[1;1H");
@@ -22,7 +26,7 @@ void mkbg() {
     std::cout << H("\033[H");
     std::cout << H("\033[2;1H");
 }
-void wwwNuebinedotcom() {
+void wwwNuebinedotcom() { // www.nuebine.com
     int choice = 1;
     int page = 1;
     while (true) {
@@ -34,6 +38,7 @@ void wwwNuebinedotcom() {
             std::cout << H("[1] About\n");
             std::cout << H("[2] Projects\n");
             std::cout << H("[3] Exit\n");
+            std::cin >> choice;
             if (choice == 1) {
                 page = 2;
             }
@@ -74,8 +79,7 @@ void wwwNuebinedotcom() {
         }
     }
 }
-website Nuebinedotcom = website(H("www.Nuebine.com"), wwwNuebinedotcom);
-void wwwJackwddotcom() {
+void wwwJackwddotcom() { // www.jackwd.com
     int choice = 1;
     int page = 1;
     while (true) {
@@ -106,7 +110,7 @@ void wwwJackwddotcom() {
             std::cout << H("   |$>_ | - - - - - |  R  |         `-----+-----'   |") << '\n';
             std::cout << H(" __|____|__   Wall  |  O  | - - - - - - - |         |") << '\n';
             std::cout << H("|PC______--|        |  X  |         .-----+-----.   |") << '\n';
-            std::cout << H("`-/.::::.\-'      +-+  Y  +-+       |  Display  |   |") << '\n';
+            std::cout << H("`-/.::::.\\-'      +-+  Y  +-+       |  Display  |   |") << '\n';
             std::cout << H(" `--------'       | `-----' |       `-----+-----'   |") << '\n';
             std::cout << H("      |           |         |             |         |") << '\n';
             std::cout << H("      + - - - - - +         + - - - - - - + - - - - +") << '\n';
@@ -141,4 +145,12 @@ void wwwJackwddotcom() {
         }
     }
 }
-website jackwddotcom = website(H("www.jackwd.com"), wwwJackwddotcom);
+using RouteTable = std::unordered_map<std::string, std::function<void()>>;
+RouteTable buildRouter()
+{
+    return {
+        {H("www.nuebine.com"), wwwNuebinedotcom},
+        {H("www.Nuebine.com"), wwwNuebinedotcom},
+        {H("www.jackwd.com"),  wwwJackwddotcom}
+    };
+}

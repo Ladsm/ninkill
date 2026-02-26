@@ -18,10 +18,9 @@ namespace obf
         {
             std::string out;
             out.resize(N - 1);
-
-            for (size_t i = 0; i < N - 1; ++i)
+            for (int i = 0; i < N - 1; i++) {
                 out[i] = data[i] ^ key;
-
+            }
             return out;
         }
     };

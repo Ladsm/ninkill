@@ -14,6 +14,7 @@
 #include "userinput.hpp"
 #include "page.hpp"
 #include "website.hpp"
+#include <algorithm>
 
 std::string menuops[2] = {H("   1-Forum Index     "), H("2-News     ")};
 static int langthofopts() {
@@ -237,55 +238,53 @@ int isAddress(const std::string& address) {
         return 3;
     else if (address == H("www.jackwd.com"))
         return 4;
+    return 0;
 }
 void clscls() {
     std::cout << H("\033[2J\033[H");
 }
-void conecting(std::string address, bool fail) {
+void connecting(const std::string& address, bool fail) {
     mkbg();
     loadingSpinnerCentered(800, H("Connecting to ") + address + ' ');
     mkbg();
-    if (fail == true) {
+    if (fail)
+    {
         Center() << H("404 - No website at that address");
         std::this_thread::sleep_for(std::chrono::seconds(2));
         return;
     }
     loadingSpinnerCentered(800, H("Resolving host... "));
     mkbg();
-    loadingSpinnerCentered(100, H("Connected. "));
+    loadingSpinnerCentered(100, H("Connected."));
 }
-void internet() {
+void internet()
+{
+    auto routes = buildRouter();
     std::string site;
-    int choice = 0;
+
     loadingSpinnerCentered(1000, H("Loading"));
-    loadingSpinnerCentered(3000, H("Conecting"));
+    loadingSpinnerCentered(3000, H("Connecting"));
     while (true) {
         clscls();
         mkbg();
         Center() << H("Network Internet Navigator");
         Center() << H("Enter Internet address (or type 'exit'):");
         std::cout << std::string(getConsoleWidth() / 2 - 15, ' ');
-        std::getline(std::cin, site);
-        int z = isAddress(site);
-        switch (z) {
-        case 0:
-            conecting(site, true);
-            break;
-        case 1:
-            conecting(H("www.Nuebine.com"), false);
-            Nuebinedotcom.siteAction();
-            break;
-        case 2:
-            break;
-        case 3:
+        std::getline(std::cin >> std::ws, site);
+        if (site.empty())
+            continue;
+        std::transform(site.begin(), site.end(), site.begin(), ::tolower);
+
+        if (site == H("exit")) {
             std::cout << H("\033[32;40m");
             return;
-            break;
-        case 4:
-            conecting(jackwddotcom.Address, false);
-            jackwddotcom.siteAction();
-            break;
         }
+        auto it = routes.find(site);
+        if (it == routes.end()) {
+            connecting(site, true);
+            continue;
+        }
+        connecting(site, false);
+        it->second();
     }
-    return;
 }

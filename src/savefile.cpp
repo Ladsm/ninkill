@@ -34,7 +34,7 @@ std::string getAppDataPath() {
         CoTaskMemFree(pszPath);
     }
 #elif defined(__linux__)
-    const char* home = std::getenv(H("HOME"));
+    const char* home = std::getenv(H("HOME").c_str());
     if (!home) {
         home = getpwuid(getuid())->pw_dir;
     }

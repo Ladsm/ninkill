@@ -237,10 +237,11 @@ int readcommand(const std::string& line)
 			std::cout << H("All filesystem types:\n");
 			std::cout << H("TYPENAME       Fullname cant be used\n");
 			std::cout << H("nffb           new formated filesystem blocks\n");
-			std::cout << PROTECT("mfs            my file system\n");
+	  std::cout << PROTECT("mfs            my file system\n");
 			std::cout << H("tftcfyis       the filesystem that cares for you in saveing\n");
 			return 0;
 			};
+		cmds[H("mkfs")] = [](auto&) { readcommand("mkfs."); return 0; };
 		cmds[H("cls")] = [](auto&) {
 			std::cout << H("\033[2J\033[H");
 			return 0;
@@ -272,10 +273,12 @@ int readcommand(const std::string& line)
 				std::cout << H("Unknown device\n");
 				return 0;
 			}
+			if (dev == H("/dev/hda") && devices[dev] == 2)
+				std::cout << H("");
 			if (dev == H("/dev/fd0") && devices[dev] == 2)
 				std::cout << H("10 Megabite flopy\n");
 			else if (dev == H("/dev/vdc") && devices[dev] == 2)
-				std::cout << H("To: Jack.W Dean\nThe forums are becomeing unstable, we dont have moderators for this and I dont want to mod the forums on work.\nPlease talk to the higher-ups about this\n - Jack.W Dean\n");
+				std::cout << H("To: nin\nThe forums are becomeing unstable, we dont have moderators for this and I dont want to mod the forums on work.\nPlease talk to the higher-ups about this\n - Jack.W Dean\n");
 			else
 				std::cout << H("No readable info\n");
 			return 0;

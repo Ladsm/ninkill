@@ -12,5 +12,5 @@ struct website {
 	}
 };
 void mkbg();
-extern website Nuebinedotcom;
-extern website jackwddotcom;
+using RouteTable = std::unordered_map<std::string, std::function<void()>>;
+RouteTable buildRouter();
