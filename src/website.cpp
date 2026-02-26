@@ -26,7 +26,7 @@ void mkbg() {
     std::cout << H("\033[H");
     std::cout << H("\033[2;1H");
 }
-void wwwNuebinedotcom() { // www.nuebine.com
+void wwwNuebinedotcom() {
     int choice = 1;
     int page = 1;
     while (true) {
@@ -79,7 +79,7 @@ void wwwNuebinedotcom() { // www.nuebine.com
         }
     }
 }
-void wwwJackwddotcom() { // www.jackwd.com
+void wwwJackwddotcom() {
     int choice = 1;
     int page = 1;
     while (true) {
@@ -110,7 +110,7 @@ void wwwJackwddotcom() { // www.jackwd.com
             std::cout << H("   |$>_ | - - - - - |  R  |         `-----+-----'   |") << '\n';
             std::cout << H(" __|____|__   Wall  |  O  | - - - - - - - |         |") << '\n';
             std::cout << H("|PC______--|        |  X  |         .-----+-----.   |") << '\n';
-            std::cout << H("`-/.::::.\\-'      +-+  Y  +-+       |  Display  |   |") << '\n';
+           std::cout << H("`-/.::::.\\-'      +-+  Y  +-+       |  Display  |   |") << '\n';
             std::cout << H(" `--------'       | `-----' |       `-----+-----'   |") << '\n';
             std::cout << H("      |           |         |             |         |") << '\n';
             std::cout << H("      + - - - - - +         + - - - - - - + - - - - +") << '\n';
@@ -146,11 +146,11 @@ void wwwJackwddotcom() { // www.jackwd.com
     }
 }
 using RouteTable = std::unordered_map<std::string, std::function<void()>>;
-RouteTable buildRouter()
-{
+RouteTable buildRouter() {
     return {
         {H("www.nuebine.com"), wwwNuebinedotcom},
         {H("www.Nuebine.com"), wwwNuebinedotcom},
+        {H("Nuebine.co.us"), wwwNuebinedotcom },
         {H("www.jackwd.com"),  wwwJackwddotcom}
     };
 }
