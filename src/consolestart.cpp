@@ -43,7 +43,6 @@ std::string getcommand()
 {
 	static std::vector<std::string> history;
 	int historyIndex = history.size();
-
 	std::string buf;
 	size_t cursor = 0;
 	const std::string prompt = H("[root@ninkill-live]# ");
