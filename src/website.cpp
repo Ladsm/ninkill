@@ -27,8 +27,8 @@ void mkbg() {
     std::cout << H("\033[2;1H");
 }
 void wwwNuebinedotcom() {
-    int choice = 1;
     int page = 1;
+    int choice = 1;
     while (true) {
         mkbg();
         switch (page) {
@@ -80,6 +80,36 @@ void wwwNuebinedotcom() {
         }
     }
 }
+void wwwNuebinedotcomFeedback() {
+    int page = 1;
+    int choice = 1;
+    while (true) {
+        mkbg();
+        switch (page) {
+        case 1:
+            std::cout << H("Feedback page:\n");
+            std::cout << H("[1] Send Feedback\n");
+            std::cout << H("[2] Back\n");
+            std::cin >> choice;
+            if (choice == 1) {
+                page = 2;
+            }
+            if (choice == 2) {
+                wwwNuebinedotcom();
+                return;
+            }
+            else {
+                std::cout << H("Not an option\n");
+            }
+            break;
+        case 2:
+            std::string feedback;
+            std::getline(std::cin >> std::ws, feedback);
+            page = 1;
+            break;
+        }
+    }
+}
 void wwwJackwddotcom() {
     int choice = 1;
     int page = 1;
@@ -107,11 +137,11 @@ void wwwJackwddotcom() {
             std::cout << H("My portfolio:\n - Internet Explorer\nThis is a piece of software I made that temporarily downloads files from a server, then after 10 minutes the files get wiped from your computer.\n");
             std::cout << H("To protect from ACE, it uses a proxy server. This is a diagram of how it works:\n");
    std::cout << STATIC_DEF("                    .-----.         .-----------.    ") << '\n';
-            std::cout << H("   .----.     Fire  |  P  |         |   Server  + - +") << '\n';
-            std::cout << H("   |$>_ | - - - - - |  R  |         `-----+-----'   |") << '\n';
+            std::cout << H("   .----.     Fire  |  P  |         |---Server--+ - +") << '\n';
+            std::cout << H("   |$>_ | - - - - - |--R--|         `-----+-----'   |") << '\n';
             std::cout << H(" __|____|__   Wall  |  O  | - - - - - - - |         |") << '\n';
-            std::cout << H("|PC______--|        |  X  |         .-----+-----.   |") << '\n';
-           std::cout << H("`-/.::::.\\-'      +-+  Y  +-+       |  Display  |   |") << '\n';
+            std::cout << H("|PC______--|        |--X--|         .-----+-----.   |") << '\n';
+           std::cout << H("`-/.::::.\\-'      +-+  Y  +-+       |--Display--|   |") << '\n';
             std::cout << H(" `--------'       | `-----' |       `-----+-----'   |") << '\n';
             std::cout << H("      |           |         |             |         |") << '\n';
             std::cout << H("      + - - - - - +         + - - - - - - + - - - - +") << '\n';
@@ -168,8 +198,9 @@ RouteTable buildRouter() {
     return {
         {H("www.nuebine.com"), wwwNuebinedotcom},
         {H("www.Nuebine.com"), wwwNuebinedotcom},
-        {H("Nuebine.co.us"), wwwNuebinedotcom },
+        {H("Nuebine.co.us"), wwwNuebinedotcom},
         {H("www.jackwd.com"),  wwwJackwddotcom},
-        {H("www.readme.com"), wwwreadmedotcom}
+        {H("www.readme.com"), wwwreadmedotcom},
+        {H("www.nuebine.com/feedback"), wwwNuebinedotcomFeedback}
     };
 }

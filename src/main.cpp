@@ -3,6 +3,7 @@
 #include "boot.hpp"
 #include "consolestart.hpp"
 #include "savefile.hpp"
+#include "ninsys.hpp"
 #include <filesystem>
 #ifdef _WIN32
 #include <windows.h>
@@ -59,7 +60,7 @@ void initForumData(const std::vector<user>& users, const std::vector<Page>& page
 	FoRuM = pages;
 }
 int main() {
-	std::cout << "/*do we still need this? -Hoien Shaun Dow\nprojecting much? -Jack.W Dean\nno -nin\nNUEBINE WILL NEVER LET PEOPLE DATA MINE, IF YOU DO YOU ARE BRAKEING THE NIN LICENSE AND IF YOU ARE FOUND OUT TO BE USING A CRACKED VERSION OR DATAMINE OUR PRODUCTS YOU WILL BE SENT A HEFTY FINE OR THE LAW WILL CATCH UP TO YOU\n";
+	std::cout << "/*do we still need this? -Hoien Shaun Dow\nprojecting much? -Jack.W Dean\nno, will we keep it? Yes. -nin\nNUEBINE WILL NEVER LET PEOPLE DATA MINE, IF YOU DO YOU ARE BRAKEING THE NIN LICENSE AND IF YOU ARE FOUND OUT TO BE USING A CRACKED VERSION OR DATAMINE OUR PRODUCTS YOU WILL BE SENT A HEFTY FINE OR THE LAW WILL CATCH UP TO YOU\n";
 	clear();
 #ifdef _WIN32
 	SetConsoleOutputCP(CP_UTF8);
@@ -75,6 +76,7 @@ int main() {
 	init();
 	reboot:
 	showBootMenu();
+	initSysCommands();
 	initFS();
 	std::cout << H("\ninitramfs"); threedot();
 	clear();

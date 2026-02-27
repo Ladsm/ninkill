@@ -25,6 +25,8 @@ src/savefile.hpp
 src/website.cpp
 src/website.hpp
 src/obfstr.hpp
+src/ninsys.cpp
+src/ninsys.hpp
 )
 add_executable(ninkill ${PROJECT_SOURCES})
 if(NOT WIN32)

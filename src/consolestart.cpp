@@ -8,6 +8,8 @@
 #include <functional>
 #include <sstream>
 #include <unordered_set>
+#include "consolestart.hpp"
+#include "ninsys.hpp"
 
 #if defined(_WIN32)
 #include <conio.h>
@@ -39,20 +41,6 @@ int readKey() {
 }
 #endif
 using CmdFunc = std::function<int(const std::vector<std::string>&)>;
-struct VNode {
-	std::string name;
-	bool isDir;
-	bool isExec = false;
-	std::string content;
-	std::function<int(const std::vector<std::string>&)> execFunc;
-	VNode* parent = nullptr;
-	std::unordered_map<std::string, std::unique_ptr<VNode>> children;
-
-	VNode(std::string n, bool d, VNode* p = nullptr)
-		:name(std::move(n)), isDir(d), parent(p) {
-	}
-};
-
 std::unique_ptr<VNode> root;
 VNode* cwd;
 
@@ -113,12 +101,15 @@ void initFS() {
 	auto dev = mkdirNode(root.get(), H("dev"));
 	auto boot = mkdirNode(root.get(), H("boot"));
 	auto RooT = mkdirNode(root.get(), H("root"));
-	mkdirNode(root.get(), H("mnt"));
+	auto mnt = mkdirNode(root.get(), H("mnt"));
 	//excs
 	mkfile(bin, H("nin-iexc.exc"), NINEX_EXC_TEXT);
 	mkfile(bin, H("nin-fexc.exc"), NINKILL_EXC_TEXT);
 	mkfile(bin, H("help.exc"), giberspeak());
 	mkfile(bin, H("mkfs.exc"), giberspeak());
+	mkfile(bin, H("mkfs.mfs.exc"), giberspeak());
+	mkfile(bin, H("mkfs.nffb.exc"), giberspeak());
+	mkfile(bin, H("mkfs.tftcfyis.exc"), giberspeak());
 	mkfile(bin, H("cat.exc"), giberspeak());
 	mkfile(bin, H("mkdir.exc"), giberspeak());
 	mkfile(bin, H("cd.exc"), giberspeak());
@@ -130,7 +121,9 @@ void initFS() {
 	mkfile(bin, H("ifo.exc"), giberspeak());
 	mkfile(bin, H("lsblk.exc"), giberspeak());
 	mkfile(bin, H("reboot.exc"), giberspeak());
-	mkfile(bin, H("exit.exc"), giberspeak());
+	mkfile(bin, H("ninsys"), giberspeak());
+	mkfile(bin, H("bash"), giberspeak());
+	mkfile(bin, H("nin-sys.exc"), giberspeak());
 	//dev
 	mkfile(dev, H("loop0"), H(""));
 	mkfile(dev, H("hda"), H("RAW BLOCK DEVICE\nREAD VIA DRIVER ONLY\nTRY USING ifo\n"));
@@ -157,6 +150,7 @@ void initFS() {
 	mkfile(RooT, H(".history"), H("mkfs.mfs /dev/vdc\narr /dev/vdc\nifo /dev/vdc\ncd ..\ncd bin\ncat nin-iexc.exc\nreboot"));
 	mkfile(RooT, H(".log"), H("[1998-03-24 18:22:01] device mounted\n[1998-03-24 18:22:31]commands now logged to .history\n[1998-03-24 18:24:34] rebooting\n"));
 	mkfile(RooT, H(".bashrc"),H("alias ll=\'ls\'\n"));
+	//mnt
 }
 std::string getcommand() {
 	static std::vector<std::string> history;
@@ -281,19 +275,27 @@ const std::unordered_set<std::string> validFS = {
 	H("tftcfyis")
 };
 const std::unordered_map<std::string, std::string> helpDB = {
+	{H("\nThank you for using NINKILL os!\nWe hoppe you enjoy your use of NINKILL os and send feedback to www.nuebine.com/feedback :)"), H(".")},
 	{H("help"),H("Shows help information")},
 	{H("ls"), H("Lists the directory you're in")},
 	{H("dir"),H("Alias for ls")},
+	{H("cd"), H("Changes directory")},
+	{H("cat"), H("Displays raw text of file")},
+	{H("pwd"), H("Prints working directory")},
 	{H("cls"),H("Clears the screen")},
 	{H("clear"),H("Alias for cls")},
 	{H("nin-fexc"),H("Runs forum executable")},
 	{H("nin-iexc"),H("Runs internet executable")},
+	{H("nin-sys"), H("System utility for power users")},
 	{H("mkfs"),H("Formats a device: mkfs.<type> /dev/device")},
 	{H("lsfs"),H("Lists all filesystems")},
 	{H("arr"),H("Aranges filesystem for use")},
 	{H("ifo"),H("Displays information about device")},
 	{H("lsblk"),H("Shows block devices")}
 };
+void EXIT(int code) {
+	std::exit(code);
+}
 int readcommand(const std::string& line) {
 	auto args = tokenize(line);
 	if (args.empty()) return 0;
@@ -315,7 +317,7 @@ int readcommand(const std::string& line) {
 	if (cmd == H("help")) {
 		if (args.size() == 1)
 		{
-			std::cout << H("Available commands:\n");
+			std::cout << H("Thank you for using NINKILL os!\nWe hoppe you enjoy your use of NINKILL os and send feedback to www.nuebine.com/feedback :)\n");
 			for (const auto& [name, desc] : helpDB)
 				std::cout << H("  ") << name << H("\n");
 			std::cout << H("\nType help <command> for details\n");
@@ -381,12 +383,12 @@ int readcommand(const std::string& line) {
 			std::cout << cwdPath() << "\n";
 			return 0;
 			};
+		cmds[H("nin-sys")] = [](auto& a) { return nin_sys_cmd(a); };
 		cmds[H("nin-fexc")] = [](auto&) { return 1; };
 		cmds[H("nin-iexc")] = [](auto&) { return 2; };
-		cmds[STATIC_DEF("exit")] = [](auto&) { std::exit(0); return 0; };
 		cmds[H("ls")] = [](auto&) { listdir(); return 0; };
 		cmds[H("dir")] = cmds[H("ls")];
-		cmds[H("ll")] = cmds[H("ls")];
+		cmds[H("ll")] = cmds[H("ls")]; // alias
 		cmds[H("lsfs")] = [](auto&) {
 			std::cout << H("All filesystem types:\n");
 			std::cout << H("TYPENAME       Fullname cant be used\n");
@@ -440,7 +442,7 @@ int readcommand(const std::string& line) {
 		cmds[PROTECT("lsblk")] = [](auto&) {
 			printDevices();
 			return 0;
-			};
+		};
 	}
 	auto it = cmds.find(cmd);
 	if (it != cmds.end())
