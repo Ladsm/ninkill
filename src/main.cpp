@@ -77,13 +77,13 @@ int main() {
 	FoRuM = loadForum(list);
 	init();
 	reboot:
-	//showBootMenu();
+	showBootMenu();
 	initSysCommands();
 	initFS();
 	std::cout << H("\ninitramfs"); threedot();
 	clear();
 	std::cout << H("\033[32m");
-	//bootanim();
+	bootanim();
 	clear();
 	bool usr = false;
 	std::cout << H("Welcome to NINKILLos!\nWrite \'help\' for more info\n");
