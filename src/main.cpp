@@ -27,11 +27,9 @@ user hoikgrew = user(H("hoikgrew"), H("HoknGrew"), 3);
 user testmem = user(H("TEST"), H("TESTSTART"), 1);
 user jorin = user(H("jorin"), H("dfsjhjiof"), -1);
 user till = user(H("till"), H("systemtilday"), 1);
-user tomm = user(H("tomm"), H("4566"), 1);//
+user tomm = user(H("tomm"), H("4566"), 1);
 //replies
-reply Gone1 = reply(H("After two years of work, fun, and more, the Ninkill forums are shutting down."), nin);
-reply Gtwo1 = reply(H("I'm done with the harassment. You assholes can’t dox me and expect me to continue running this shit."), nin);
-reply Nthree1 = reply(H("Nuebine Incorporated Network is releasing a new version of NINKILL!!! What do you want us to add? Because I may add it >:)."), Jack);
+reply Gone1 = reply(H("After two years of work, fun, and more, the Ninkill forums are shutting down."), nin);reply Nthree1 = reply(H("Nuebine Incorporated Network is releasing a new version of NINKILL!!! What do you want us to add? Because I may add it >:)."), Jack);
 reply Gone2 = reply(H("What? Why? This is dumb. Don’t let the words of shitty people stop your fun."), Jack);
 reply Gone3 = reply(H("Because I can’t take this shit anymore. I'm done working with dumbasses that want more and more—and for what? To get more people to hurt me?"), nin);
 //posts
@@ -39,10 +37,8 @@ std::vector<reply> NINKILLOSNEWarr = { Nthree1 };
 Post NINKILLOSNEW = Post(H("NINKILL v1.3 releaseing!"), Jack, NINKILLOSNEWarr);
 std::vector<reply> NINKILLPinnedarr = { Gone1, Gone2, Gone3 };
 Post NINKILLPinned = Post(H("PINNED Ninkill is takeing a break"), nin, NINKILLPinnedarr, true);
-std::vector<reply> Imsickarr = { Gtwo1 };
-Post Imsick = Post(H("Im sick of this"), nin, Imsickarr, true);
 //pages
-std::vector<Post> indexarr = { NINKILLPinned, Imsick };
+std::vector<Post> indexarr = { NINKILLPinned };
 std::vector<Post> Newsarr = { NINKILLOSNEW };
 Page News = Page{ H("News"), Newsarr };
 Page Index = Page{ H("Index"), indexarr };

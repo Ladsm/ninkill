@@ -154,7 +154,7 @@ void initFS() {
 	mkfile(bin, H("reboot.exc"), giberspeak());
 	mkfile(bin, H("bash.exc"), giberspeak());
 	mkfile(bin, H("nin-sys.exc"), giberspeak());
-	mkfile(bin, H("bootanim.exc"), giberspeak());
+	mkfile(bin, H("StartAnim.exc"), giberspeak());
 	//dev
 	mkfile(dev, H("loop0"), H(""));
 	mkfile(dev, H("hda"), H("RAW BLOCK DEVICE\nREAD VIA DRIVER ONLY\nTRY USING ifo\n"));
@@ -191,7 +191,7 @@ void initFS() {
 	mkfile(etc, H("group"),H("root:x:0:\nusers:x:100:\n"));
 	mkfile(etc, H("fstab"),H("/dev/fd0   /      mfs     defaults  0 0\n/dev/hda   /mnt   nffb    defaults  0 0\n"));
 	mkfile(etc, H("motd"),H("Welcome to NINKILL OS\nUnauthorized access prohibited\n"));
-	mkfile(etc, H("inittab"),H("id:3:initdefault:\nsi::sysinit:/etc/init.d/rcS\n1:2345:respawn:/bin/nin-login\n"));
+	mkfile(etc, H("inittab"),H("id:3:initdefault:\nsi::sysinit:/etc/init.d/rcS\n"));
 	mkfile(initd, H("rcS"), H(
 		"#!/bin/sh\n"
 		"# NINKILL boot script\n"
@@ -199,11 +199,10 @@ void initFS() {
 		"echo \"Booting NINKILL OS 1.3\"\n"
 		"echo \".\"\n"
 		"\n"
-		"# Mount kernel virtual filesystems\n"
 		"mount -t proc proc /proc\n"
 		"mount -t sysfs sysfs /sys\n"
 		"\n"
-		"hostname NINKILL\n"
+		"hostname --file /etc/hostname\n"
 		"\n"
 		"hwclock --hctosys\n"
 		"echo \".\"\n"
@@ -447,6 +446,7 @@ int readcommand(const std::string& line) {
 	}
 	static std::unordered_map<std::string, CmdFunc> cmds;
 	if (cmds.empty()) {
+		cmds["bash"] = [](auto& a) { return 0; };
 		cmds["cat"] = [](auto& a) {
 			if (a.size() < 2) { std::cout << "Usage: cat <file>\n"; return 0; }
 			VNode* f = resolvePath(a[1]);
