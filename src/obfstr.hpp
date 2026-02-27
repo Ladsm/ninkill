@@ -1,12 +1,11 @@
 #pragma once
 #include <string>
 #include <array>
-
+#include <cstdint>
 namespace obf
 {
     constexpr char xor_key = 0x5A;
     constexpr int shift = 3;
-
     constexpr char enc_char(char c)
     {
         if (c >= 32 && c <= 126)
@@ -14,7 +13,6 @@ namespace obf
 
         return c ^ xor_key;
     }
-
     constexpr char dec_char(char c)
     {
         c ^= xor_key;
@@ -24,8 +22,7 @@ namespace obf
 
         return c;
     }
-
-    template<size_t N>
+    template<std::uint64_t N>
     class ObfString
     {
         std::array<char, N> data{};
@@ -49,7 +46,6 @@ namespace obf
         }
     };
 }
-
 #define H(str) obf::ObfString<sizeof(str)>(str).decode()
 #define SAFESTR(x) H(x)
 #define STATIC_DEF(x) H(x)

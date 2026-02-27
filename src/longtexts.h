@@ -1,6 +1,15 @@
 #include "obfstr.hpp"
+#include <string>
+#include <random>
+#include <limits>
 const char* NINKILL_EXC_TEXT = R"(
-NINKILL forum software owned by Nuebine incorperated Network
+Nuebine ELF Header
+This program can only be run in DOS mode
+Rich
+.text
+.data@
+.data
+.pdata
 H‹Eֶ hH‹M(כֶEhHƒשvH‹Eֶ@eH‹M(כֶEeHƒשvH‹Eֶ@lH‹M(כֶElHEHƒשHGEֶ@pfo;־
  ף…  ַ…   *>-6fַ…$  (+ֶ…&  ZH•X  H  טּ–H‹׀Wְ…  H‹MH‰  H‹MH‰˜  H‹M H‰   H‹M(H‰¨  H‰} HַE(   ֶE …°  H‰½ְ  H‰½ָ  H‹ H‰…°  H‹BH‰…¸  H‹BH‰…ְ  H‹BH‰…ָ  H‰zHַB   ֶ EpH‰½€   Hַ…ˆ      ֶEp ַD$    E3ְ÷   HMpט†H‹ˆ   HƒשvH‹Epֶ lH‹ˆ   כֶEplHEpHƒשHGEpֶ@sfoּ
  ףD$0ַD$@(/&yַD$D&("pַD$H/2y6fַD$L+ZWְ…°   H‰½ְ   Hַ…ָ      ֶ…°    ַD$    E3ְ÷   H°   טx…L‹ַff„     B¶L0€סZAא<^w!¾ֹƒֱ<¸…‘v¬קיֱׁת‹ֱֲט׀kֲ_+ָ€ֱ H…°   Hƒ½ָ   HG…°   Bˆ IְIƒרr«Wְ…׀  H‹EpH‰…׀  H‹ExH‰…״  H‹…€   H‰…א  H‹…ˆ   H‰…ט  H‰½€   Hַ…ˆ      ֶEp …נ  H‹…°   H‰…נ  H‹…¸   H‰…ר  H‹…ְ   H‰…   H‹…ָ   H‰…  H‰½ְ   Hַ…ָ      ֶ…°    EPH‰}`HַEh   ֶEP ַD$    E3ְ÷   HMPט?„H‹MhHƒשv
@@ -40,7 +49,13 @@ Fitness for a particular purpose and noninfringement. You may not try to: data m
 By viewing this text here, you are infringeing on my license, you may turn back and forget about this.
 This software is only owned due to a legel battle, please: visit www.jackwd.com for more info
 -------------------------------------------------------------------------------------------------------------
-
+Nuebine ELF Header
+This program can only be run in DOS mode
+Rich
+.text
+.data@
+.data
+.pdata
 ַ‏ טw״H‹א   ט׃H‹…א   H‹ָט ־H‹…א   H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּL‰D$ˆT$H‰L$UWHלט   Hl$ H
 R‏ ט״H‹…א   H‹ָט0H‹…א   H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּH‰T$H‰L$UWHלט   Hl$ H
 צ‎ ט¦׳H‹…א   H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּL‰D$ˆT$H‰L$UWHלט   Hl$ H
@@ -82,5 +97,58 @@ HַE(    כ/H‹…  H‹ Hc@H‹  HָH‹ֱH‹ָa¸ H+…   H
 ‚ ט2¹H  טז»H‰EH˜  טן¶H‰E(ֶED ÷   HMhטּ¹L‹…¨  H‹•   HMhט»כH‹EHƒְ(H‰EH‹E(H9EtH‹UHMhטa°כHMhט´H‰…X  HMhטוµH‹…X  H‹רHMאHWװ טם±H‹ַH‹h  H3ֽט²H¥x  _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּH‰L$UWHלט   Hl$ H
 N ט¸H‹…א   H‹ H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּH‰L$UWHלט   Hl$ H
 ‏ ט»·H‹…א   H‹ H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּH‰L$UWHלט   Hl$ H
-ח טk³H‹…נ   H‹ Hc@H‹נ   HָH‹ֱH‰…ְ   ²
-)";
+ח טk³H‹…נ   H‹ Hc@H‹נ   HָH‹ֱH‰…ְ   ²)";
+std::string giber = R"(
+ַ‏ טw״H‹א   ט׃H‹…א   H‹ָט ־H‹…א   H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּL‰D$ˆT$H‰L$UWHלט   Hl$ H
+R‏ ט״H‹…א   H‹ָט0H‹…א   H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּH‰T$H‰L$UWHלט   Hl$ H
+צ‎ ט¦׳H‹…א   H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּL‰D$ˆT$H‰L$UWHלט   Hl$ H
+¢‎ טR׳H‹…א   H‹ָטˆֽH‹…א   H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּH‰T$H‰L$UWHלט   Hl$ H
+F‎ טצײH‹…א   H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּH‰T$H‰L$UWHלר   Hl$ H
+ר ט¦ײH‹ר   טףׁH‰…ְ   H‹ר   ט®ׁH‰…ָ   L‹…ְ   H‹•ָ   H‹נ   טjײH¥״   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּH‰T$H‰L$UWHל¸  Hl$ H|$ ¹6   ¸ּּּּף«H‹$״  H‹8| H3ֵH‰…€  H
+h טלױַE    H‹¸  טmׂH‰E(H‹…°  H‹ Hc@H‹°  HָH‹ֱH‹ָז־ H…ְ~[H‹…°  H‹ Hc@H‹°  HָH‹ֱH‹ָ½־ H;E(~1H‹…°  H‹ Hc@H‹°  HָH‹ֱH‹ָ“־ H+E(H‰…h  כHַ…h      H‹…h  H‰EHH‹•°  HMhטך־HMhט>ױ¶ְ…ְu‹Eƒָ‰Eיb  H‹…°  H‹ Hc@H‹°  HָH‹ֱH‹ָ־ %ְ  ƒר@„ֶ   כH‹EHHָH‰EHHƒ}H ®   H‹…°  H‹ Hc@H‹°  HָH‹ֱH‹ָsֽ H‰…h  H‹…°  H‹ Hc@H‹°  HָH‹ֱH‹ָ@ֽ ˆ…p  ¶•p  H‹h  Vֽ ‰…t  ‹…t  ‰…x  טֺ‰…|  ‹•x  ‹|  ט־¶ְ…ְt‹Eƒָ‰Eכי<ƒ} u`H‹…°  H‹ Hc@H‹°  HָH‹ֱH‹ָ¿ּ H‰…h  L‹E(H‹•¸  H‹h  ְּ H‰…p  H‹E(H9…p  t	‹Eƒָ‰Eƒ} …ֶ   כH‹EHHָH‰EHHƒ}H ®   H‹…°  H‹ Hc@H‹°  HָH‹ֱH‹ָ=ּ H‰…h  H‹…°  H‹ Hc@H‹°  HָH‹ֱH‹ָ
+ּ ˆ…p  ¶•p  H‹h   ּ ‰…t  ‹…t  ‰…x  טVֹ‰…|  ‹•x  ‹|  טTֽ¶ְ…ְt‹Eƒָ‰Eכי<H‹…°  H‹ Hc@H‹°  HָH‹ֱH‰…h  3ׂH‹h  ךֻ כ H‹…°  H‹ Hc@H‹°  HָH‹ֱH‰…h  E3ְ‹UH‹h  bֻ H‹…°  H‰…X  HMhטDׁH‹…X  H‹רHMאH­ט ט£ֻH‹ַH‹€  H3ֽט¾ֻH¥˜  _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּH‰L$UWHלט   Hl$ H
+Kק ט׀Hƒ½א    u3ְכAטַ¶ְ…ְtH‹א   טֺכ'H½א      rH‹א   ט״ֿכH‹א   טuֺH¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּH‰T$H‰L$UWHלט   Hl$ H
+¦צ טV׀H‹…ט   H‹H‹א   טוֺH¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּH‰T$H‰L$UWHלט   Hl$ H
+Fצ טצֿH‹…ט   H‹H‹א   טֶH¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּH‰T$H‰L$UWHלH  Hl$ H
+טץ ט–ֿH‹…H  H‹ HְH‹H  H‰HַE    H‹•H  H‹@  טׂH‰Eטrֶ¶ְ…ְtKH‹MטֶH‰E(HַEH    כH‹EHHְH‰EHH‹…H  H‹ H9EHsH‹EHH‹M(HָH‹ֱH‹ָטH־כּH‹…H  H‹ HָH‹H  H‰H‹EH¥(  _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּH‰L$UWHלX  Hl$0H
+פ ט‹־H‹…@  Hƒְ/H‰EH‹…@  H9Ewט4ּH‹Mט)ָH‰E(Hƒ}( uBH׃ך H‰D$(Hך H‰D$ E3ֹA¸ֲ   Hׂך ¹   קֺ ƒרuּ3ְ¹   ֽ)H‹E(Hƒְ/HƒאאH‰EH¸   HkְH‹MHH‹U(H‰¸   Hkְ‏H‹MHH÷תתתתתתתתH‰H‹EHH¥(  _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּL‰D$H‰T$H‰L$UWHלר  Hl$ H|$ ¹F   ¸ּּּּף«H‹$  H‹ƒs H3ֵH‰…ָ  H
+‰ף ט7ֽH‹…נ  H‰EH‹נ  ט ִH9…   vטֻH‹נ  ט¢ֵH‰E(H‹U(HMDטֻּL‹EHUDHMhט־Hƒ½   wzH‹EH‹   H‰HH‹EHַ@    H‹EHƒְL‹…   H‹•ר  H‹ָטַֶ…”   H‹EH‹   HDH•”  H‹ָט>ֳHMhטרַHMhט(ֿיױ   H‹נ  ט1ֳL‹ְ÷   H‹   טֳH‰…˜   H•˜   H‹M(טםַH‰…¸   H‹EHƒְH•¸   H‹ָטֻH‹EH‹   H‰HH‹EH‹˜   H‰H H‹¸   ט!ֳL‹…   H‹•ר  H‹ָטDֶֶ…´   H‹¸   טקֲH…   H•´  H‹ָטdֲHMhטַHMhטN־HMאHעה ט״ִH‹ָ  H3ֽטצִH¥״  _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּL‰D$H‰T$H‰L$UWHלָ  Hl$ H|$ ¹:   ¸ּּּּף«H‹$ט  H‹ֳp H3ֵH‰…  H
+ֹנ טwֺH‹…ְ  H‰EH‹ְ  ט@ֱH9…׀  vטֹH‹ְ  טגֲH‰E(H‹U(HMDטֺL‹EHUDHMhט\ֻHƒ½׀  wRH‹EH‹׀  H‰HH‹EHַ@    H‹EHƒְA¸   H‹•ָ  H‹ָט
+ֱHMhט`ֵHMhטּי¿   H‹ְ  ט™ְL‹ְ÷   H‹׀  ט€ְH‰…˜   H•˜   H‹M(טUֵH‰…¸   H‹EHƒְH•¸   H‹ָטpָH‹EH‹׀  H‰HH‹EH‹˜   H‰H H‹…׀  HְH‰…ˆ  H‹¸   טxְH‹ˆ  L‹ֱH‹•ָ  H‹ָטFְHMhטִHMhטֻּHMאHה טVֲH‹  H3ֽטtֲH¥¨  _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּH‰T$H‰L$UWHל  Hl$ H
+yמ ט6ָטH¿¶ְ…ְtH‹   טJֳH‹•  H‹ָטbֹכ4H‹   ט,ֳƒH‹MHHƒשv
+H‹E0ֶ cH‹MHכֶE0cHƒשvH‹E0ֶ@lH‹MHכֶE1lHE0HƒשHGE0ֶ@sfofֺ
+ ף…p  fַ…€  +ZH•  Hp  ט7uH‹׀Wְ…P  H‹M0H‰P  H‹M8H‰X  H‹M@H‰`  H‹MHH‰h  H‰}@HַEH   ֶE0 …p  H‰½€  H‰½ˆ  H‹ H‰…p  H‹BH‰…x  H‹BH‰…€  H‹BH‰…ˆ  H‰zHַB   ֶ E׀H‰}אHַEט   ֶE׀ ַD$ ?   E3ְ÷   HM׀ט״H‹MטHƒשv
+H‹E׀ֶ cH‹MטכֶE׀cHƒשvH@lH‹MטכֶEׁlHƒשvH‹E׀ֶ@eH‹MטכֶEׂeHƒשvH‹E׀ֶ@aH‹MטכֶE׃aHE׀HƒשHGE׀ֶ@rַEְ56>ַEִ,y3(ַEָ/y<5fַEּ,ZH•ר  HMְטְH‹׀Wְ…  H‹M׀H‰  H‹M״H‰˜  H‹MאH‰   H‹MטH‰¨  H‰}אHַEט   ֶE׀ …°  H‰½ְ  H‰½ָ  H‹ H‰…°  H‹BH‰…¸  H‹BH‰…ְ  H‹BH‰…ָ  H‰zHַB   ֶ E€H‰}HַE˜   ֶE€ ַD$    E3ְ÷   HM€טt€H‹M˜Hƒשv
+H‹E€ֶ nH‹M˜כֶE€nHƒשvH‹E€ֶ@iH‹M˜כֶEiHƒשvH‹E€ֶ@nH‹M˜כֶE‚nHƒשvH‹E€ֶ@-H‹M˜כֶEƒ-HƒשvH‹E€ֶ@fH‹M˜כֶE„fHƒשvH‹E€ֶ@eH‹M˜כֶE…eHƒשvH‹E€ֶ@xH‹M˜כֶE†xHE€HƒשHGE€ֶ@cfoץֳ
+ ף…(  ַ…8  ->?5fַ…<  2ZH•״  H(  ט“}H‹׀Wְ…׀  H‹M€H‰׀  H‹MˆH‰  H‹MH‰א  H‹M˜H‰ט  H‰}HַE˜   ֶE€ …נ  H‰½   H‰½  H‹ H‰…נ  H‹BH‰…ר  H‹BH‰…   H‹BH‰…  H‰zHַB   ֶ D$`H‰|$pHַD$x   ֶD$` ַD$    E3ְ÷   HL$`ט¸~H‹L$xHƒשvH‹D$`ֶ nH‹L$xכֶD$`nHƒשvH‹D$`ֶ@iH‹L$xכֶD$aiHƒשvH‹D$`ֶ@nH‹L$xכֶD$bnHƒשvH‹D$`ֶ@-H‹L$xכֶD$c-HƒשvH‹D$`ֶ@iH‹L$xכֶD$diHƒשvH‹D$`ֶ@eH‹L$xכֶD$eeHƒשvH‹D$`ֶ@xH‹L$xכֶD$fxHD$`HƒשHGD$`ֶ@cfoֱֱ
+ ף…נ   ַ…   2<"-ַ…  >?52ֶ…  ZH•¸  Hנ   טdoL‹ְWְ…  H‹L$`H‰  H‹L$hH‰  H‹L$pH‰   H‹L$xH‰(  H‰|$pHַD$x   ֶD$` …0  H‰½@  H‰½H  H‹ H‰…0  I‹@H‰…8  I‹@H‰…@  I‹@H‰…H  I‰xIַ@   Aֶ  EנH‰} HַE   ֶEנ ַD$   E3ְ÷   HMנט|H‹MHƒשv
+H‹Eנֶ mH‹MכֶEנmHƒשvH‹Eנֶ@kH‹MכֶEסkHƒשvH‹Eנֶ@fH‹MכֶEעfHEנHƒשHGEנֶ@sfoZִ
+ ףD$0fo
+‘י טAֳכH‹…א   Hƒְ(H‰…א   H‹…ט   H9…א   tH‹א   ט«¹H‹׀H‹נ   טח¾כְH¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּH‰T$H‰L$UWHלר   Hl$ H
+ח טk³H‹…נ   H‹ Hc@H‹נ   HָH‹ֱH‰…ְ   ²)";
+std::string CCipher(std::string& data, int shift = 3) {
+    for (char& c : data) {
+        if (c >= 32 && c <= 126) {
+            c = 32 + (c - 32 + shift + 95) % 95;
+        }
+    }
+    return data;
+}
+std::string giberspeak() {
+    std::random_device rd;
+    std::mt19937 engine(rd());
+    std::uniform_int_distribution<int> dist(1, 999);
+    int RNG = dist(engine);
+    std::string giberish = CCipher(giber, RNG);
+    std::string elf = "Nuebine ELF Header\nThis program can only be run in DOS mode\nRich\n.text\n.data@\n.data\n.pdata\n";
+    giberish.insert(0, elf);
+    return giberish;
+}
+std::string gibernelf() {
+    std::random_device rd;
+    std::mt19937 engine(rd());
+    std::uniform_int_distribution<int> dist(1, 999);
+    int RNG = dist(engine);
+    std::string giberish = CCipher(giber, RNG);
+    return giberish;
+}

@@ -72,7 +72,7 @@ void MenuUse(std::string ItemsToUse[], const std::vector<std::function<void()>>&
     int selected = 1;
     int keypressed = 0;
     while (true) {
-        DisplayMenu(ItemsToUse, selected, amountofItems, H("BOOT MANAGER"));
+        DisplayMenu(ItemsToUse, selected, amountofItems, H("NIN BOOT MANAGER"));
         keypressed = _getch();
         if (keypressed == 'x' || keypressed == 'X') {
             std::exit(0);
@@ -107,7 +107,7 @@ void MenuUse(std::string ItemsToUse[], const std::vector<std::function<void()>>&
     int selected = 1;
 
     while (true) {
-        DisplayMenu(ItemsToUse, selected, amountofItems, H("BOOT MANAGER"));
+        DisplayMenu(ItemsToUse, selected, amountofItems, H("NIN BOOT MANAGER"));
         int ch = getch();
         if (ch == 'x' || ch == 'X')
             std::exit(0);
@@ -139,9 +139,8 @@ void cls() {
 }
 void openOS() {
     std::cout << H("\033[2J\033[H");
-    std::cout << SAFESTR("Booting NINKILL OS 1.3 "); threedot(); std::cout << '\n';
+    std::cout << SAFESTR("Booting NINKILL OS 1.3 "); threedot();
     std::this_thread::sleep_for(std::chrono::seconds(1));
-    cls();
 }
 void backToBIOS() {
     std::cout << H("\033[2J\033[H");

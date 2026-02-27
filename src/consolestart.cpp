@@ -38,14 +38,132 @@ int readKey() {
 	return ch;
 }
 #endif
+using CmdFunc = std::function<int(const std::vector<std::string>&)>;
+struct VNode {
+	std::string name;
+	bool isDir;
+	bool isExec = false;
+	std::string content;
+	std::function<int(const std::vector<std::string>&)> execFunc;
+	VNode* parent = nullptr;
+	std::unordered_map<std::string, std::unique_ptr<VNode>> children;
 
-std::string getcommand()
-{
+	VNode(std::string n, bool d, VNode* p = nullptr)
+		:name(std::move(n)), isDir(d), parent(p) {
+	}
+};
+
+std::unique_ptr<VNode> root;
+VNode* cwd;
+
+VNode* mkdirNode(VNode* parent, const std::string& name) {
+	auto n = std::make_unique<VNode>(name, true, parent);
+	auto ptr = n.get();
+	parent->children[name] = std::move(n);
+	return ptr;
+}
+
+VNode* mkfile(VNode* parent, const std::string& name, const std::string& txt) {
+	auto n = std::make_unique<VNode>(name, false, parent);
+	n->content = txt;
+	auto ptr = n.get();
+	parent->children[name] = std::move(n);
+	return ptr;
+}
+VNode* resolvePath(const std::string& path) {
+	if (path.empty()) return cwd;
+
+	VNode* cur = (path[0] == '/') ? root.get() : cwd;
+
+	std::stringstream ss(path);
+	std::string part;
+
+	while (std::getline(ss, part, '/')) {
+		if (part.empty() || part == ".") continue;
+		if (part == "..") {
+			if (cur->parent) cur = cur->parent;
+			continue;
+		}
+		auto it = cur->children.find(part);
+		if (it == cur->children.end()) return nullptr;
+		cur = it->second.get();
+	}
+	return cur;
+}
+std::string cwdPath() {
+	VNode* t = cwd;
+	std::string p;
+	while (t && t->parent) {
+		p = "/" + t->name + p;
+		t = t->parent;
+	}
+	return p.empty() ? "/" : p;
+}
+auto makePrompt = [] {
+	VNode* t = cwd;
+	std::string path;
+	while (t && t->parent) { path = H("/") + t->name + path; t = t->parent; }
+	if (path.empty()) path = H("/");
+	return H("[root@ninkill-live ") + path + H("]# ");
+	};
+void initFS() {
+	root = std::make_unique<VNode>("/", true, nullptr);
+	cwd = root.get();
+	auto bin = mkdirNode(root.get(), H("bin"));
+	auto dev = mkdirNode(root.get(), H("dev"));
+	auto boot = mkdirNode(root.get(), H("boot"));
+	auto RooT = mkdirNode(root.get(), H("root"));
+	mkdirNode(root.get(), H("mnt"));
+	//excs
+	mkfile(bin, H("nin-iexc.exc"), NINEX_EXC_TEXT);
+	mkfile(bin, H("nin-fexc.exc"), NINKILL_EXC_TEXT);
+	mkfile(bin, H("help.exc"), giberspeak());
+	mkfile(bin, H("mkfs.exc"), giberspeak());
+	mkfile(bin, H("cat.exc"), giberspeak());
+	mkfile(bin, H("mkdir.exc"), giberspeak());
+	mkfile(bin, H("cd.exc"), giberspeak());
+	mkfile(bin, H("pwd.exc"), giberspeak());
+	mkfile(bin, H("ls.exc"), giberspeak());
+	mkfile(bin, H("lsfs.exc"), giberspeak());
+	mkfile(bin, H("clear.exc"), giberspeak());
+	mkfile(bin, H("arr.exc"), giberspeak());
+	mkfile(bin, H("ifo.exc"), giberspeak());
+	mkfile(bin, H("lsblk.exc"), giberspeak());
+	mkfile(bin, H("reboot.exc"), giberspeak());
+	mkfile(bin, H("exit.exc"), giberspeak());
+	//dev
+	mkfile(dev, H("loop0"), H(""));
+	mkfile(dev, H("hda"), H("RAW BLOCK DEVICE\nREAD VIA DRIVER ONLY\nTRY USING ifo\n"));
+	mkfile(dev, H("fd0"), H("RAW BLOCK DEVICE\nREAD VIA DRIVER ONLY\nTRY USING ifo\n"));
+	mkfile(dev, H("vdc"), H("RAW BLOCK DEVICE\nREAD VIA DRIVER ONLY\nTRY USING ifo\n"));
+	mkfile(dev, H("tty0"), H(""));
+	mkfile(dev, H("loop0"), H(""));
+	mkfile(dev, H("loop1"), H(""));
+	mkfile(dev, H("loop2"), H(""));
+	mkfile(dev, H("loop3"), H(""));
+	mkfile(dev, "null", "");
+	mkfile(dev, "zero", "");
+	mkfile(dev, "random", "");
+	//boot
+	auto ninbootmgr = mkdirNode(boot, H("NINBOOTMGR"));
+	mkfile(boot, H("vmlinuz"), gibernelf());
+	mkfile(boot, H("initrd.img"), gibernelf());
+	mkfile(boot, H("System.map"), H("c0100000 T _start\nc01001a0 T init_nin_kernel\nc0101fff T nin_lies\n"));
+	mkfile(boot, H("config"), H("CONFIG_X86=y\nCONFIG_MTRR = y\nCONFIG_MODULES = y\nCONFIG_MODVERSIONS = y\nCONFIG_NFFB_FS = y\nCONFIG_TFTCFYIS_FS = y\nCONFIG_MFS_FS = y\nCONFIG_MSDOS_FS = y\n"));
+	mkfile(ninbootmgr, H("ninbootmgr.cfg"), H("set default=\"0\"\nset imgdevpath=\"/dev/fd0\"\nmenuentry \'NINKILL os, linux\' --class os{\ninsmod bios\ninsmod mfs\nset root=\'hda,nindisk\'\nlinux /boot/vmlinuz\ninitrd /boot/initrd.img\n}\n"));
+	mkfile(ninbootmgr, H("stage2"), gibernelf());
+	mkfile(ninbootmgr, H("device.map"), gibernelf());
+	//root
+	mkfile(RooT, H(".history"), H("mkfs.mfs /dev/vdc\narr /dev/vdc\nifo /dev/vdc\ncd ..\ncd bin\ncat nin-iexc.exc\nreboot"));
+	mkfile(RooT, H(".log"), H("[1998-03-24 18:22:01] device mounted\n[1998-03-24 18:22:31]commands now logged to .history\n[1998-03-24 18:24:34] rebooting\n"));
+	mkfile(RooT, H(".bashrc"),H("alias ll=\'ls\'\n"));
+}
+std::string getcommand() {
 	static std::vector<std::string> history;
 	int historyIndex = history.size();
 	std::string buf;
 	size_t cursor = 0;
-	const std::string prompt = H("[root@ninkill-live]# ");
+	const std::string prompt = makePrompt();
 	auto redraw = [&]() {
 		std::cout << H("\33[2K\r") << prompt << buf;
 		std::cout << H("\r\33[") << (cursor + prompt.size()) << H("C") << std::flush;
@@ -115,8 +233,7 @@ std::unordered_map<std::string, int> devices = {
 	{H("/dev/fd0"),2},
 	{H("/dev/vdc"),0}
 };
-std::vector<std::string> tokenize(const std::string& line)
-{
+std::vector<std::string> tokenize(const std::string& line) {
 	std::istringstream iss(line);
 	std::vector<std::string> out;
 	std::string s;
@@ -125,11 +242,9 @@ std::vector<std::string> tokenize(const std::string& line)
 	return out;
 } using CmdFunc = std::function<int(const std::vector<std::string>&)>;
 void listdir() {
-	std::cout << H("                 Directory: /mnt/\n\n");
-	std::cout << H(" Mode     LastWriteTime       Name         Size   \n");
-	std::cout << H(" ----     -------------       ----         ----   \n");
-	std::cout << H("-a----  3/24/1998 6:28 PM  NINKill.exc   2,865kb  \n");
-	std::cout << H("-a----  4/26/1997 8:02 PM   NINEX.exc    6,462kb  \n");
+	std::cout << "Directory: " << cwdPath() << "\n\n";
+	for (auto& [n, node] : cwd->children)
+		std::cout << (node->isDir ? "/ " : "  ") << n << "\n";
 }
 void printDevices() {
 	std::cout << H("NAME  SIZE   TYPE   MOUNTPOINTS\n");
@@ -179,13 +294,25 @@ const std::unordered_map<std::string, std::string> helpDB = {
 	{H("ifo"),H("Displays information about device")},
 	{H("lsblk"),H("Shows block devices")}
 };
-int readcommand(const std::string& line)
-{
+int readcommand(const std::string& line) {
 	auto args = tokenize(line);
 	if (args.empty()) return 0;
 	const std::string& cmd = args[0];
-	if (cmd == H("help"))
-	{
+	auto local = cwd->children.find(cmd);
+	if (local != cwd->children.end() && local->second->isExec)
+		return local->second->execFunc(args);
+	if (cmd.find('/') != std::string::npos || cmd.rfind("./", 0) == 0) {
+		VNode* node = resolvePath(cmd);
+		if (node && node->isExec)
+			return node->execFunc(args);
+		if (node && !node->isExec) {
+			std::cout << "Not executable\n";
+			return 0;
+		}
+		std::cout << "Command not found\n";
+		return 0;
+	}
+	if (cmd == H("help")) {
 		if (args.size() == 1)
 		{
 			std::cout << H("Available commands:\n");
@@ -225,14 +352,41 @@ int readcommand(const std::string& line)
 		return 0;
 	}
 	static std::unordered_map<std::string, CmdFunc> cmds;
-
-	if (cmds.empty())
-	{
+	if (cmds.empty()) {
+		cmds["cat"] = [](auto& a) {
+			if (a.size() < 2) { std::cout << "Usage: cat <file>\n"; return 0; }
+			VNode* f = resolvePath(a[1]);
+			if (!f || f->isDir) { std::cout << "File not found\n"; return 0; }
+			std::cout << f->content << "\n";
+			return 0;
+			};
+		cmds["mkdir"] = [](auto& a) {
+			if (a.size() < 2) { std::cout << "Usage: mkdir <name>\n"; return 0; }
+			if (cwd->children.count(a[1])) {
+				std::cout << "Already exists\n";
+				return 0;
+			}
+			mkdirNode(cwd, a[1]);
+			return 0;
+			};
+		cmds["cd"] = [](auto& a) {
+			if (a.size() < 2) { cwd = root.get(); return 0; }
+			VNode* dest = resolvePath(a[1]);
+			if (!dest) { std::cout << "Directory not found\n"; return 0; }
+			if (!dest->isDir) { std::cout << "Not a directory\n"; return 0; }
+			cwd = dest;
+			return 0;
+			};
+		cmds["pwd"] = [](auto&) {
+			std::cout << cwdPath() << "\n";
+			return 0;
+			};
 		cmds[H("nin-fexc")] = [](auto&) { return 1; };
 		cmds[H("nin-iexc")] = [](auto&) { return 2; };
 		cmds[STATIC_DEF("exit")] = [](auto&) { std::exit(0); return 0; };
 		cmds[H("ls")] = [](auto&) { listdir(); return 0; };
 		cmds[H("dir")] = cmds[H("ls")];
+		cmds[H("ll")] = cmds[H("ls")];
 		cmds[H("lsfs")] = [](auto&) {
 			std::cout << H("All filesystem types:\n");
 			std::cout << H("TYPENAME       Fullname cant be used\n");
@@ -274,7 +428,7 @@ int readcommand(const std::string& line)
 				return 0;
 			}
 			if (dev == H("/dev/hda") && devices[dev] == 2)
-				std::cout << H("");
+				std::cout << H("5 Gigabite Hard disk\n");
 			if (dev == H("/dev/fd0") && devices[dev] == 2)
 				std::cout << H("10 Megabite flopy\n");
 			else if (dev == H("/dev/vdc") && devices[dev] == 2)
@@ -287,14 +441,6 @@ int readcommand(const std::string& line)
 			printDevices();
 			return 0;
 			};
-	}
-	if (line == H("cat NINKill.exc")) {
-		std::cout << NINKILL_EXC_TEXT << H("\n");
-		return 0;
-	}
-	if (line == H("cat NINEX.exc")) {
-		std::cout << NINEX_EXC_TEXT << H("\n");
-		return 0;
 	}
 	auto it = cmds.find(cmd);
 	if (it != cmds.end())
@@ -309,7 +455,7 @@ int console() {
 	while (true) {
 		std::cout << PROTECT("\033[32m");
 		std::cout << H("\033[?25h");
-		std::cout << H("[root@ninkill-live]# ") << std::flush;
+		std::cout << makePrompt() << std::flush;
 		std::string command = getcommand();
 		int z = readcommand(command);
 		if (z == 1)

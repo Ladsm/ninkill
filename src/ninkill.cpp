@@ -17,7 +17,7 @@
 #include <algorithm>
 
 std::string menuops[2] = {H("   1-Forum Index     "), H("2-News     ")};
-static int langthofopts() {
+static size_t langthofopts() {
     size_t langth = 0;
     for (int i = 0; i < 2; i++) {
         langth += menuops[i].size();
@@ -60,9 +60,9 @@ void loadingSpinnerCentered(int duration_ms = 3000, std::string nexttospin = H("
     std::string LoadorConecting = nexttospin;
     size_t numFrames = sizeof(spinner) / sizeof(spinner[0]);
     int frame = 0;
-    int consoleWidth = getConsoleWidth();
-    int textsizedtwo = nexttospin.size() / 2;
-    int consoleHeight = getConsoleHeight();
+    size_t consoleWidth = getConsoleWidth();
+    size_t textsizedtwo = nexttospin.size() / 2;
+    size_t consoleHeight = getConsoleHeight();
     int topPadding = consoleHeight / 2;
     int leftPadding = consoleWidth / 2 - textsizedtwo;
     int iterations = duration_ms / 100;
@@ -165,7 +165,7 @@ void drawPost(Post& post) {
             else {
                 std::cout << std::string(prefix.length(), ' ') << line;
             }
-            int remaining = width - ((firstLine) ? prefix.length() + line.length() : prefix.length() + line.length());
+            size_t remaining = width - ((firstLine) ? prefix.length() + line.length() : prefix.length() + line.length());
             if (remaining > 0)
                 std::cout << std::string(remaining, ' ');
             std::cout << H("\033[0m");
@@ -250,6 +250,7 @@ void connecting(const std::string& address, bool fail) {
     if (fail)
     {
         Center() << H("404 - No website at that address");
+        Center() << H("Are you sure the website is using the spp internet maker?");
         std::this_thread::sleep_for(std::chrono::seconds(2));
         return;
     }
@@ -261,7 +262,6 @@ void internet()
 {
     auto routes = buildRouter();
     std::string site;
-
     loadingSpinnerCentered(1000, H("Loading"));
     loadingSpinnerCentered(3000, H("Connecting"));
     while (true) {
