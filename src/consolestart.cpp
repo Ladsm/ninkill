@@ -78,6 +78,19 @@ VNode* resolvePath(const std::string& path) {
 	}
 	return cur;
 }
+std::string hashPass(const std::string& s) {
+	std::hash<std::string> h;
+	return std::to_string(h(s));
+}
+void lockDir(VNode* dir, const std::string& pass) {
+	dir->locked = true;
+	dir->passwordHash = hashPass(pass);
+}
+bool unlockDir(VNode* dir, const std::string& attempt) {
+	if (!dir->locked)
+		return true;
+	return hashPass(attempt) == dir->passwordHash;
+}
 std::string cwdPath() {
 	VNode* t = cwd;
 	std::string p;
@@ -94,6 +107,14 @@ auto makePrompt = [] {
 	if (path.empty()) path = H("/");
 	return H("[root@ninkill-live ") + path + H("]# ");
 	};
+void mkuserfiles(VNode* dir) {
+	auto downloads = mkdirNode(dir, H("downloads"));
+	auto documents = mkdirNode(dir, H("documents"));
+	auto desktop = mkdirNode(dir, H("desktop"));
+	auto audio = mkdirNode(dir, H("audio"));
+	auto videos = mkdirNode(dir, H("videos"));
+	auto images = mkdirNode(dir, H("images"));
+}
 void initFS() {
 	root = std::make_unique<VNode>("/", true, nullptr);
 	cwd = root.get();
@@ -102,6 +123,16 @@ void initFS() {
 	auto boot = mkdirNode(root.get(), H("boot"));
 	auto RooT = mkdirNode(root.get(), H("root"));
 	auto mnt = mkdirNode(root.get(), H("mnt"));
+	auto etc = mkdirNode(root.get(), H("etc"));
+	auto proc = mkdirNode(root.get(), H("proc"));
+	auto home = mkdirNode(root.get(), H("home"));
+	//user folders
+	auto till = mkdirNode(home, H("till"));
+	lockDir(till, H("systemtilday"));
+	mkuserfiles(till);
+	auto tomm = mkdirNode(home, H("tomm"));
+	lockDir(tomm, H("4566"));
+	mkuserfiles(tomm);
 	//excs
 	mkfile(bin, H("nin-iexc.exc"), NINEX_EXC_TEXT);
 	mkfile(bin, H("nin-fexc.exc"), NINKILL_EXC_TEXT);
@@ -121,14 +152,14 @@ void initFS() {
 	mkfile(bin, H("ifo.exc"), giberspeak());
 	mkfile(bin, H("lsblk.exc"), giberspeak());
 	mkfile(bin, H("reboot.exc"), giberspeak());
-	mkfile(bin, H("ninsys"), giberspeak());
-	mkfile(bin, H("bash"), giberspeak());
+	mkfile(bin, H("bash.exc"), giberspeak());
 	mkfile(bin, H("nin-sys.exc"), giberspeak());
+	mkfile(bin, H("bootanim.exc"), giberspeak());
 	//dev
 	mkfile(dev, H("loop0"), H(""));
 	mkfile(dev, H("hda"), H("RAW BLOCK DEVICE\nREAD VIA DRIVER ONLY\nTRY USING ifo\n"));
 	mkfile(dev, H("fd0"), H("RAW BLOCK DEVICE\nREAD VIA DRIVER ONLY\nTRY USING ifo\n"));
-	mkfile(dev, H("vdc"), H("RAW BLOCK DEVICE\nREAD VIA DRIVER ONLY\nTRY USING ifo\n"));
+	mkfile(dev, H("vdd"), H("RAW BLOCK DEVICE\nREAD VIA DRIVER ONLY\nTRY USING ifo\n"));
 	mkfile(dev, H("tty0"), H(""));
 	mkfile(dev, H("loop0"), H(""));
 	mkfile(dev, H("loop1"), H(""));
@@ -147,10 +178,71 @@ void initFS() {
 	mkfile(ninbootmgr, H("stage2"), gibernelf());
 	mkfile(ninbootmgr, H("device.map"), gibernelf());
 	//root
-	mkfile(RooT, H(".history"), H("mkfs.mfs /dev/vdc\narr /dev/vdc\nifo /dev/vdc\ncd ..\ncd bin\ncat nin-iexc.exc\nreboot"));
-	mkfile(RooT, H(".log"), H("[1998-03-24 18:22:01] device mounted\n[1998-03-24 18:22:31]commands now logged to .history\n[1998-03-24 18:24:34] rebooting\n"));
+	mkfile(RooT, H(".history"), H("mkfs.mfs /dev/vdd\narr /dev/vdd\nifo /dev/vdd\ncd ..\ncd bin\ncat nin-iexc.exc\nnin-sys shutdown"));
+	mkfile(RooT, H(".log"), H("[1998-03-24 18:22:01] device mounted\n[1998-03-24 18:22:31] commands now logged to .history\n[1998-03-24 18:24:34] rebooting\n"));
 	mkfile(RooT, H(".bashrc"),H("alias ll=\'ls\'\n"));
-	//mnt
+	//etc
+	auto initd = mkdirNode(etc, H("init.d"));
+	auto network = mkdirNode(etc, H("network"));
+	auto sysconfig = mkdirNode(etc, H("sysconfig"));
+	mkfile(etc, H("hostname"), H("ninkill-live\n"));
+	mkfile(etc, H("hosts"),H("127.0.0.1 localhost\n127.0.1.1 ninkill-live\n"));
+	mkfile(etc, H("passwd"),H("root:x:0:0:root:/root:/bin/bash\n"));
+	mkfile(etc, H("group"),H("root:x:0:\nusers:x:100:\n"));
+	mkfile(etc, H("fstab"),H("/dev/fd0   /      mfs     defaults  0 0\n/dev/hda   /mnt   nffb    defaults  0 0\n"));
+	mkfile(etc, H("motd"),H("Welcome to NINKILL OS\nUnauthorized access prohibited\n"));
+	mkfile(etc, H("inittab"),H("id:3:initdefault:\nsi::sysinit:/etc/init.d/rcS\n1:2345:respawn:/bin/nin-login\n"));
+	mkfile(initd, H("rcS"), H(
+		"#!/bin/sh\n"
+		"# NINKILL boot script\n"
+		"\n"
+		"echo \"Booting NINKILL OS 1.3\"\n"
+		"echo \".\"\n"
+		"\n"
+		"# Mount kernel virtual filesystems\n"
+		"mount -t proc proc /proc\n"
+		"mount -t sysfs sysfs /sys\n"
+		"\n"
+		"hostname NINKILL\n"
+		"\n"
+		"hwclock --hctosys\n"
+		"echo \".\"\n"
+		"\n"
+		"modprobe loop\n"
+		"modprobe nffb\n"
+		"modprobe mfs\n"
+		"echo \"initramfs\"\n"
+		"echo \".\"\n"
+		"\n"
+		"fsck -A\n"
+		"\n"
+		"mount -a\n"
+		"\n"
+		"#Dont know why, but forum info and logs are spilling into the virtual dynamic disk.\n"
+		"#I think it maybe something with the image building system we have being conected to the forum servers\n"
+		"umount /mnt/vdd\n"
+		"\n"
+		"/bin/nin-sys start rngd\n"
+		"dmesg -n 4\n"
+		"/bin/nin-sys start logger\n"
+		"echo \".\"\n"
+		"\n"
+		"/bin/nin-sys start net\n"
+		"/bin/nin-sys start forums\n"
+		"\n"
+		"clear\n"
+		"StartAnim\n"
+		"clear\n"
+		"\n"
+		"echo \"Welcome to NINKILL OS!\"\n"
+		"echo \"Type 'help' for assistance\"\n"
+	));
+	mkfile(network, H("interfaces"), H("auto lo\niface lo inet loopback\n"));
+	mkfile(sysconfig, H("clock"), H("UTC=true\n"));
+	//proc
+	mkfile(proc, H("version"), H("NINKILL kernel 1.3"));
+	mkfile(proc, H("filesystems"), H("nodev\tproc\nnodev\ttmpfs\n"));
+	mkfile(proc, H("cmdline"), H("root=/bin/bash rw"));
 }
 std::string getcommand() {
 	static std::vector<std::string> history;
@@ -225,7 +317,7 @@ std::string getcommand() {
 std::unordered_map<std::string, int> devices = {
 	{H("/dev/hda"),2},
 	{H("/dev/fd0"),2},
-	{H("/dev/vdc"),0}
+	{H("/dev/vdd"),0}
 };
 std::vector<std::string> tokenize(const std::string& line) {
 	std::istringstream iss(line);
@@ -241,7 +333,7 @@ void listdir() {
 		std::cout << (node->isDir ? "/ " : "  ") << n << "\n";
 }
 void printDevices() {
-	std::cout << H("NAME  SIZE   TYPE   MOUNTPOINTS\n");
+	std::cout << H("NAME  SIZE   TYPE             MOUNTPOINTS\n");
 	for (const auto& [name, state] : devices){
 		std::string shortName = name.substr(5);
 		std::string size;
@@ -250,17 +342,17 @@ void printDevices() {
 		if (name == H("/dev/hda")) {
 			size = H("5.05GB");
 			type = H(" disk");
-			mount = H(" /mnt");
+			mount = H("              /mnt");
 		}
 		else if (name == H("/dev/fd0")) {
 			size = H("10.3MB");
 			type = H(" flopy");
-			mount = H("/");
+			mount = H("             /");
 		}
-		else if (name == H("/dev/vdc")) {
+		else if (name == H("/dev/vdd")) {
 			size = H(" 5MB");
-			type = H("   loop");
-			mount = H(" /dev");
+			type = H(" Virtual Dynamic Disk");
+			mount = H("/dev");
 		}
 		std::cout
 			<< shortName << H("  ")
@@ -275,7 +367,6 @@ const std::unordered_set<std::string> validFS = {
 	H("tftcfyis")
 };
 const std::unordered_map<std::string, std::string> helpDB = {
-	{H("\nThank you for using NINKILL os!\nWe hoppe you enjoy your use of NINKILL os and send feedback to www.nuebine.com/feedback :)"), H(".")},
 	{H("help"),H("Shows help information")},
 	{H("ls"), H("Lists the directory you're in")},
 	{H("dir"),H("Alias for ls")},
@@ -291,6 +382,7 @@ const std::unordered_map<std::string, std::string> helpDB = {
 	{H("lsfs"),H("Lists all filesystems")},
 	{H("arr"),H("Aranges filesystem for use")},
 	{H("ifo"),H("Displays information about device")},
+	{H("StartAnim"), H("Displays the start animation")},
 	{H("lsblk"),H("Shows block devices")}
 };
 void EXIT(int code) {
@@ -374,6 +466,15 @@ int readcommand(const std::string& line) {
 		cmds["cd"] = [](auto& a) {
 			if (a.size() < 2) { cwd = root.get(); return 0; }
 			VNode* dest = resolvePath(a[1]);
+			if (dest->locked) {
+				std::string input;
+				std::cout << H("Password: ");
+				std::getline(std::cin, input);
+				if (!unlockDir(dest, input)) {
+					std::cout << H("Access denied\n");
+					return 0;
+				}
+			}
 			if (!dest) { std::cout << "Directory not found\n"; return 0; }
 			if (!dest->isDir) { std::cout << "Not a directory\n"; return 0; }
 			cwd = dest;
@@ -389,6 +490,7 @@ int readcommand(const std::string& line) {
 		cmds[H("ls")] = [](auto&) { listdir(); return 0; };
 		cmds[H("dir")] = cmds[H("ls")];
 		cmds[H("ll")] = cmds[H("ls")]; // alias
+		cmds[H("StartAnim")] = [](auto& a) { bootanim(); return 0; };
 		cmds[H("lsfs")] = [](auto&) {
 			std::cout << H("All filesystem types:\n");
 			std::cout << H("TYPENAME       Fullname cant be used\n");
@@ -433,7 +535,7 @@ int readcommand(const std::string& line) {
 				std::cout << H("5 Gigabite Hard disk\n");
 			if (dev == H("/dev/fd0") && devices[dev] == 2)
 				std::cout << H("10 Megabite flopy\n");
-			else if (dev == H("/dev/vdc") && devices[dev] == 2)
+			else if (dev == H("/dev/vdd") && devices[dev] == 2)
 				std::cout << H("To: nin\nThe forums are becomeing unstable, we dont have moderators for this and I dont want to mod the forums on work.\nPlease talk to the higher-ups about this\n - Jack.W Dean\n");
 			else
 				std::cout << H("No readable info\n");

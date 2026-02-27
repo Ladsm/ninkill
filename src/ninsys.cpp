@@ -7,9 +7,17 @@ void initSysCommands() {
     sysCommands[H("status")] = {
     H("status"),
     [](const std::vector<std::string>&)->int {
-        std::cout << H("State: Killin it\nJobs: 0 queued\nSysVinit: 2.75-4-ninkill\n");
+        std::cout << H(
+        "system status\n"
+        "----------------------\n"
+        "state      : running\n"
+        "runlevel   : 3\n"
+        "processes  : 58\n"
+        "init       : 2.74\n"
+        "load avg   : 0.01 0.03 0.00"
+        "tty users  : 1\n");
         return 0;
-    }
+        }
     };
     sysCommands[H("reboot")] = {
         H("reboot"),

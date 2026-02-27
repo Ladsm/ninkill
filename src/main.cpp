@@ -26,8 +26,10 @@ user Jack = user(H("Jack Wilder Dean"), H("no...youarenotgetingmypassword"), 3);
 user hoikgrew = user(H("hoikgrew"), H("HoknGrew"), 3);
 user testmem = user(H("TEST"), H("TESTSTART"), 1);
 user jorin = user(H("jorin"), H("dfsjhjiof"), -1);
-reply Gone1 = reply(H("After two years of work, fun, and more, the Ninkill forums are shutting down."), nin);
+user till = user(H("till"), H("systemtilday"), 1);
+user tomm = user(H("tomm"), H("4566"), 1);//
 //replies
+reply Gone1 = reply(H("After two years of work, fun, and more, the Ninkill forums are shutting down."), nin);
 reply Gtwo1 = reply(H("I'm done with the harassment. You assholes can’t dox me and expect me to continue running this shit."), nin);
 reply Nthree1 = reply(H("Nuebine Incorporated Network is releasing a new version of NINKILL!!! What do you want us to add? Because I may add it >:)."), Jack);
 reply Gone2 = reply(H("What? Why? This is dumb. Don’t let the words of shitty people stop your fun."), Jack);
@@ -75,13 +77,13 @@ int main() {
 	FoRuM = loadForum(list);
 	init();
 	reboot:
-	showBootMenu();
+	//showBootMenu();
 	initSysCommands();
 	initFS();
 	std::cout << H("\ninitramfs"); threedot();
 	clear();
 	std::cout << H("\033[32m");
-	bootanim();
+	//bootanim();
 	clear();
 	bool usr = false;
 	std::cout << H("Welcome to NINKILLos!\nWrite \'help\' for more info\n");
