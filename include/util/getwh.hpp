@@ -1,0 +1,2 @@
+int getConsoleWidth();
+int getConsoleHeight();

@@ -1,6 +1,8 @@
-#pragma once
 #include <string>
 #include <vector>
+#include <functional>
+#include <unordered_map>
+#include <memory>
 struct VNode {
 	std::string name;
 	bool isDir;
@@ -15,16 +17,14 @@ struct VNode {
 		:name(std::move(n)), isDir(d), parent(p) {
 	}
 };
-int console();
-void initFS();
-int readKey();
+std::string cwdPath();
 VNode* mkdirNode(VNode* parent, const std::string& name);
 VNode* mkfile(VNode* parent, const std::string& name, const std::string& txt);
 VNode* resolvePath(const std::string& path);
-std::string cwdPath();
-std::string getcommand();
-std::vector<std::string> tokenize(const std::string& line);
-void listdir();
-void printDevices();
-void EXIT(int code);
-int readcommand(const std::string& line);
+std::string hashPass(const std::string& s);
+void lockDir(VNode* dir, const std::string& pass);
+bool unlockDir(VNode* dir, const std::string& attempt);
+extern std::unique_ptr<VNode> root;
+extern VNode* cwd;
+void mkuserfiles(VNode* dir);
+void initFS();

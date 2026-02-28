@@ -23,8 +23,9 @@
  * SOFTWARE.
  */
 #pragma once
-#ifndef BEEP_H
-#define BEEP_H
+#if defined(_WIN32)
+#include <windows.h>
+#endif
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
  /* On Windows use the built-in Beep() function from <utilapiset.h> */
@@ -40,5 +41,3 @@ inline int blop(int freq, int ms) {
 #else
 #error H("unknown platform")
 #endif
-
-#endif /* BEEP_H */

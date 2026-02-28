@@ -1,6 +1,6 @@
 #include <util/obfstr.hpp>
 #include <net/website.hpp>
-#include <net/ninkill.hpp>
+#include <util/getwh.hpp>
 #include <iostream>
 #include <unordered_map>
 #include <functional>

@@ -2,7 +2,7 @@
 #include <string>
 #include <random>
 #include <limits>
-const char* NINKILL_EXC_TEXT = R"(
+inline const char* NINKILL_EXC_TEXT = R"(
 Nuebine ELF Header
 This program can only be run in DOS mode
 Rich
@@ -40,7 +40,7 @@ tH‰½    Hַ…¨      ֶ…    H‹UHƒתv1HֲH‹MנHת   
   Hƒֲ'H‹ָט¬rH‰}אHַEט   ֶE׀ H  ט-…H‹UHHƒתv1HֲH‹M0Hת   rH‹AרH+ָHƒיHƒש‡¹  Hƒֲ'H‹ָטTrH‰}@HַEH   ֶE0 H8  טױ„H‹UhHƒתv1HֲH‹MPHת   rH‹AרH+ָHƒיHƒש‡h  Hƒֲ'H‹ָטqH‰}`HַEh   ֶEP H‹•ָ   Hƒתv4HֲH‹°   Hת   rH‹AרH+ָHƒיHƒש‡  Hƒֲ'H‹ָט«qH‰½ְ   Hַ…ָ      ֶ…°    H‹•ˆ   Hƒתv1HֲH‹MpHת   rH‹AרH+ָHƒיHƒש‡־   Hƒֲ'H‹ָטTqH‰½€   Hַ…ˆ      ֶEp HX  טֿƒH‹U(Hƒתv-HֲH‹MHת   rH‹AרH+ָHƒיHƒשw{Hƒֲ'H‹ָטתpH
 m
 )";
-const char* NINEX_EXC_TEXT = R"(
+inline const char* NINEX_EXC_TEXT = R"(
 NINKILL Internet software owned by Jack Wilder Dean and Nuebine incorperated Network
 License by Jack Wilder Dean:
 The software is provided STRSUCURE(\"As is\"), without warranty of any kind, express or
@@ -98,7 +98,7 @@ HַE(    כ/H‹…  H‹ Hc@H‹  HָH‹ֱH‹ָa¸ H+…   H
 N ט¸H‹…א   H‹ H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּH‰L$UWHלט   Hl$ H
 ‏ ט»·H‹…א   H‹ H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּH‰L$UWHלט   Hl$ H
 ח טk³H‹…נ   H‹ Hc@H‹נ   HָH‹ֱH‰…ְ   ²)";
-std::string giber = R"(
+inline std::string giber = R"(
 ַ‏ טw״H‹א   ט׃H‹…א   H‹ָט ־H‹…א   H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּL‰D$ˆT$H‰L$UWHלט   Hl$ H
 R‏ ט״H‹…א   H‹ָט0H‹…א   H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּH‰T$H‰L$UWHלט   Hl$ H
 צ‎ ט¦׳H‹…א   H¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּL‰D$ˆT$H‰L$UWHלט   Hl$ H
@@ -126,7 +126,7 @@ H‹Eנֶ mH‹MכֶEנmHƒשvH‹Eנֶ@kH‹MכֶEסkHƒשvH‹Eנֶ@
  ףD$0fo
 ‘י טAֳכH‹…א   Hƒְ(H‰…א   H‹…ט   H9…א   tH‹א   ט«¹H‹׀H‹נ   טח¾כְH¥ָ   _]ֳּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּּH‰T$H‰L$UWHלר   Hl$ H
 ח טk³H‹…נ   H‹ Hc@H‹נ   HָH‹ֱH‰…ְ   ²)";
-std::string CCipher(std::string& data, int shift = 3) {
+inline std::string CCipher(std::string& data, int shift = 3) {
     for (char& c : data) {
         if (c >= 32 && c <= 126) {
             c = 32 + (c - 32 + shift + 95) % 95;
@@ -134,7 +134,7 @@ std::string CCipher(std::string& data, int shift = 3) {
     }
     return data;
 }
-std::string giberspeak() {
+inline std::string giberspeak() {
     std::random_device rd;
     std::mt19937 engine(rd());
     std::uniform_int_distribution<int> dist(1, 999);
@@ -144,7 +144,7 @@ std::string giberspeak() {
     giberish.insert(0, elf);
     return giberish;
 }
-std::string gibernelf() {
+inline std::string gibernelf() {
     std::random_device rd;
     std::mt19937 engine(rd());
     std::uniform_int_distribution<int> dist(1, 999);

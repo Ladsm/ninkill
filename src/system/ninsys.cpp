@@ -1,7 +1,7 @@
 #include <util/obfstr.hpp>
 #include <system/ninsys.hpp>
+#include <system/console.hpp>
 #include <iostream>
-#include <vfs/consolestart.hpp>
 std::unordered_map<std::string, SysCommand> sysCommands;
 void initSysCommands() {
     sysCommands[H("status")] = {

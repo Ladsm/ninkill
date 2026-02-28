@@ -1,5 +1,11 @@
 #include <util/obfstr.hpp>
 #include <boot/boot.hpp>
+#include <util/getwh.hpp>
+#include <util/beep.h>
+#include <ui/userinput.hpp>
+#include <net/page.hpp>
+#include <net/website.hpp>
+#include <ui/spiner.hpp>
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -10,10 +16,6 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #endif
-#include <util/beep.h>
-#include <ui/userinput.hpp>
-#include <net/page.hpp>
-#include <net/website.hpp>
 #include <algorithm>
 
 std::string menuops[2] = {H("   1-Forum Index     "), H("2-News     ")};
@@ -32,50 +34,7 @@ static void orangebk() {
     for (int i = 0; i < 1000; i++) std::cout << H(" ");
     std::cout << H("\033[H");
 }
-int getConsoleWidth() {
-#ifdef _WIN32
-    CONSOLE_SCREEN_BUFFER_INFO csbi;
-    if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
-        return csbi.srWindow.Right - csbi.srWindow.Left + 1;
-#else
-    struct winsize w;
-    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) == 0) return w.ws_col;
-#endif
-    return 80;
-}
-int getConsoleHeight() {
-#ifdef _WIN32
-    CONSOLE_SCREEN_BUFFER_INFO csbi;
-    if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
-        return csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-#else
-    struct winsize w;
-    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) == 0) return w.ws_row;
-#endif
-    return 25;
-}
 
-void loadingSpinnerCentered(int duration_ms = 3000, std::string nexttospin = H("Loading")) {
-    const char spinner[] = { '|', '/', '-', '\\' };
-    std::string LoadorConecting = nexttospin;
-    size_t numFrames = sizeof(spinner) / sizeof(spinner[0]);
-    int frame = 0;
-    size_t consoleWidth = getConsoleWidth();
-    size_t textsizedtwo = nexttospin.size() / 2;
-    size_t consoleHeight = getConsoleHeight();
-    int topPadding = consoleHeight / 2;
-    int leftPadding = consoleWidth / 2 - textsizedtwo;
-    int iterations = duration_ms / 100;
-    for (int i = 0; i < iterations; i++) {
-        std::cout << H("\033[H");
-        for (int k = 0; k < topPadding; k++) std::cout << H("\n");
-        std::cout << std::string(leftPadding, ' ')
-            << LoadorConecting << spinner[frame % numFrames] << std::flush;
-        frame++;
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
-    std::cout << H("\033[H");
-}
 void printBlackBar(int row) {
     int width = getConsoleWidth();
     std::cout << H("\033[") << row << H(";0H");
@@ -227,64 +186,5 @@ void forum(std::vector<Page>& forumPages) {
             default: break;
             }
         }
-    }
-}
-int isAddress(const std::string& address) {
-    if (address == H("www.Nuebine.com") || address == H("www.nuebine.com"))
-        return 1;
-    else if (address.empty())
-        return 2;
-    else if (address == H("exit"))
-        return 3;
-    else if (address == H("www.jackwd.com"))
-        return 4;
-    return 0;
-}
-void clscls() {
-    std::cout << H("\033[2J\033[H");
-}
-void connecting(const std::string& address, bool fail) {
-    mkbg();
-    loadingSpinnerCentered(800, H("Connecting to ") + address + ' ');
-    mkbg();
-    if (fail)
-    {
-        Center() << H("404 - No website at that address");
-        Center() << H("Are you sure the website is using the spp internet maker?");
-        std::this_thread::sleep_for(std::chrono::seconds(2));
-        return;
-    }
-    loadingSpinnerCentered(800, H("Resolving host... "));
-    mkbg();
-    loadingSpinnerCentered(100, H("Connected."));
-}
-void internet()
-{
-    auto routes = buildRouter();
-    std::string site;
-    loadingSpinnerCentered(1000, H("Loading"));
-    loadingSpinnerCentered(3000, H("Connecting"));
-    while (true) {
-        clscls();
-        mkbg();
-        Center() << H("Network Internet Navigator");
-        Center() << H("Enter Internet address (or type 'exit'):");
-        std::cout << std::string(getConsoleWidth() / 2 - 15, ' ');
-        std::getline(std::cin >> std::ws, site);
-        if (site.empty())
-            continue;
-        std::transform(site.begin(), site.end(), site.begin(), ::tolower);
-
-        if (site == H("exit")) {
-            std::cout << H("\033[32;40m");
-            return;
-        }
-        auto it = routes.find(site);
-        if (it == routes.end()) {
-            connecting(site, true);
-            continue;
-        }
-        connecting(site, false);
-        it->second();
     }
 }
