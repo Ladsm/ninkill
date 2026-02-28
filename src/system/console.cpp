@@ -271,6 +271,8 @@ int readcommand(const std::string& line) {
 		cmds["cd"] = [](auto& a) {
 			if (a.size() < 2) { cwd = root.get(); return 0; }
 			VNode* dest = resolvePath(a[1]);
+			if (!dest) { std::cout << "Directory not found\n"; return 0; }
+			if (!dest->isDir) { std::cout << "Not a directory\n"; return 0; }
 			if (dest->locked) {
 				std::string input;
 				std::cout << H("Password: ");
@@ -280,8 +282,6 @@ int readcommand(const std::string& line) {
 					return 0;
 				}
 			}
-			if (!dest) { std::cout << "Directory not found\n"; return 0; }
-			if (!dest->isDir) { std::cout << "Not a directory\n"; return 0; }
 			cwd = dest;
 			return 0;
 			};
