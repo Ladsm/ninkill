@@ -3,22 +3,12 @@
 #include <ui/spiner.hpp>
 #include <ui/center.hpp>
 #include <net/website.hpp>
+#include <ui/userinput.hpp>
 #include <iostream>
 #include <string>
 #include <thread>
 #include <algorithm>
 
-int isAddress(const std::string& address) {
-    if (address == H("www.Nuebine.com") || address == H("www.nuebine.com"))
-        return 1;
-    else if (address.empty())
-        return 2;
-    else if (address == H("exit"))
-        return 3;
-    else if (address == H("www.jackwd.com"))
-        return 4;
-    return 0;
-}
 void clscls() {
     std::cout << H("\033[2J\033[H");
 }
@@ -37,22 +27,36 @@ void connecting(const std::string& address, bool fail) {
     mkbg();
     loadingSpinnerCentered(100, H("Connected."));
 }
+auto drawBox = [&](std::string text) {
+    Center() << H("+----------------------------------------+");
+    Center() << (H("| ") + text + std::string(38 - text.size(), ' ') + H(" |"));
+    Center() << H("+----------------------------------------+");
+    };
 void internet() {
     auto routes = buildRouter();
     std::string site;
     loadingSpinnerCentered(1000, H("Loading"));
     loadingSpinnerCentered(3000, H("Connecting"));
     while (true) {
-        clscls();
-        mkbg();
-        Center() << H("Network Internet Navigator");
-        Center() << H("Enter Internet address (or type 'exit'):");
-        std::cout << std::string(getConsoleWidth() / 2 - 15, ' ');
-        std::getline(std::cin >> std::ws, site);
-        if (site.empty())
-            continue;
+        site.clear();
+        while (true) {
+            clscls();
+            mkbg();
+            Center() << H("Network Internet Navigator");
+            Center() << H("Enter Internet address (or type 'exit'):");
+            drawBox(site);
+            int ch = readKey();
+            if (ch == '\r' || ch == '\n') {
+                if (site.empty())
+                    continue;
+                break;
+            }
+            else if ((ch == 8 || ch == 127) && !site.empty())
+                site.pop_back();
+            else if (ch >= 32 && ch <= 126 && site.size() < 38)
+                site.push_back((char)ch);
+        }
         std::transform(site.begin(), site.end(), site.begin(), ::tolower);
-
         if (site == H("exit")) {
             std::cout << H("\033[32;40m");
             return;

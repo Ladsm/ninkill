@@ -4,6 +4,7 @@
 #include <util/longtexts.h>
 #include <util/obfstr.hpp>
 #include <vfs/vfs.hpp>
+#include <ui/userinput.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -12,35 +13,6 @@
 #include <sstream>
 #include <unordered_set>
 
-#if defined(_WIN32)
-#include <conio.h>
-int readKey() {
-	int ch = _getch();
-	if (ch == 0 || ch == 224) {
-		int ch2 = _getch();
-		return 1000 + ch2;
-	}
-	return ch;
-}
-#else
-#include <unistd.h>
-#include <termios.h>
-int readKey() {
-	termios oldt, newt;
-	tcgetattr(STDIN_FILENO, &oldt);
-	newt = oldt;
-	newt.c_lflag &= ~(ICANON | ECHO);
-	tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-	int ch = getchar();
-	if (ch == 27) {
-		if (getchar() == '[') {
-			ch = 1000 + getchar();
-		}
-	}
-	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-	return ch;
-}
-#endif
 auto makePrompt = [] {
 	VNode* t = cwd;
 	std::string path;

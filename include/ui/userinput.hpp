@@ -19,3 +19,4 @@ enum class InputType {
     Escape
 };
 InputType GetPlayerInput();
+int readKey();

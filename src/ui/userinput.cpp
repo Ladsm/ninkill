@@ -73,3 +73,30 @@ InputType GetPlayerInput() {
     }
     return InputType::None;
 }
+//simpler key reader, not made for menuing
+#if defined(_WIN32)
+int readKey() {
+    int ch = _getch();
+    if (ch == 0 || ch == 224) {
+        int ch2 = _getch();
+        return 1000 + ch2;
+    }
+    return ch;
+}
+#else
+int readKey() {
+    termios oldt, newt;
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    int ch = getchar();
+    if (ch == 27) {
+        if (getchar() == '[') {
+            ch = 1000 + getchar();
+        }
+    }
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    return ch;
+}
+#endif
