@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "page.hpp"
+#include <net/page.hpp>
 void caesarCipher(std::string& data, int shift = 3);
 std::string getAppDataPath();
 void saveForum(const std::vector<Page>& pages);

@@ -1,6 +1,8 @@
-#include "obfstr.hpp"
-#include "boot.hpp"
-#include "longtexts.h"
+#include <system/ninsys.hpp>
+#include <boot/boot.hpp>
+#include <vfs/consolestart.hpp>
+#include <util/longtexts.h>
+#include <util/obfstr.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,8 +10,6 @@
 #include <functional>
 #include <sstream>
 #include <unordered_set>
-#include "consolestart.hpp"
-#include "ninsys.hpp"
 
 #if defined(_WIN32)
 #include <conio.h>

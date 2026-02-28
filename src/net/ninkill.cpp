@@ -1,5 +1,5 @@
-#include "obfstr.hpp"
-#include "boot.hpp"
+#include <util/obfstr.hpp>
+#include <boot/boot.hpp>
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -10,10 +10,10 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #endif
-#include "beep.h"
-#include "userinput.hpp"
-#include "page.hpp"
-#include "website.hpp"
+#include <util/beep.h>
+#include <ui/userinput.hpp>
+#include <net/page.hpp>
+#include <net/website.hpp>
 #include <algorithm>
 
 std::string menuops[2] = {H("   1-Forum Index     "), H("2-News     ")};

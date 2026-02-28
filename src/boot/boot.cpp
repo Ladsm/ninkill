@@ -1,7 +1,7 @@
-#include "obfstr.hpp"
-#include "boot.hpp"
-#include "ninkill.hpp"
-#include "beep.h"
+#include <util/obfstr.hpp>
+#include <boot/boot.hpp>
+#include <net/ninkill.hpp>
+#include <util/beep.h>
 #include <iostream>
 #include <string>
 #include <chrono>

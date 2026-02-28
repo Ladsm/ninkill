@@ -1,8 +1,9 @@
-#include "obfstr.hpp"
+#include <util/obfstr.hpp>
+#include <system/usrAndPass.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
-#include "usrAndPass.hpp"
+
 bool BANDIT = false;
 extern std::vector<user> list;
 bool whoiswantingin() {

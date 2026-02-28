@@ -1,6 +1,6 @@
-#include "obfstr.hpp"
-#include "website.hpp"
-#include "ninkill.hpp"
+#include <util/obfstr.hpp>
+#include <net/website.hpp>
+#include <net/ninkill.hpp>
 #include <iostream>
 #include <unordered_map>
 #include <functional>

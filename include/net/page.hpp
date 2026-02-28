@@ -1,8 +1,8 @@
 #pragma once
-#include "obfstr.hpp"
+#include <util/obfstr.hpp>
 #include <vector>
 #include <string>
-#include "usrAndPass.hpp"
+#include <system/usrAndPass.hpp>
 struct reply {
     std::string paragraph = H("");
     user replyer;

@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+#include <vector>
 struct VNode {
 	std::string name;
 	bool isDir;

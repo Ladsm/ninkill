@@ -1,5 +1,5 @@
 #pragma once
-#include "obfstr.hpp"
+#include <util/obfstr.hpp>
 #include <iostream>
 
 struct user {

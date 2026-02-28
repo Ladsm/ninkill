@@ -1,4 +1,4 @@
-#include "obfstr.hpp"
+#include <util/obfstr.hpp>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -12,7 +12,7 @@
 #include <sys/types.h>
 #include <pwd.h>
 #endif
-#include "page.hpp"
+#include "net/page.hpp"
 
 namespace fs = std::filesystem;
 
