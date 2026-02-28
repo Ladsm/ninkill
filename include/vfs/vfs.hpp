@@ -1,8 +1,8 @@
 #include <string>
 #include <vector>
 #include <functional>
-#include <unordered_map>
 #include <memory>
+#include <map>
 struct VNode {
 	std::string name;
 	bool isDir;
@@ -10,7 +10,7 @@ struct VNode {
 	bool isExec = false;
 	std::function<int(const std::vector<std::string>&)> execFunc;
 	VNode* parent = nullptr;
-	std::unordered_map<std::string, std::unique_ptr<VNode>> children;
+	std::map<std::string, std::unique_ptr<VNode>> children;
 	bool locked = false;
 	std::string passwordHash;
 	VNode(std::string n, bool d, VNode* p = nullptr)

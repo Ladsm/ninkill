@@ -46,13 +46,15 @@ Page Index = Page{ H("Index"), indexarr };
 std::vector<Page> FoRuM = { Index, News };
 std::vector<user> list = { nin ,john, Jack ,hoikgrew ,testmem ,jorin };
 void init() {
-	nin = user(H("nin"), H("XxAdMiN123xX"), 4);
+	nin = user(H("nin"), H("XxAdMiN123xX...NINEXC_PAKWORK_ENTER"), 4);
 	john = user(H("john"), H("12345678910mod"), 3);
 	Jack = user(H("Jack Wilder Dean"), H("no...youarenotgetingmypassword"), 3);
 	hoikgrew = user(H("hoikgrew"), H("HoknGrew"), 3);
 	testmem = user(H("TEST"), H("TESTSTART"), 1);
 	jorin = user(H("jorin"), H("dfsjhjiof"), -1);
-	list = { nin ,john, Jack ,hoikgrew ,testmem ,jorin };
+	till = user(H("till"), H("systemtilday"), 1);
+	tomm = user(H("tomm"), H("4566"), 1);
+	list = { nin ,john, Jack ,hoikgrew ,testmem ,jorin, till, tomm };
 }
 void initForumData(const std::vector<user>& users, const std::vector<Page>& pages) {
 	list = users;
