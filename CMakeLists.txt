@@ -24,6 +24,6 @@ endif()
 target_compile_options(ninkill PRIVATE
     $<$<CONFIG:Release>:-O2>
 )
-target_link_options(ninkill PRIVATE
+target_link_options(ninkill PRIVATE 
     $<$<CONFIG:Release>:-s>
 )

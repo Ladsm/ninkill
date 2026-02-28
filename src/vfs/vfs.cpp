@@ -1,3 +1,4 @@
+#include <util/obfstr.hpp>
 #include <vfs/vfs.hpp>
 #include <string>
 #include <sstream>
