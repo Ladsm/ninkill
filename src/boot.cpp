@@ -37,10 +37,13 @@ void DisplayMenu(std::string ItemsToShow[],int WhatsSelected,int amountofItems,c
     std::cout << H("\033[97;44m");
     std::cout << H("+") << std::string(innerWidth, '-') << H("+\n");
     std::string titleText = H(" ") + title;
-    std::string closeButton = H("[X]");
-    int spacing = innerWidth - titleText.length() - closeButton.length();
+    std::string closeButton = H("[╳]");
+    std::string fullButton = H("[O]");
+    std::string minButton = H("[─]");
+    int spacing = innerWidth - titleText.length() - closeButton.length() - fullButton.length() - minButton.length();
+    spacing += 4;
     if (spacing < 1) spacing = 1;
-    std::cout << H("|")<< titleText<< std::string(spacing, ' ')<< closeButton<< H("|\n");
+    std::cout << H("|")<< titleText<< std::string(spacing, ' ')<< minButton << fullButton << closeButton<< H("|\n");
     std::cout << H("+") << std::string(innerWidth, '-') << H("+\n");
     std:: cout << H("\033[48;2;192;192;192m");
     std:: cout << H("\033[38;2;0;0;0m");

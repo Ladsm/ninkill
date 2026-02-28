@@ -172,7 +172,7 @@ void initFS() {
 	auto ninbootmgr = mkdirNode(boot, H("NINBOOTMGR"));
 	mkfile(boot, H("vmlinuz"), gibernelf());
 	mkfile(boot, H("initrd.img"), gibernelf());
-	mkfile(boot, H("System.map"), H("c0100000 T _start\nc01001a0 T init_nin_kernel\nc0101fff T nin_lies\n"));
+	mkfile(boot, H("System.map"), H("c0100000 T _start\nc01001a0 T init_nin_kernel\nc0101fff T nin_sys_start\n"));
 	mkfile(boot, H("config"), H("CONFIG_X86=y\nCONFIG_MTRR = y\nCONFIG_MODULES = y\nCONFIG_MODVERSIONS = y\nCONFIG_NFFB_FS = y\nCONFIG_TFTCFYIS_FS = y\nCONFIG_MFS_FS = y\nCONFIG_MSDOS_FS = y\n"));
 	mkfile(ninbootmgr, H("ninbootmgr.cfg"), H("set default=\"0\"\nset imgdevpath=\"/dev/fd0\"\nmenuentry \'NINKILL os, linux\' --class os{\ninsmod bios\ninsmod mfs\nset root=\'hda,nindisk\'\nlinux /boot/vmlinuz\ninitrd /boot/initrd.img\n}\n"));
 	mkfile(ninbootmgr, H("stage2"), gibernelf());
@@ -533,7 +533,7 @@ int readcommand(const std::string& line) {
 			}
 			if (dev == H("/dev/hda") && devices[dev] == 2)
 				std::cout << H("5 Gigabite Hard disk\n");
-			if (dev == H("/dev/fd0") && devices[dev] == 2)
+			else if (dev == H("/dev/fd0") && devices[dev] == 2)
 				std::cout << H("10 Megabite flopy\n");
 			else if (dev == H("/dev/vdd") && devices[dev] == 2)
 				std::cout << H("To: nin\nThe forums are becomeing unstable, we dont have moderators for this and I dont want to mod the forums on work.\nPlease talk to the higher-ups about this\n - Jack.W Dean\n");
