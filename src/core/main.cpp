@@ -80,11 +80,11 @@ int main() {
 	FoRuM = loadForum(list);
 	init();
 reboot:
-	//showBootMenu();
-	//std::cout << H("\ninitramfs"); threedot();
-	//clear();
-	//std::cout << SAFESTR("\033[32m");
-	//bootanim();
+	showBootMenu();
+	std::cout << H("\ninitramfs"); threedot();
+	clear();
+	std::cout << SAFESTR("\033[32m");
+	bootanim();
 	clear();
 	bool usr = false;
 	std::cout << H("Welcome to NINKILLos!\nWrite \'help\' for more info\n");
