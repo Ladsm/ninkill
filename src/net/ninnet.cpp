@@ -27,9 +27,9 @@ void connecting(const std::string& address, bool fail) {
     mkbg();
     loadingSpinnerCentered(100, H("Connected."));
 }
-auto drawBox = [&](std::string text) {
+void drawBox(std::string text) {
     Center() << H("+----------------------------------------+");
-    Center() << (H("| ") + text + std::string(38 - text.size(), ' ') + H(" |"));
+    Center() << (SAFESTR("| ") + text + std::string(38 - text.size(), ' ') + H(" |"));
     Center() << H("+----------------------------------------+");
     };
 void internet() {
@@ -40,7 +40,6 @@ void internet() {
     while (true) {
         site.clear();
         while (true) {
-            clscls();
             mkbg();
             Center() << H("Network Internet Navigator");
             Center() << H("Enter Internet address (or type 'exit'):");

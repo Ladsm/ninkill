@@ -16,5 +16,6 @@ struct user {
 * 3. moderator
 * 4. admin
 * -1. banned
-*/
+*/ 
+extern user currentuser;
 bool whoiswantingin();

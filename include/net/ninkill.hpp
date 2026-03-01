@@ -4,3 +4,4 @@
 void initforum();
 void forum(std::vector<Page>& forumPages);
 void internet();
+extern std::vector<Page> FoRuM;

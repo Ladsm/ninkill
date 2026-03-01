@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-bool BANDIT = false;
 extern std::vector<user> list;
+user currentuser;
 bool whoiswantingin() {
 	std::string nameget;
 	std::string passget;
@@ -13,12 +13,14 @@ bool whoiswantingin() {
 	std::getline(std::cin >> std::ws, nameget); std::cout << H("password: ");
 	std::getline(std::cin >> std::ws, passget);
 	if (nameget == H("BANDIT") && passget == H("ENVELOPE")) {
-		BANDIT = true;
+		currentuser.name = "BANDIT";
+		currentuser.level = 0;
 		return true;
 	}
 	for (int i = 0; i < list.size(); i++) {
 		if (nameget == list[i].name && passget == list[i].password)
 		{
+			currentuser = list[i];
 			return true;
 		}
 	}

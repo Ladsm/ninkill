@@ -71,7 +71,7 @@ void initforum() {
     printMenuLine(3, menuops[0], menuops[1]);
     printBlackBar(4);
 }
-void redrawall() {
+void reDrawAll() {
     std::cout << H("\033[2J\033[H");
     orangebk();
     printBlackBar(2);
@@ -100,7 +100,7 @@ void drawPage(const Page& page, int selectedPost) {
     std::cout.flush();
 }
 void drawPost(Post& post) {
-    redrawall();
+    reDrawAll();
     int width = getConsoleWidth();
     int height = getConsoleHeight();
     printBlackBar(1);
@@ -143,6 +143,11 @@ void drawPost(Post& post) {
 
     std::cout.flush();
 }
+void initPosts() {
+    switch (currentuser.level) {
+
+    }
+}
 void forum(std::vector<Page>& forumPages) {
     int currentPage = 0;
     int selectedPost = 0;
@@ -160,10 +165,10 @@ void forum(std::vector<Page>& forumPages) {
                     selectedPost++;
                 break;
             case InputType::Top1:
-                redrawall();
+                reDrawAll();
                 currentPage = 0; selectedPost = 0; break;
             case InputType::Top2:
-                redrawall();
+                reDrawAll();
                 currentPage = 1; selectedPost = 0; break;
             case InputType::Enter:
                 inPostView = true;
@@ -179,7 +184,7 @@ void forum(std::vector<Page>& forumPages) {
         else {
             switch (input) {
             case InputType::Escape:
-                redrawall();
+                reDrawAll();
                 drawPage(forumPages[currentPage], selectedPost);
                 inPostView = false;
                 break;

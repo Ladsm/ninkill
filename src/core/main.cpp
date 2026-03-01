@@ -48,12 +48,12 @@ std::vector<user> list = { nin ,john, Jack ,hoikgrew ,testmem ,jorin };
 void init() {
 	nin = user(H("nin"), H("XxAdMiN123xX...NINEXC_PAKWORK_ENTER"), 4);
 	john = user(H("john"), H("12345678910mod"), 3);
-	Jack = user(H("Jack Wilder Dean"), H("no...youarenotgetingmypassword"), 3);
+	Jack = user(SAFESTR("Jack Wilder Dean"), H("no...youarenotgetingmypassword"), 3);
 	hoikgrew = user(H("hoikgrew"), H("HoknGrew"), 3);
 	testmem = user(H("TEST"), H("TESTSTART"), 1);
 	jorin = user(H("jorin"), H("dfsjhjiof"), -1);
 	till = user(H("till"), H("systemtilday"), 1);
-	tomm = user(H("tomm"), H("4566"), 1);
+	tomm = user(H("tomm"), SAFESTR("4566"), 1);
 	list = { nin ,john, Jack ,hoikgrew ,testmem ,jorin, till, tomm };
 }
 void initForumData(const std::vector<user>& users, const std::vector<Page>& pages) {
@@ -81,7 +81,7 @@ int main() {
 	initFS();
 	std::cout << H("\ninitramfs"); threedot();
 	clear();
-	std::cout << H("\033[32m");
+	std::cout << SAFESTR("\033[32m");
 	bootanim();
 	clear();
 	bool usr = false;
@@ -107,7 +107,7 @@ int main() {
 			clear();
 			break;
 		case 3:
-			std::cout << H("Rebooting"); threedot();
+			std::cout << SAFESTR("Rebooting"); threedot();
 			clear();
 			goto reboot;
 			break;

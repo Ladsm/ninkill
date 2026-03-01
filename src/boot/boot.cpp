@@ -2,6 +2,7 @@
 #include <boot/boot.hpp>
 #include <net/ninkill.hpp>
 #include <util/beep.h>
+#include <util/getwh.hpp>
 #include <ui/menu.hpp>
 #include <ui/center.hpp>
 #include <iostream>
@@ -16,17 +17,6 @@
 #if defined(__linux__)
 #include <unistd.h>
 #include <termios.h>
-int getch() {
-    struct termios old_settings, new_settings;
-    int ch;
-    tcgetattr(STDIN_FILENO, &old_settings);
-    new_settings = old_settings;
-    new_settings.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &new_settings);
-    ch = getchar();
-    tcsetattr(STDIN_FILENO, TCSANOW, &old_settings);
-    return ch;
-}
 #endif
 void threedot();
 void ensureConsoleInitialized();
@@ -93,15 +83,7 @@ void bootanim() {
         {H("NN  NNNN "), H("II NN  NNNN  KK KK  II LL       LL      ")},
         {H("NN   NNN "), H("II NN   NNN  KK  KK II LLLLLLLL LLLLLLLL")}
     };
-    int consoleHeight = 25;
-#if defined(_WIN32)
-    CONSOLE_SCREEN_BUFFER_INFO csbi;
-    if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
-        consoleHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-#else
-    struct winsize w;
-    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) == 0) consoleHeight = w.ws_row;
-#endif
+    int consoleHeight = getConsoleHeight();
     int topPadding = (consoleHeight - static_cast<int>(logo.size())) / 2;
     size_t maxLen = 0;
     for (auto& [fixed, moving] : logo)
