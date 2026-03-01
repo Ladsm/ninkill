@@ -223,6 +223,14 @@ int readcommand(const std::string& line) {
 		return 0;
 	}
 	static std::unordered_map<std::string, CmdFunc> cmds;
+	if (packagesz[4].downloaded && cmds.find("nin-show") == cmds.end()) {
+		cmds["nin-show"] = [](auto& a) {
+			for (size_t i = 0; i < ninfetch.size(); i++) {
+				std::cout << ninfetch[i];
+			}
+			return 0;
+			};
+	}
 	if (cmds.empty()) {
 		cmds["bash"] = [](auto& a) { return 0; };
 		cmds["cat"] = [](auto& a) {

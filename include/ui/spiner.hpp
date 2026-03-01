@@ -24,3 +24,23 @@ inline void loadingSpinnerCentered(int duration_ms = 3000, std::string nexttospi
     }
     std::cout << H("\033[H");
 }
+inline void printProgress(double percentage) {
+    int val = (int)(percentage * 100);
+    int barWidth = 50;
+    std::cout << "\r[";
+    int pos = (int)(barWidth * percentage);
+    for (int i = 0; i < barWidth; ++i) {
+        if (i < pos) std::cout << "=";
+        else if (i == pos) std::cout << ">";
+        else std::cout << " ";
+    }
+    std::cout << "] " << val << "% " << std::flush;
+}
+inline void progressbar(int speed) {
+    int totalSteps = 100;
+    for (int i = 0; i <= totalSteps; ++i) {
+        printProgress((double)i / totalSteps);
+        std::this_thread::sleep_for(std::chrono::milliseconds(speed));
+    }
+    std::cout << '\n';
+}
