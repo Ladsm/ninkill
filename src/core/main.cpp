@@ -75,7 +75,7 @@ int main() {
 	std::string FKDEF = "ENCRT(\"OS log...\")";
 	FoRuM = loadForum(list);
 	init();
-	reboot:
+reboot:
 	showBootMenu();
 	initSysCommands();
 	initFS();
@@ -91,11 +91,11 @@ int main() {
 		switch (mode) {
 		case 1:
 			clear();
-		login:
-			usr = whoiswantingin();
-			if (usr == false) {
-				std::cout << H("Sorry... That name or password is incorect.\n");
-				goto login;
+			while (!usr) {
+				usr = whoiswantingin();
+				if (!usr) {
+					std::cout << H("Sorry... That name or password is incorect.\n");
+				}
 			}
 			initforum();
 			forum(FoRuM);
