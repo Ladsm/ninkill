@@ -14,7 +14,7 @@ void initSysCommands() {
         "runlevel   : 3\n"
         "processes  : 58\n"
         "init       : 2.74\n"
-        "load avg   : 0.01 0.03 0.00"
+        "load avg   : 0.01 0.03 0.00\n"
         "tty users  : 1\n");
         return 0;
         }

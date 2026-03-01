@@ -108,6 +108,7 @@ void initFS() {
 	mkfile(bin, H("bash.exc"), giberspeak());
 	mkfile(bin, H("nin-sys.exc"), giberspeak());
 	mkfile(bin, H("StartAnim.exc"), giberspeak());
+	mkfile(bin, H("neon.exc"), giberspeak());
 	//dev
 	mkfile(dev, H("loop0"), H(""));
 	mkfile(dev, H("hda"), H("RAW BLOCK DEVICE\nREAD VIA DRIVER ONLY\nTRY USING ifo\n"));

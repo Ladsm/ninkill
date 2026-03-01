@@ -1,6 +1,7 @@
 #include <system/ninsys.hpp>
 #include <boot/boot.hpp>
 #include <system/console.hpp>
+#include <system/pkg.hpp>
 #include <util/longtexts.h>
 #include <util/obfstr.hpp>
 #include <vfs/vfs.hpp>
@@ -264,6 +265,7 @@ int readcommand(const std::string& line) {
 		cmds[H("nin-sys")] = [](auto& a) { return nin_sys_cmd(a); };
 		cmds[H("nin-fexc")] = [](auto&) { return 1; };
 		cmds[H("nin-iexc")] = [](auto&) { return 2; };
+		cmds[H("neon")] = [](auto& a) { return neon_cmd(a); };
 		cmds[H("ls")] = [](auto&) { listdir(); return 0; };
 		cmds[H("dir")] = cmds[H("ls")];
 		cmds[H("ll")] = cmds[H("ls")]; // alias

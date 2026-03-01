@@ -4,6 +4,7 @@
 #include <system/console.hpp>
 #include <system/savefile.hpp>
 #include <system/ninsys.hpp>
+#include <system/pkg.hpp>
 #include <vfs/vfs.hpp>
 #include <filesystem>
 #ifdef _WIN32
@@ -55,6 +56,9 @@ void init() {
 	till = user(H("till"), H("systemtilday"), 1);
 	tomm = user(H("tomm"), SAFESTR("4566"), 1);
 	list = { nin ,john, Jack ,hoikgrew ,testmem ,jorin, till, tomm };
+	initSysCommands();
+	initFS();
+	initNeon();
 }
 void initForumData(const std::vector<user>& users, const std::vector<Page>& pages) {
 	list = users;
@@ -76,13 +80,11 @@ int main() {
 	FoRuM = loadForum(list);
 	init();
 reboot:
-	showBootMenu();
-	initSysCommands();
-	initFS();
-	std::cout << H("\ninitramfs"); threedot();
-	clear();
-	std::cout << SAFESTR("\033[32m");
-	bootanim();
+	//showBootMenu();
+	//std::cout << H("\ninitramfs"); threedot();
+	//clear();
+	//std::cout << SAFESTR("\033[32m");
+	//bootanim();
 	clear();
 	bool usr = false;
 	std::cout << H("Welcome to NINKILLos!\nWrite \'help\' for more info\n");
