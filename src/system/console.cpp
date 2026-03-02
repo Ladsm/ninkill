@@ -233,7 +233,8 @@ int readcommand(const std::string& line) {
 		cmds[H("dir")] = cmds[H("ls")];
 		cmds[H("ll")] = cmds[H("ls")];
 		cmds[H("pwd")] = [](auto&) { std::cout << cwdPath() << "\n"; return 0; };
-
+		cmds[H("clear")] = [](auto& a) { std::cout << H("\033[2J\033[H"); return 0; };
+		cmds[H("cls")] = cmds[H("clear")];
 		cmds[H("cat")] = [](auto& a) {
 			if (a.size() < 2) { std::cout << "Usage: cat <file>\n"; return 0; }
 			VNode* f = resolvePath(a[1]);
