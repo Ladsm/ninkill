@@ -39,6 +39,13 @@ void initSysCommands() {
             return 0;
         }
     };
+    sysCommands[H("version")] = {
+    H("version"),
+    [](const std::vector<std::string>&)->int {
+        std::cout << "1.3\n";
+        return 0;
+        }
+    };
     sysCommands[H("help")] = {
         H("help"),
         [](const std::vector<std::string>&)->int {

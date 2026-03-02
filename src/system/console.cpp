@@ -152,6 +152,7 @@ const std::unordered_map<std::string, std::string> helpDB = {
 	{H("pwd"), H("Prints working directory")},
 	{H("cls"),H("Clears the screen")},
 	{H("clear"),H("Alias for cls")},
+	{H("neon"), H("Neon package manager")},
 	{H("nin-fexc"),H("Runs forum executable")},
 	{H("nin-iexc"),H("Runs internet executable")},
 	{H("nin-sys"), H("System utility for power users")},
@@ -161,7 +162,7 @@ const std::unordered_map<std::string, std::string> helpDB = {
 	{H("ifo"),H("Displays information about device")},
 	{H("StartAnim"), H("Displays the start animation")},
 	{H("lsblk"),H("Shows block devices")},
-	{ H("rm"), H("Removes a file or empty directory") }
+	{ H("rm"), H("Removes a file or empty directory")}
 };
 void EXIT(int code) {
 	std::exit(code);
@@ -242,14 +243,18 @@ int readcommand(const std::string& line) {
 			std::cout << f->content << "\n";
 			return 0;
 			};
-
 		cmds[H("mkdir")] = [](auto& a) {
 			if (a.size() < 2) { std::cout << "Usage: mkdir <name>\n"; return 0; }
 			if (cwd->children.count(a[1])) { std::cout << "Already exists\n"; return 0; }
 			mkdirNode(cwd, a[1]);
 			return 0;
 			};
-
+		cmds[H("touch")] = [](auto& a) {
+			if (a.size() < 2) { std::cout << "Usage: touch <name>\n"; return 0; }
+			if (cwd->children.count(a[1])) { std::cout << "File Already exists\n"; return 0; }
+			mkfile(cwd, a[1], "");
+			return 0;
+			};
 		cmds[H("cd")] = [](auto& a) {
 			if (a.size() < 2) { cwd = root.get(); return 0; }
 			VNode* dest = resolvePath(a[1]);
