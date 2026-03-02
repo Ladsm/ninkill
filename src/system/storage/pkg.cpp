@@ -1,6 +1,9 @@
 #include <util/obfstr.hpp>
 #include <system/storage/pkg.hpp>
 #include <ui/spiner.hpp>
+#include <vfs/vfs.hpp>
+#include <util/text/longtexts.h>
+#include <programs/vi.hpp>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -52,51 +55,62 @@ void initNeon() {
                 std::cout << H("Usage: neon install <package>\n");
                 return 0;
             }
-            std::string pkg = a[2];
+            std::string pkgName = a[2];
             for (size_t i = 0; i < packagesz.size(); i++) {
-                if (packagesz[i].name == pkg && packagesz[i].willDownload == false) {
-                    std::cout << packagesz[i].message << '\n';
-                    return 0;
-                }
-                else if (packagesz[i].name == pkg && packagesz[i].willDownload == true) {
-                    progressbar(20);
-                    packagesz[i].downloaded = true;
-                    std::cout << packagesz[i].message << '\n';
+                if (packagesz[i].name == pkgName) {
+                    if (packagesz[i].willDownload) {
+                        progressbar(20);
+                        packagesz[i].downloaded = true;
+                        VNode* bin = resolvePath(H("/bin"));
+                        if (bin) {
+                            VNode* exe = mkfile(bin, pkgName + H(".exc"), giberspeak());
+                            exe->isExec = true;
+                            if (pkgName == H("vi")) {
+                                exe->execFunc = [](const std::vector<std::string>& args) { Vi(args); return 0; };
+                            }
+                            else if (pkgName == H("ninshow")) {
+                                exe->execFunc = [](const std::vector<std::string>& args) {
+                                    for (const auto& line : ninfetch) std::cout << line;
+                                    return 0;
+                                    };
+                                }
+                            }
+                            std::cout << packagesz[i].message << '\n';
+                        }
+                        else {
+                            std::cout << packagesz[i].message << '\n';
+                    }
                     return 0;
                 }
             }
-            std::cout << H("Could not find package ") << pkg << H(" in database www.nuedb.co.us, returned error 404.\n");
+            std::cout << H("Could not find package ") << pkgName << H("\n");
             return 0;
         }
     };
-    neonCommands[H("remove")] = { H("remove"), [](const std::vector<std::string>& a) -> int {
-    if (a.size() < 3) {
-        std::cout << H("Usage: neon remove <package>\n");
-        return 0;
-    }
-    std::string pkgName = a[2];
-    bool found = false;
-    for (auto& pkg : packagesz) {
-        if (pkg.name == pkgName) {
-            if (pkg.downloaded) {
-                std::cout << "Removing " << pkg.name << "...\n";
-                pkg.downloaded = false; 
-                
-                progressbar(5);
-                std::cout << "Done!\n";
-                found = true;
-            } else {
-                std::cout << H("Package '") << pkgName << H("' is not installed.\n");
+    neonCommands[H("remove")] = {
+        H("remove"),
+        [](const std::vector<std::string>& a) -> int {
+            if (a.size() < 3) {
+                std::cout << H("Usage: neon remove <package>\n");
                 return 0;
             }
-            break; 
-        }
-    }
-    if (!found) {
-        std::cout << H("No package with the name '") << pkgName << H("'\n");
-    }
+            std::string pkgName = a[2];
+            for (auto& pkg : packagesz) {
+                if (pkg.name == pkgName && pkg.downloaded) {
+                    std::cout << "Removing " << pkg.name << "...\n";
+                    pkg.downloaded = false;
+                    VNode* bin = resolvePath(H("/bin"));
+                    if (bin) {
+                        bin->children.erase(pkgName + H(".exc"));
+                    }
+                    progressbar(5);
+                    std::cout << "Done!\n";
+                    return 0;
+                }
+            }
+            std::cout << H("No package with the name '") << pkgName << H("'\n");
             return 0;
-        } 
+        }
     };
     neonCommands[H("help")] = {
         H("help"),
@@ -106,8 +120,8 @@ void initNeon() {
         }
     };
     neonCommands[H("version")] = {
-    H("version"),
-    [](const std::vector<std::string>&) -> int {
+        H("version"),
+        [](const std::vector<std::string>&) -> int {
             std::cout << H("N    N                             \n");
             std::cout << H("NN   N eeeee            (c)Nuebine \n");
             std::cout << H("N N  N e   e           Incorporated\n");

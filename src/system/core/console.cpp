@@ -163,7 +163,7 @@ const std::unordered_map<std::string, std::string> helpDB = {
 	{H("ifo"),H("Displays information about device")},
 	{H("StartAnim"), H("Displays the start animation")},
 	{H("lsblk"),H("Shows block devices")},
-	{ H("rm"), H("Removes a file or empty directory")}
+	{H("rm"), H("Removes a file or empty directory")}
 };
 void EXIT(int code) {
 	std::exit(code);
@@ -172,6 +172,14 @@ int readcommand(const std::string& line) {
 	auto args = tokenize(line);
 	if (args.empty()) return 0;
 	const std::string& cmd = args[0];
+	VNode* bin = resolvePath(H("/bin"));
+	if (bin) {
+		std::string exeName = (cmd.find('.') == std::string::npos) ? cmd + H(".exc") : cmd;
+		auto it = bin->children.find(exeName);
+		if (it != bin->children.end() && it->second->isExec) {
+			return it->second->execFunc(args);
+		}
+	}
 	auto local = cwd->children.find(cmd);
 	if (local != cwd->children.end() && local->second->isExec)
 		return local->second->execFunc(args);
@@ -225,18 +233,6 @@ int readcommand(const std::string& line) {
 		return 0;
 	}
 	static std::unordered_map<std::string, CmdFunc> cmds;
-	if (packagesz[3].downloaded == true && cmds.find("vi") == cmds.end()) {
-		cmds["vi"] = [](auto& a) {
-			Vi(a);
-			return 0;
-		};
-	}
-	if (packagesz[4].downloaded == true && cmds.find("nin-show") == cmds.end()) {
-		cmds["nin-show"] = [](auto& a) {
-			for (size_t i = 0; i < ninfetch.size(); i++) std::cout << ninfetch[i];
-			return 0;
-		};
-	}
 	if (cmds.find(H("ls")) == cmds.end()) {
 		cmds[H("bash")] = [](auto& a) { return 0; };
 		cmds[H("ls")] = [](auto&) { listdir(); return 0; };
