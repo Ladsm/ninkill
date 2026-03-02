@@ -311,6 +311,7 @@ int readcommand(const std::string& line) {
 		cmds[H("nin-iexc")] = [](auto&) { return 2; };
 		cmds[H("neon")] = [](auto& a) { return neon_cmd(a); };
 		cmds[H("StartAnim")] = [](auto& a) { bootanim(); return 0; };
+		cmds[PROTECT("lsblk")] = [](auto&) { printDevices(); return 0; };
 		cmds[H("lsfs")] = [](auto&) {
 			std::cout << H("All filesystem types:\nTYPENAME       Fullname\n");
 			std::cout << H("nffb           new formated filesystem blocks\n");
