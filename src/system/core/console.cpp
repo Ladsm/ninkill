@@ -6,7 +6,6 @@
 #include <util/obfstr.hpp>
 #include <vfs/vfs.hpp>
 #include <ui/userinput.hpp>
-#include <programs/vi.hpp>
 #include <iostream>
 #include <string>
 #include <vector>

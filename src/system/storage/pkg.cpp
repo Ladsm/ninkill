@@ -9,41 +9,56 @@
 #include <string>
 #include <functional>
 #include <unordered_map>
-const std::vector<std::string> ninfetch =
-{
-    H("                                                                       \n"),
-    H("               ----++----                                              \n"),
-    H("                   ||  AAA                                             \n"),
-    H("++-----            ||   AAA      ---++---                              \n"),
-    H("||    AA           ||    AA         ||                                 \n"),
-    H("||     AA          ||     AA        ||                                 \n"),
-    H("||     AA          ||     AA        || +-----------------------------+ \n"),
-    H("||      AA         ||     AA        || |root@ninkill-live            | \n"),
-    H("||      AA         ||     AA        || |OS: ninkill x86              | \n"),
-    H("||      AA         ||      AA       || |Packages:                    | \n"),
-    H("||      AA         ||      AA       || |Shell: bash 2.0              | \n"),
-    H("||      AA         ||      AA       || |CPU: Intel(c) Pentium MMX 200| \n"),
-    H("||       AA        ||      AA       || |MHz Memory: 32MB SDRAM       | \n"),
-    H("||       AA        ||       AA      || |Disk (/): 10.3 MB - mfs      | \n"),
-    H("||       AA        ||       AA      || |Disk (/mnt/): 5.05GB - mfs   | \n"),
-    H("||        AA       ||        AA     || |Locale: en_US.UTF-8          | \n"),
-    H("||         AA      ||        AAA    || +-----------------------------+ \n"),
-    H("||          AA     ||          AA   ||                                 \n"),
-    H("            AAA    ||           AAAA++                                 \n"),
-    H("             AAA   ||             AA                                   \n"),
-    H("              AAA  ||                                                  \n"),
-    H("               AAA ||                                                  \n"),
-    H("                AAA||                                                  \n"),
-    H("               ----++---                                               \n"),
-    H("                                                                       \n"),
-};
 std::unordered_map<std::string, NeonCommand> neonCommands;
 package vdd = package(H("vdd"), H("Error: archive discontinued\nThe virtual dynamic disk(vdd) is unstable on NINKILLos 1.3, we can not supply you defected copys of it."), false, false);
 package forum = package(H("forum"), H("The forum package is now hard installed on NINKILL 1.3\nSee: www.nuebine.com/forum/news"), false, false);
 package echo = package(H("echo"), H("Echo node sent to www.neudb.com/.echo"), false, false);
 package vi = package(H("vi"), H("vi installed!\nUsage: vi <filename>"), true, false);
-package ninshow = package(H("ninshow"), H("Installed!\nWrite nin-show to see all the parts of your computer."), true, false);
+package ninshow = package(H("ninfetch"), H("Installed!\nWrite ninfetch to see all the parts of your computer."), true, false);
 std::vector<package> packagesz = { vdd, forum, echo, vi, ninshow };
+std::string amountOfPackages(std::vector<package> pkgs) {
+    int returner = 0;
+    for (size_t i = 0; i < pkgs.size(); i++) {
+        if (pkgs[i].downloaded == true) {
+            returner++;
+        }
+    }
+    return std::to_string(returner);
+}
+void printninfetch() {
+    const std::vector<std::string> ninfetch =
+    {
+        H("                                                                       \n"),
+        H("               ----++----                                              \n"),
+        H("                   ||  AAA                                             \n"),
+        H("++-----            ||   AAA      ---++---                              \n"),
+        H("||    AA           ||    AA         ||                                 \n"),
+        H("||     AA          ||     AA        ||                                 \n"),
+        H("||     AA          ||     AA        || +-----------------------------+ \n"),
+        H("||      AA         ||     AA        || |root@ninkill-live            | \n"),
+        H("||      AA         ||     AA        || |OS: ninkill x86              | \n"),
+        H("||      AA         ||      AA       || |Packages: "), amountOfPackages(packagesz), H("                  | \n"),
+        H("||      AA         ||      AA       || |Shell: bash 2.0              | \n"),
+        H("||      AA         ||      AA       || |CPU: Intel(c) Pentium MMX 200| \n"),
+        H("||       AA        ||      AA       || |MHz Memory: 32MB SDRAM       | \n"),
+        H("||       AA        ||       AA      || |Disk (/): 10.3 MB - mfs      | \n"),
+        H("||       AA        ||       AA      || |Disk (/mnt/): 5.05GB - mfs   | \n"),
+        H("||        AA       ||        AA     || |Locale: en_US.UTF-8          | \n"),
+        H("||         AA      ||        AAA    || +-----------------------------+ \n"),
+        H("||          AA     ||          AA   ||                                 \n"),
+        H("            AAA    ||           AAAA++                                 \n"),
+        H("             AAA   ||             AA                                   \n"),
+        H("              AAA  ||                                                  \n"),
+        H("               AAA ||                                                  \n"),
+        H("                AAA||                                                  \n"),
+        H("               ----++---                                               \n"),
+        H("                                                                       \n"),
+    };
+    for (const auto& line : ninfetch) {
+        std::cout << line;
+    }
+    return;
+}
 static std::string arg(const std::vector<std::string>& a, size_t i) {
     return (i < a.size()) ? a[i] : "";
 }
@@ -68,10 +83,9 @@ void initNeon() {
                             if (pkgName == H("vi")) {
                                 exe->execFunc = [](const std::vector<std::string>& args) { Vi(args); return 0; };
                             }
-                            else if (pkgName == H("ninshow")) {
+                            else if (pkgName == H("ninfetch")) {
                                 exe->execFunc = [](const std::vector<std::string>& args) {
-                                    for (const auto& line : ninfetch) std::cout << line;
-                                    return 0;
+                                    printninfetch(); return 0;
                                     };
                                 }
                             }

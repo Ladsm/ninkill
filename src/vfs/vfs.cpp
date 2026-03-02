@@ -115,7 +115,7 @@ neon install <package name>
 vdd : virtual dynamic disk reader
 vi : simple text editor
 forum : nin forum software
-ninshow : nin computer analizer
+ninfetch : nin computer analizer
 )";
 void initFS() {
 	root = std::make_unique<VNode>("/", true, nullptr);
