@@ -64,7 +64,13 @@ void initForumData(const std::vector<user>& users, const std::vector<Page>& page
 	list = users;
 	FoRuM = pages;
 }
-int main() {
+bool debug = false;
+int main(int argc, char* argv[]) {
+	for (int i = 1; i < argc; ++i) {
+		if (strcmp(argv[i], "iopgjdiogjiogjidfogjiopgjdfiopg4789503274850934uojklsdjfklsdjfmk") == 0) {
+			debug = true;
+		}
+	}
 	std::cout << "/*do we still need this? -Hoien Shaun Dow\nprojecting much? -Jack.W Dean\nno, will we keep it? Yes. -nin\nNUEBINE WILL NEVER LET PEOPLE DATA MINE, IF YOU DO YOU ARE BRAKEING THE NIN LICENSE AND IF YOU ARE FOUND OUT TO BE USING A CRACKED VERSION OR DATAMINE OUR PRODUCTS YOU WILL BE SENT A HEFTY FINE OR THE LAW WILL CATCH UP TO YOU\n";
 	clear();
 #ifdef _WIN32
@@ -80,12 +86,14 @@ int main() {
 	FoRuM = loadForum(list);
 	init();
 reboot:
-	showBootMenu();
-	std::cout << H("\ninitramfs"); threedot();
-	clear();
-	std::cout << SAFESTR("\033[32m");
-	bootanim();
-	clear();
+	if (!debug) {
+		showBootMenu();
+		std::cout << H("\ninitramfs"); threedot();
+		clear();
+		std::cout << SAFESTR("\033[32m");
+		bootanim();
+		clear();
+	}
 	bool usr = false;
 	std::cout << H("Welcome to NINKILLos!\nWrite \'help\' for more info\n");
 	while (true) {
