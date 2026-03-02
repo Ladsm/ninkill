@@ -187,10 +187,12 @@ int readcommand(const std::string& line) {
 	}
 	if (cmd == H("help")) {
 		if (args.size() == 1) {
-			std::cout << H("Thank you for using NINKILL os!\nWe hope you enjoy your use of NINKILL os and send feedback to ://www.nuebine.com :)\n");
-			for (const auto& [name, desc] : helpDB)
-				std::cout << H("  ") << name << H("\n");
-			std::cout << H("\nType help <command> for details\n");
+			std::cout << H("|Thank you for using NINKILL os!\n|We hope you enjoy your use of NINKILL os and send feedback to ://www.nuebine.com :)\n|");
+			std::cout << H("Use neon to use the package manager\n|Use nin-sys for system commands\n|All commands:\n");
+			for (const auto& [name, desc] : helpDB) {
+				std::cout << '|' << name << '\n';
+			}
+			std::cout << H("|Type help <command> for details\n");
 			return 0;
 		}
 		std::string target = args[1];
@@ -204,7 +206,7 @@ int readcommand(const std::string& line) {
 	}
 	if (cmd.rfind(H("mkfs."), 0) == 0) {
 		if (args.size() < 2) {
-			std::cout << "Usage: mkfs.<type> /dev/device\n";
+			std::cout << H("Usage: mkfs.<type> /dev/device\n");
 			return 0;
 		}
 		std::string type = cmd.substr(5);
