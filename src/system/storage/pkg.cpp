@@ -69,25 +69,34 @@ void initNeon() {
             return 0;
         }
     };
-    neonCommands[H("remove")] = {
-        H("remove"),
-        [](const std::vector<std::string>& a) -> int {
-            if (a.size() < 3) {
-                std::cout << H("Usage: neon remove <package>\n");
+    neonCommands[H("remove")] = { H("remove"), [](const std::vector<std::string>& a) -> int {
+    if (a.size() < 3) {
+        std::cout << H("Usage: neon remove <package>\n");
+        return 0;
+    }
+    std::string pkgName = a[2];
+    bool found = false;
+    for (auto& pkg : packagesz) {
+        if (pkg.name == pkgName) {
+            if (pkg.downloaded) {
+                std::cout << "Removing " << pkg.name << "...\n";
+                pkg.downloaded = false; 
+                
+                progressbar(5);
+                std::cout << "Done!\n";
+                found = true;
+            } else {
+                std::cout << H("Package '") << pkgName << H("' is not installed.\n");
                 return 0;
             }
-            std::string pkg = a[2];
-            for (size_t i = 0; i < packagesz.size(); i++) {
-                if (packagesz[i].name == pkg && packagesz[i].downloaded == true) {
-                    std::cout << "Removeing " << packagesz[i].name << '\n';
-                    progressbar(5);
-                    std::cout << "Done!\n";
-                    return 0;
-                }
-            }
-            std::cout << H("No package with the name \'") << pkg << H("\'\n");
-            return 0;
+            break; 
         }
+    }
+    if (!found) {
+        std::cout << H("No package with the name '") << pkgName << H("'\n");
+    }
+            return 0;
+        } 
     };
     neonCommands[H("help")] = {
         H("help"),
@@ -123,9 +132,4 @@ int neon_cmd(const std::vector<std::string>& args) {
         return 0;
     }
     return it->second.action(args);
-}
-void installPackage(package* pkg) {
-    pkg->downloaded = true;
-} void removePackage(package* pkg) {
-    pkg->downloaded = false;
 }

@@ -225,17 +225,17 @@ int readcommand(const std::string& line) {
 		return 0;
 	}
 	static std::unordered_map<std::string, CmdFunc> cmds;
-	if (packagesz[4].downloaded && cmds.find("nin-show") == cmds.end()) {
-		cmds["nin-show"] = [](auto& a) {
-			for (size_t i = 0; i < ninfetch.size(); i++) std::cout << ninfetch[i];
-			return 0;
-			};
-	}
-	if (packagesz[3].downloaded && cmds.find("vi") == cmds.end()) {
+	if (packagesz[3].downloaded == true && cmds.find("vi") == cmds.end()) {
 		cmds["vi"] = [](auto& a) {
 			Vi(a);
 			return 0;
-			};
+		};
+	}
+	if (packagesz[4].downloaded == true && cmds.find("nin-show") == cmds.end()) {
+		cmds["nin-show"] = [](auto& a) {
+			for (size_t i = 0; i < ninfetch.size(); i++) std::cout << ninfetch[i];
+			return 0;
+		};
 	}
 	if (cmds.find(H("ls")) == cmds.end()) {
 		cmds[H("bash")] = [](auto& a) { return 0; };

@@ -90,10 +90,10 @@ reboot:
 		showBootMenu();
 		std::cout << H("\ninitramfs"); threedot();
 		clear();
-		std::cout << SAFESTR("\033[32m");
 		bootanim();
 		clear();
 	}
+	std::cout << SAFESTR("\033[32m");
 	bool usr = false;
 	std::cout << H("Welcome to NINKILLos!\nWrite \'help\' for more info\n");
 	while (true) {

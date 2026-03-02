@@ -27,5 +27,3 @@ extern std::unordered_map<std::string, NeonCommand> neonCommands;
 extern std::vector<package> packagesz;
 void initNeon();
 int neon_cmd(const std::vector<std::string>& args);
-void installPackage(package* pkg);
-void removePackage(package* pkg);
