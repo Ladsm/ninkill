@@ -1,5 +1,5 @@
 #include <util/obfstr.hpp>
-#include <system/pkg.hpp>
+#include <system/storage/pkg.hpp>
 #include <ui/spiner.hpp>
 #include <iostream>
 #include <vector>
@@ -123,4 +123,9 @@ int neon_cmd(const std::vector<std::string>& args) {
         return 0;
     }
     return it->second.action(args);
+}
+void installPackage(package* pkg) {
+    pkg->downloaded = true;
+} void removePackage(package* pkg) {
+    pkg->downloaded = false;
 }

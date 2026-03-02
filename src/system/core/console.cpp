@@ -1,8 +1,8 @@
-#include <system/ninsys.hpp>
+#include <system/core/ninsys.hpp>
 #include <boot/boot.hpp>
-#include <system/console.hpp>
-#include <system/pkg.hpp>
-#include <util/longtexts.h>
+#include <system/core/console.hpp>
+#include <system/storage/pkg.hpp>
+#include <util/text/longtexts.h>
 #include <util/obfstr.hpp>
 #include <vfs/vfs.hpp>
 #include <ui/userinput.hpp>

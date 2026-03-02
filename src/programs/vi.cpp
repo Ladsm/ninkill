@@ -1,8 +1,6 @@
-#include <ui/userinput.hpp>
-#include <vfs/vfs.hpp>
+#include <programs/api.hpp>
 #include <iostream>
 #include <algorithm>
-#include <vector>
 #include <sstream>
 #include <numeric>
 #if defined(_WIN32)
@@ -13,7 +11,6 @@
 #include <unistd.h>
 #include <termios.h>
 #endif
-#include <algorithm>
 enum SpecialKeys {
     KEY_UP = 1001,
     KEY_DOWN = 1002,
@@ -33,7 +30,19 @@ static int readKeyVI() {
         default: return 1000 + ch2;
         }
     }
-    return ch;
+    else {
+        switch (ch) {
+        case 'h': return KEY_LEFT;
+        case 'j': return KEY_DOWN;
+        case 'k': return KEY_UP;
+        case 'l': return KEY_RIGHT;
+        case 'H': return KEY_LEFT;
+        case 'J': return KEY_DOWN;
+        case 'K': return KEY_UP;
+        case 'L': return KEY_RIGHT;
+        default: return ch;
+        }
+    }
 }
 #else
 static int readKeyVI() {
@@ -54,13 +63,25 @@ static int readKeyVI() {
             }
         }
     }
+    else {
+        switch (ch) {
+        case 'h': ch = KEY_LEFT; break;
+        case 'j': ch = KEY_DOWN; break;
+        case 'k': ch = KEY_UP; break;
+        case 'l': ch = KEY_RIGHT; break;
+        case 'H': ch = KEY_LEFT; break;
+        case 'J': ch = KEY_DOWN; break;
+        case 'K': ch = KEY_UP; break;
+        case 'L': ch = KEY_RIGHT; break;
+        default: break;
+        }
+    }
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
     return ch;
 }
 #endif
-
 void Vi(const std::vector<std::string>& args) {
-    if (args.size() < 2) { std::cout << "Usage: vi <filename>\n"; return; }
+    if (args.size() < 2) { std::cout << H("Usage: vi <filename>\n"); return; }
     std::string filename = args[1];
     VNode* node = resolvePath(filename);
     std::vector<std::string> lines;

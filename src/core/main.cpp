@@ -1,10 +1,10 @@
 #include <util/obfstr.hpp>
 #include <net/ninkill.hpp>
 #include <boot/boot.hpp>
-#include <system/console.hpp>
-#include <system/savefile.hpp>
-#include <system/ninsys.hpp>
-#include <system/pkg.hpp>
+#include <system/core/console.hpp>
+#include <system/storage/savefile.hpp>
+#include <system/core/ninsys.hpp>
+#include <system/storage/pkg.hpp>
 #include <vfs/vfs.hpp>
 #include <filesystem>
 #ifdef _WIN32

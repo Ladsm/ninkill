@@ -1,4 +1,4 @@
-#include <util/getwh.hpp>
+#include <util/term/getwh.hpp>
 #if defined(_WIN32)
 #include <windows.h>
 #else

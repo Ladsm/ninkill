@@ -1,6 +1,6 @@
 #include <util/obfstr.hpp>
-#include <system/ninsys.hpp>
-#include <system/console.hpp>
+#include <system/core/ninsys.hpp>
+#include <system/core/console.hpp>
 #include <iostream>
 std::unordered_map<std::string, SysCommand> sysCommands;
 void initSysCommands() {

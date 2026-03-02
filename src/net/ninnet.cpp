@@ -1,5 +1,5 @@
 #include <util/obfstr.hpp>
-#include <util/getwh.hpp>
+#include <util/term/getwh.hpp>
 #include <ui/spiner.hpp>
 #include <ui/center.hpp>
 #include <net/website.hpp>

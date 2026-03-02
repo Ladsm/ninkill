@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include <util/longtexts.h>
+#include <util/text/longtexts.h>
 std::unique_ptr<VNode> root;
 VNode* cwd;
 std::string cwdPath() {

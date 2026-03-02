@@ -1,7 +1,7 @@
 #include <util/obfstr.hpp>
 #include <boot/boot.hpp>
-#include <util/getwh.hpp>
-#include <util/beep.h>
+#include <util/term/getwh.hpp>
+#include <util/term/beep.h>
 #include <ui/userinput.hpp>
 #include <net/page.hpp>
 #include <net/website.hpp>
@@ -142,11 +142,6 @@ void drawPost(Post& post) {
     }
 
     std::cout.flush();
-}
-void initPosts() {
-    switch (currentuser.level) {
-
-    }
 }
 void forum(std::vector<Page>& forumPages) {
     int currentPage = 0;

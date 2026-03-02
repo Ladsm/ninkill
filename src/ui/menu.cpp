@@ -1,5 +1,5 @@
 #include <util/obfstr.hpp>
-#include <util/getwh.hpp>
+#include <util/term/getwh.hpp>
 #include <ui/menu.hpp>
 #include <iostream>
 #include <string>

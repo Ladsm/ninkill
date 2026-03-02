@@ -1,8 +1,8 @@
 #include <util/obfstr.hpp>
 #include <boot/boot.hpp>
 #include <net/ninkill.hpp>
-#include <util/beep.h>
-#include <util/getwh.hpp>
+#include <util/term/beep.h>
+#include <util/term/getwh.hpp>
 #include <ui/menu.hpp>
 #include <ui/center.hpp>
 #include <iostream>
@@ -44,7 +44,6 @@ void showBootMenu() {
         openOS,
         backToBIOS
     };
-    std::this_thread::sleep_for(std::chrono::seconds(1));
     MenuUse(items, actions, 2);
 }
 void threedot(){
