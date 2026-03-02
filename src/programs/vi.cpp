@@ -112,8 +112,8 @@ void Vi(const std::vector<std::string>& args) {
             << (mode == INSERT ? "-- INSERT --" : "-- COMMAND --")
             << "  " << filename << " [" << (cursorLine + 1) << ":" << (cursorCol + 1) << "] \33[0m";
         std::cout << "\33[" << (cursorLine - scrollOffset + 1) << ";" << (cursorCol + 5) << "H" << std::flush;
-        int key = readKeyVI();
         if (mode == COMMAND) {
+            int key = readKeyVI();
             if (key == 'i') mode = INSERT;
             else if (key == ':') {
                 std::cout << "\33[24;1H\33[2K:";
@@ -140,6 +140,7 @@ void Vi(const std::vector<std::string>& args) {
             }
         }
         else if (mode == INSERT) {
+            int key = readKey();
             if (key == 27) mode = COMMAND;
             else if (key == 8 || key == 127) {
                 if (cursorCol > 0) {
