@@ -51,7 +51,7 @@ void initSysCommands() {
         [](const std::vector<std::string>&)->int {
             std::cout << H("Available nin-sys commands:\n");
             for (auto& [k, v] : sysCommands) {
-                std::cout << H("  ") << k << H("\n");
+                std::cout << H("|") << k << H("\n");
             }
             return 0;
         }

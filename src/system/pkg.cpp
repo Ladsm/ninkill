@@ -37,9 +37,9 @@ const std::vector<std::string> ninfetch =
 std::unordered_map<std::string, NeonCommand> neonCommands;
 package vdd = package(H("vdd"), H("Error: archive discontinued\nThe virtual dynamic disk(vdd) is unstable on NINKILLos 1.3, we can not supply you defected copys of it."), false, false);
 package forum = package(H("forum"), H("The forum package is now hard installed on NINKILL 1.3\nSee: www.nuebine.com/forum/news"), false, false);
-package echo = package(H("echo"), H("Echo node sent to www.neudb.com/.echo\n"), false, false);
-package vi = package(H("vi"), H("Error: Editors are not suported on NINKILL 1.3\nSee: www.nuebine.com/os/"), false, false);
-package ninshow = package(H("ninshow"), H("Installed!\nWrite nin-show to see all the parts of your computer.\n"), true, false);
+package echo = package(H("echo"), H("Echo node sent to www.neudb.com/.echo"), false, false);
+package vi = package(H("vi"), H("vi installed!\nUsage: vi <filename>"), true, false);
+package ninshow = package(H("ninshow"), H("Installed!\nWrite nin-show to see all the parts of your computer."), true, false);
 std::vector<package> packagesz = { vdd, forum, echo, vi, ninshow };
 static std::string arg(const std::vector<std::string>& a, size_t i) {
     return (i < a.size()) ? a[i] : "";
@@ -64,10 +64,6 @@ void initNeon() {
                     std::cout << packagesz[i].message << '\n';
                     return 0;
                 }
-            }
-            if (pkg == H("vi")) {
-                std::cout << "DEBUG!!!!\n";
-                return 0;
             }
             std::cout << H("Could not find package ") << pkg << H(" in database www.nuedb.co.us, returned error 404.\n");
             return 0;

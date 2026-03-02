@@ -6,6 +6,7 @@
 #include <util/obfstr.hpp>
 #include <vfs/vfs.hpp>
 #include <ui/userinput.hpp>
+#include <programs/vi.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -105,9 +106,9 @@ std::vector<std::string> tokenize(const std::string& line) {
 	return out;
 } using CmdFunc = std::function<int(const std::vector<std::string>&)>;
 void listdir() {
-	std::cout << "Directory: " << cwdPath() << "\n\n";
+	std::cout << "Directory: " << cwdPath() << "\n";
 	for (auto& [n, node] : cwd->children)
-		std::cout << (node->isDir ? "/ " : "  ") << n << "\n";
+		std::cout << (node->isDir ? "|/" : "| ") << n << "\n";
 }
 void printDevices() {
 	std::cout << H("NAME  SIZE   TYPE             MOUNTPOINTS\n");
@@ -227,6 +228,12 @@ int readcommand(const std::string& line) {
 	if (packagesz[4].downloaded && cmds.find("nin-show") == cmds.end()) {
 		cmds["nin-show"] = [](auto& a) {
 			for (size_t i = 0; i < ninfetch.size(); i++) std::cout << ninfetch[i];
+			return 0;
+			};
+	}
+	if (packagesz[3].downloaded && cmds.find("vi") == cmds.end()) {
+		cmds["vi"] = [](auto& a) {
+			Vi(a);
 			return 0;
 			};
 	}

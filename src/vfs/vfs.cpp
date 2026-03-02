@@ -68,6 +68,55 @@ void mkuserfiles(VNode* dir) {
 	auto videos = mkdirNode(dir, H("videos"));
 	auto images = mkdirNode(dir, H("images"));
 }
+std::string readme = 
+R"(
+Nuebine Incorporated Network Operating System
+---------------------------------------------
+Licence:
+All Rights Reserved
+Copyright (c) 1998 Nuebine Incorporated Network
+THE CONTENTS OF THIS PROJECT ARE PROPRIETARY AND CONFIDENTIAL.
+UNAUTHORIZED COPYING, TRANSFERRING OR REPRODUCTION OF THE CONTENTS OF THIS PROJECT, VIA ANY MEDIUM IS STRICTLY PROHIBITED.
+The receipt or possession of the source code and/or any parts thereof does not convey or imply any right to use them
+for any purpose other than the purpose for which they were provided to you.
+The software is provided "AS IS", without warranty of any kind, express or implied, including but not limited to
+the warranties of merchantability, fitness for a particular purpose and non infringement.
+In no event shall the authors or copyright holders be liable for any claim, damages or other liability,
+whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software
+or the use or other dealings in the software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the software.
+
+1. basic commands
+-----------------
+help: prints help screen or command info, usage: help <command name>
+cd : change directory, usage: cd <directory name>
+ls & dir : list directory, usage: ls
+pwd : print working directory, usage: pwd
+mkdir : make new directory, usage: mkdir <directory name>
+touch : make new file, usage: touch <file name>
+cat : print file contents, usage: cat <file name>
+rm : remove file, usage: rm <filename> (to remove directory use: rm -r <directory name>)
+clear & cls: clears screen, usage: clear
+lsfs : lists filesystems, usage: lsfs
+mkfs : make filesystem at device, usage: mkfs.<filesystem type> <device>
+
+2. ninkill only commands
+------------------------
+nin-sys : nin system utility, usage: nin-sys <nin-sys command>
+nin-iexc : internet browser, usage: nin-iexc
+neon : nin package manager, usage: neon <neon command>
+StartAnim : plays the start animation, usage: StartAnim
+
+3. Downloadables
+----------------
+Download these via the command:
+neon install <package name>
+
+vdd : virtual dynamic disk reader
+vi : simple text editor
+forum : nin forum software
+ninshow : nin computer analizer
+)";
 void initFS() {
 	root = std::make_unique<VNode>("/", true, nullptr);
 	cwd = root.get();
@@ -196,4 +245,6 @@ void initFS() {
 	mkfile(proc, H("version"), H("NINKILL kernel 1.3"));
 	mkfile(proc, H("filesystems"), H("nodev\tproc\nnodev\ttmpfs\n"));
 	mkfile(proc, H("cmdline"), H("root=/bin/bash rw"));
+	//mnt
+	mkfile(mnt, H("README.txt"), readme);
 }
