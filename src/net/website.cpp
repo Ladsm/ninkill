@@ -154,8 +154,8 @@ void wwwNuebinedotcomLie() {
         mkbg();
         switch (page) {
         case 1:
-            w("Jack is no longer with us.\nWe found jack yesterday, in his cubicle, passed out.\nWe rushed him to the hospital, but he didn't make it.\nWe contacted his family and told them the news\nWe hope you take this well.\nFrom nin:\n");
-            w("He was like a brother to me, even though we just meet, I felt like he was a great person\nHe was a hard worker, worked every day, worked through the night and to the other employees's heart.\nWe wish you all the best, and to jack. We miss you.\n");
+            w(H("Jack is no longer with us.\nWe found jack yesterday, in his cubicle, passed out.\nWe rushed him to the hospital, but he didn't make it.\nWe contacted his family and told them the news\nWe hope you take this well.\nFrom nin:\n"));
+            w(H("He was like a brother to me, even though we just meet, I felt like he was a great person\nHe was a hard worker, worked every day, worked through the night and to the other employees's heart.\nWe wish you all the best, and to jack. We miss you.\n"));
             l(1, "Exit");
             std::cin >> choice;
             if (choice == 1) {
