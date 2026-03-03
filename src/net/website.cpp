@@ -132,6 +132,42 @@ void wwwNuebinedotcomFeedback() {
         }
     }
 }
+// -Hoien Shaun Dow
+void wwwNuebinedotcomLie() {
+    int page = 1;
+    int choice = 1;
+    if (tmpDir == nullptr) {
+        tmpDir = resolvePath("/tmp");
+    }
+    mkfile(tmpDir, H("www.neubine.com.|lie.spp"), H(
+        "//bullshit, this man worked so litle here.\n"
+        "//only four months, all he did was moderation on the forum and left on time.\n"
+        "//he hated it, corprate were all ways talking about ways to get rid of him.\n"
+        "//HoienShaunDow@www.HoienDow.net\n" // todo continue here
+        "#include \"spp.hpp\"\n"
+        "page 1 {\n"
+        "w(\"Jack is no longer with us.|nWe found jack yesterday, in his cubicle, passed out.|nWe rushed him to the hospital, but he didn't make it.|nWe contacted his family and told them the news|nWe hope you take this well.|nFrom nin:|n\");\n"
+        "w(\"He was like a brother to me, even though we just meet, I felt like he was a great person\nHe was a hard worker, worked every day, worked through the night and to the other employees's heart.|nWe wish you all the best, and to jack. We miss you.\");\n"
+        "}\n"
+    ));
+    while (true) {
+        mkbg();
+        switch (page) {
+        case 1:
+            w("Jack is no longer with us.\nWe found jack yesterday, in his cubicle, passed out.\nWe rushed him to the hospital, but he didn't make it.\nWe contacted his family and told them the news\nWe hope you take this well.\nFrom nin:\n");
+            w("He was like a brother to me, even though we just meet, I felt like he was a great person\nHe was a hard worker, worked every day, worked through the night and to the other employees's heart.\nWe wish you all the best, and to jack. We miss you.\n");
+            l(1, "Exit");
+            std::cin >> choice;
+            if (choice == 1) {
+                wwwNuebinedotcom();
+                return;
+            }
+            else {
+                std::cout << H("Not an option\n");
+            }
+        }
+    }
+}
 void wwwJackwddotcom() {
     if (tmpDir == nullptr) {
         tmpDir = resolvePath("/tmp");
@@ -262,6 +298,57 @@ void wwwreadmedotcom() {
         }
     }
 }
+void wwwnuedbcous() {
+    if (tmpDir == nullptr) {
+        tmpDir = resolvePath("/tmp");
+    }
+    mkfile(tmpDir, H("www.nuedb.co.us.spp"), H(
+        "#include \"spp.hpp\"\ndb(site.database.pub)"
+    ));
+    int choice = 1;
+    int page = 1;
+    while (true) {
+        mkbg();
+        switch (page) {
+        case 1:
+            l(1, "vdd");
+            l(2, "forum");
+            l(3, "vi");
+            l(4, "ninfetch");
+            l(5, "systemtillday");
+            l(6, "Exit");
+            std::cin >> choice;
+            if (choice == 1) {
+                mkfile(tmpDir, H("vdd.ifo.exc"), H(
+                    "vdd. v(1.0, 1.1, 1.2). exc=y"
+                ));
+            }
+            if (choice == 2) {
+                mkfile(tmpDir, H("forum.ifo.exc"), H(
+                    "forum. v(1.0). exc=y"
+                ));
+            }
+            if (choice == 3) {
+                mkfile(tmpDir, H("vi.ifo.exc"), H(
+                    "vi. v(1.*). exc=y"
+                ));
+            }
+            if (choice == 4) {
+                mkfile(tmpDir, H("ninfetch.ifo.exc"), H(
+                    "ninfetch. v(1.*). exc=y"
+                ));
+            }
+            if (choice == 5) {
+                mkfile(tmpDir, H("tillpass"), H(
+                    "systemtilday"
+                ));
+            }
+            if (choice == 6) {
+                return;
+            }
+        }
+    }
+}
 using RouteTable = std::unordered_map<std::string, std::function<void()>>;
 RouteTable buildRouter() {
     return {
@@ -271,6 +358,8 @@ RouteTable buildRouter() {
         {H("nuebine.co.us"), wwwNuebinedotcom},
         {H("www.jackwd.com"),  wwwJackwddotcom},
         {H("www.readme.com"), wwwreadmedotcom},
-        {H("www.nuebine.com/feedback"), wwwNuebinedotcomFeedback}
+        {H("www.nuebine.com/feedback"), wwwNuebinedotcomFeedback},
+        {H("www.nuebine.com/lie"), wwwNuebinedotcomLie},
+        {H("www.nuedb.co.us"), wwwnuedbcous},
     };
 }

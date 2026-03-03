@@ -72,54 +72,61 @@ void mkuserfiles(VNode* dir) {
 	auto images = mkdirNode(dir, H("images"));
 }
 std::string readme = 
-R"(
-Nuebine Incorporated Network Operating System
----------------------------------------------
-Licence:
-All Rights Reserved
-Copyright (c) 1998 Nuebine Incorporated Network
-THE CONTENTS OF THIS PROJECT ARE PROPRIETARY AND CONFIDENTIAL.
-UNAUTHORIZED COPYING, TRANSFERRING OR REPRODUCTION OF THE CONTENTS OF THIS PROJECT, VIA ANY MEDIUM IS STRICTLY PROHIBITED.
-The receipt or possession of the source code and/or any parts thereof does not convey or imply any right to use them
-for any purpose other than the purpose for which they were provided to you.
-The software is provided "AS IS", without warranty of any kind, express or implied, including but not limited to
-the warranties of merchantability, fitness for a particular purpose and non infringement.
-In no event shall the authors or copyright holders be liable for any claim, damages or other liability,
-whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software
-or the use or other dealings in the software.
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the software.
-
-1. basic commands
------------------
-help: prints help screen or command info, usage: help <command name>
-cd : change directory, usage: cd <directory name>
-ls & dir : list directory, usage: ls
-pwd : print working directory, usage: pwd
-mkdir : make new directory, usage: mkdir <directory name>
-touch : make new file, usage: touch <file name>
-cat : print file contents, usage: cat <file name>
-rm : remove file, usage: rm <filename> (to remove directory use: rm -r <directory name>)
-clear & cls: clears screen, usage: clear
-lsfs : lists filesystems, usage: lsfs
-mkfs : make filesystem at device, usage: mkfs.<filesystem type> <device>
-
-2. ninkill only commands
-------------------------
-nin-sys : nin system utility, usage: nin-sys <nin-sys command>
-nin-iexc : internet browser, usage: nin-iexc
-neon : nin package manager, usage: neon <neon command>
-StartAnim : plays the start animation, usage: StartAnim
-
-3. Downloadables
-----------------
-Download these via the command:
-neon install <package name>
-
-vdd : virtual dynamic disk reader
-vi : simple text editor
-forum : nin forum software
-ninfetch : nin computer analizer
-)";
+H(
+"Nuebine Incorporated Network Operating System\n"
+"---------------------------------------------\n"
+"Licence:\n"
+"All Rights Reserved\n"
+"Copyright (c) 1998 Nuebine Incorporated Network\n"
+"THE CONTENTS OF THIS PROJECT ARE PROPRIETARY AND CONFIDENTIAL.\n"
+"UNAUTHORIZED COPYING, TRANSFERRING OR REPRODUCTION OF THE CONTENTS OF THIS PROJECT, VIA ANY MEDIUM IS STRICTLY PROHIBITED.\n"
+"The receipt or possession of the source code and/or any parts thereof does not convey or imply any right to use them\n"
+"for any purpose other than the purpose for which they were provided to you.\n"
+"The software is provided \"AS IS\", without warranty of any kind, express or implied, including but not limited to\n"
+"the warranties of merchantability, fitness for a particular purpose and non infringement.\n"
+"In no event shall the authors or copyright holders be liable for any claim, damages or other liability,\n"
+"whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software\n"
+"or the use or other dealings in the software.\n"
+"The above copyright notice and this permission notice shall be included in all copies or substantial portions of the software.\n"
+"\n"
+"1. basic commands\n"
+"-----------------\n"
+"help: prints help screen or command info, usage: help <command name>\n"
+"cd : change directory, usage: cd <directory name>\n"
+"ls & dir : list directory, usage: ls\n"
+"pwd : print working directory, usage: pwd\n"
+"mkdir : make new directory, usage: mkdir <directory name>\n"
+"touch : make new file, usage: touch <file name>\n"
+"cat : print file contents, usage: cat <file name>\n"
+"rm : remove file, usage: rm <filename> (to remove directory use: rm -r <directory name>)\n"
+"clear & cls: clears screen, usage: clear\n"
+"lsfs : lists filesystems, usage: lsfs\n"
+"mkfs : make filesystem at device, usage: mkfs.<filesystem type> <device>\n"
+"\n"
+"2. ninkill only commands\n"
+"------------------------\n"
+"nin-sys : nin system utility, usage: nin-sys <nin-sys command>\n"
+"nin-iexc : internet browser, usage: nin-iexc\n"
+"neon : nin package manager, usage: neon <neon command>\n"
+"StartAnim : plays the start animation, usage: StartAnim\n"
+"\n"
+"3. Downloadables\n"
+"----------------\n"
+"Download these via the command:\n"
+"neon install <package name>\n"
+"\n"
+"vdd : virtual dynamic disk reader\n"
+"vi : simple text editor\n"
+"forum : nin forum software\n"
+"ninfetch : nin computer analizer\n"
+);
+std::string lawsuit = H(
+	"It happened, Jack, the softWare distributer for Jack's SoftWare Products, called us.\nI kneW this would happen, I knew it was a bad idea to copy his work, but it was too good to give up.\n"
+	"I WaNted to just let him try to sUe us, we overpowEr him with our power. But the last cuple of months have been bad for us.\n"
+	"NINKILL os is still in development, even after we crunched for the last three days. We made this just for a quick Buck, but he came for us.\n"
+	"\n\nI gave hIm a job wIth us, I kNew it would work, but I still nEed to know what to do with him. I'll do what COMs to mind.\n"
+	"I just wish / hope I dont Lose what I workEd for."
+);
 void initFS() {
 	root = std::make_unique<VNode>("/", true, nullptr);
 	cwd = root.get();
@@ -135,6 +142,7 @@ void initFS() {
 	//user folders
 	auto till = mkdirNode(home, H("till"));
 	lockDir(till, H("systemtilday"));
+	mkfile(till, H("lawsuit.txt"), lawsuit);
 
 	auto tomm = mkdirNode(home, H("tomm"));
 	auto documentstomm = mkdirNode(tomm, H("documents"));

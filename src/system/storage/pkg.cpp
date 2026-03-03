@@ -97,7 +97,7 @@ void initNeon() {
                     return 0;
                 }
             }
-            std::cout << H("Could not find package ") << pkgName << H("\n");
+            std::cout << H("Could not find package ") << pkgName << H(" in database www.nuedb.co.us, returned error 404.\n");
             return 0;
         }
     };
