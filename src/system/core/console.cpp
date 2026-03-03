@@ -13,13 +13,20 @@
 #include <functional>
 #include <sstream>
 #include <unordered_set>
-
+#include <thread>
+#include <chrono>
+extern bool innin;
 auto makePrompt = [] {
 	VNode* t = cwd;
 	std::string path;
 	while (t && t->parent) { path = H("/") + t->name + path; t = t->parent; }
 	if (path.empty()) path = H("/");
-	return H("[root@ninkill-live ") + path + H("]# ");
+	if (innin == true) {
+		return H("ninpc@nin:") + "/priv/" + H("$ ");
+	}
+	else {
+		return H("[root@ninkill-live ") + path + H("]# ");
+	}
 	};
 std::string getcommand() {
 	static std::vector<std::string> history;
@@ -350,6 +357,22 @@ int readcommand(const std::string& line) {
 				std::cout << H("No readable info\n");
 			return 0;
 			};
+		cmds[H("ssh")] = [](auto& a) {
+			if (a.size() < 2) {
+				std::cout << H("Usage: ssh user@host\n");
+				return 0;
+			}
+			if (a[1] == H("ninpc@nin")) {
+				innin = true;
+				std::cout << H("Connecting to ninpc@nin...") << std::endl;
+				std::this_thread::sleep_for(std::chrono::milliseconds(800));
+				return 5;
+			}
+			else {
+				std::cout << H("ssh: Could not resolve hostname ") << a[1] << H(": Name or service not known\n");
+				return 0;
+			}
+		};
 	}
 	auto it = cmds.find(cmd);
 	if (it != cmds.end()) return it->second(args);
@@ -371,5 +394,7 @@ int console() {
 			return 2;
 		if (z == 3)
 			return 3;
+		if (z == 5)
+			return 5;
 	}
 }

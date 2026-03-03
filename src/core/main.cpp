@@ -23,8 +23,9 @@ void clear() {
 }
 std::vector<Page> FoRuM;
 std::vector<user> list;
+std::string passwordNINIMADEthisLongSOICanOfUscaTeThisLikeHowLingdoyouthinkIcanMakeThisPleaseUnderstanmdImjustsomeOkaythatsit = H("NINEXC.exc_pkgNeon/ltxc|iexc");
 void init() {
-	user nin = user(H("nin"), H("XxAdMiN123xX"), 4);
+	user nin = user(H("nin"), H("NINEXC.exc_pkgNeon/ltxc|iexc"), 4);
 	user john = user(H("john"), H("12345678910mod"), 3);
 	user Jack = user(H("Jack Wilder Dean"), H("no...youarenotgetingmypassword"), 3);
 	user hoikgrew = user(H("hoikgrew"), H("HoknGrew"), 3);
@@ -55,6 +56,7 @@ void init() {
 	initNeon();
 }
 bool debug = false;
+bool innin = false;
 int main(int argc, char* argv[]) {
 	for (int i = 1; i < argc; ++i) {
 		if (strcmp(argv[i], "iopgjdiogjiogjidfogjiopgjdfiopg4789503274850934uojklsdjfklsdjfmk") == 0) {
@@ -106,6 +108,19 @@ reboot:
 			std::cout << SAFESTR("Rebooting"); threedot();
 			clear();
 			goto reboot;
+			break;
+		case 5:
+			std::string password;
+			std::cout << H("Password: ");
+			std::getline(std::cin, password);
+			if (password == passwordNINIMADEthisLongSOICanOfUscaTeThisLikeHowLingdoyouthinkIcanMakeThisPleaseUnderstanmdImjustsomeOkaythatsit) {
+				continue;
+			}
+			else {
+				std::cout << "Wrong password, (check the spelling please).\n";
+				innin = false;
+				break;
+			}
 			break;
 		}
 	}

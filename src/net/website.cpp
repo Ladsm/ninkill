@@ -168,6 +168,17 @@ void wwwNuebinedotcomLie() {
         }
     }
 }
+//std::string hoistext = H(
+//"nuebine is a pile of shit, left them as fast as i learned the news. the nail on the head was nin asking us to lock jack in the office for three days. who am i kidding, nuebine allways did weird stuff like that.\n"
+//"I remember an invester who declined to invest in nuebine at the start, nin stole his computer later that day.\n"
+//"Even though I made the company with nin.\n"
+//"nin is such a weird guy, so confident yet scared of people who do small things.\n"
+//"thank god nuebine is bankrupt, nin moved on.\n"
+//"some scares still exist, maybe you can find the rest of his sins.\n"
+//"I never knew him that well, all he did was manage the money, did fuck all to the software or hardware manufactueing.\n"
+//"hopefully one day we will find the truth.\n"
+//);
+std::string hoistext = "IN NNI N INNN NN IN N / NN NNN / NI / NIIN NN NINN N / III NNIN / NNN NNNN NN I IINNII / NINN N NNIN I / I NNNN N II / NI NNN / NNIN NI NNN I / NI NNN / NN / NINN N NI NIN IN N INN / I NNNN N / IN N NII NNN NININI / I NNNN N / IN NI NN NINN / III IN / I NNNN N / NNNN N NI INN / NII NI NNN / IN NN IN / NI NNN INI NN IN IIN / NNI NNN / I III / NINN III ININ INI / NIII NI ININ INI / NN IN / I NNNN N / III NNIN NNIN NN ININ N / NNIN III NIN / I NNNN NIN N N / INN NI INII NNN NININI / NII NNNN III / NI II / NN / INI NN INN INN NN IN IIN IINNII / IN NNI N INNN NN IN N / NI NINN NINN NII NI INII NNN / INN NN INN / NII N NN NIN INN / NNN I NNI NNIN NNIN / NINN NN INI N / I NNNN NI I NININI / NN / NIN N II N II INNN N NIN / NI IN / NN IN NNNI N NNN I N NIN / NII NNNN III / INN N ININ NINN NN IN N INN / I III / NN IN NNNI N NNN I / NN IN / IN NNI N INNN NN IN N / NI I / I NNNN N / NNN I NI NIN I IINNII / IN NN IN / NNN I III NINN N / NNNN NN NNN / ININ III II NIIN NNI I N NIN / NINN NI I N NIN / I NNNN NI I / INN NI INII NININI / N NNNI N IN / I NNNN III NNI IIN NNNN / NN / II NI INN N / I NNNN N / ININ III II NIIN NI IN INII / NII NN I NNNN / IN NN IN NININI / IN NN IN / NN NNN / NNN NNI ININ NNNN / NI / NII N NN NIN INN / IIN NNI INII IINNII / NNN III / ININ III IN NNIN NN INN N IN I / INII N I / NNN ININ NI NIN N INN / III NNIN / NIIN N III NIIN NINN N / NII NNNN III / INN III / NNN II NI NINN NINN / I NNNN NN IN IIN NNN NININI / I NNNN NI IN INI / IIN III INN / IN NNI N INNN NN IN N / NN NNN / INNN NI IN INI NIN NNI NIIN I IINNII / IN NN IN / II III NNNI N INN / III IN NININI / NNN III II N / NNN ININ NI NIN N NNN / NNN I NN NINN NINN / N INNI NN NNN I IINNII / II NI INII INNN N / INII III NNI / ININ NI IN / NNIN NN IN INN / I NNNN N / NIN N NNN I / III NNIN / NNNN NN NNN / NNN NN IN NNN NININI / NN / IN N NNNI N NIN / INI IN N NII / NNNN NN II / I NNNN NI I / NII N NINN NINN IINNII / NI NINN NINN / NNNN N / INN NN INN / NII NI NNN / II NI IN NI IIN N / I NNNN N / II III IN N INII IINNII / INN NN INN / NNIN NNI ININ INI / NI NINN NINN / I III / I NNNN N / NNN III NNIN I NII NI NIN N / III NIN / NNNN NI NIN INN NII NI NIN N / II NI IN NNI NNIN NI ININ I NNI N NN IN IIN NININI / NNNN III NIIN N NNIN NNI NINN NINN INII / III IN N / INN NI INII / NII N / NII NN NINN NINN / NNIN NN IN INN / I NNNN N / I NIN NNI I NNNN NININI\n";
 void wwwhoiendowdotnet() {
     if (tmpDir == nullptr) {
         tmpDir = resolvePath("/tmp");
@@ -177,7 +188,6 @@ void wwwhoiendowdotnet() {
         "#include \"spp.hpp\"\n"
         "page 1 {\n"
         "\tw(\"please enter nuebine systems password.|npassword:\"); gpass(\"************************\");\n"
-        "}"
     ));
     int choice = 1;
     int page = 1;
@@ -200,6 +210,23 @@ void wwwhoiendowdotnet() {
             }
             break;
         case 2:
+            mkfile(tmpDir, H("www.hoiendow.net.spp"), H(
+                "#include \"spp.hpp\"\n"
+                "page 1 {\n"
+                "\tw(\"please enter nuebine systems password.|npassword:\"); gpass(\"************************\");\n"
+                "}\npage 2 {ENCRIPT.morce->text && ENCRIPT.morce->code}"
+            ));
+            tmpDir = resolvePath("/home/till");
+            mkfile(tmpDir, H("Lead.txt"), H("ssh ninpc@nin"));
+            w(hoistext);
+            l(1, "Exit");
+            std::cin >> choice;
+            if (choice == 1) {
+                return;
+            }
+            else {
+                std::cout << H("Not an option\n");
+            }
             break;
         }
     }
