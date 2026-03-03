@@ -1,6 +1,7 @@
 #include <util/obfstr.hpp>
 #include <net/website.hpp>
 #include <util/term/getwh.hpp>
+#include <vfs/vfs.hpp>
 #include <iostream>
 #include <unordered_map>
 #include <functional>
@@ -26,9 +27,30 @@ void mkbg() {
     std::cout << H("\033[H");
     std::cout << H("\033[2;1H");
 }
+void w(std::string write) {
+    std::cout << write << '\n';
+}
+void l(int num, std::string pageName) {
+    std::cout << "[" << num << "] " << pageName << "\n";
+}
 void wwwNuebinedotcom() {
     int page = 1;
     int choice = 1;
+    if (tmpDir == nullptr) {
+        tmpDir = resolvePath("/tmp");
+    }
+    mkfile(tmpDir, H("www.neubine.com.spp"), H(
+        "#include \"spp.hpp\"\n"
+        "page 1 {\n"
+        "\tw(\"Welcome to Nuebine Incorporated!\");\n\tw(\"Innovating the Network Since 1990\");\n\tl(2); l(3);\n}\n"
+        "page 2 {\n"
+        "\tw(\"About Nuebine:\");\n\tw(\"We make all things tech—software, hardware, and more...We started in 1990 in Washington, and over the years we have grown larger and larger, from a two-man team to over fifty employees.\");\n"
+        "\tl(1);\n}"
+        "page 3 {\n"
+        "\tw(\"Our projects: - NINKILL OS|nNINKILL OS is a small Linux-based operating system made for home users. Load it with a floppy drive like DOS.\");"
+        "\tw(\" - NINKILL Internet Navigator|nA way to see things without needing to download them—just some temporary files, and when you finish using the content, the files get deleted.|n\");\n"
+        "\tw(\"It uses a website maker named spp(Script++), it uses c++ to display text or get input.\");\n\tl(1);\n}"
+        ));
     while (true) {
         mkbg();
         switch (page) {
@@ -111,14 +133,61 @@ void wwwNuebinedotcomFeedback() {
     }
 }
 void wwwJackwddotcom() {
+    if (tmpDir == nullptr) {
+        tmpDir = resolvePath("/tmp");
+    }
+    mkfile(tmpDir, H("www.jackwd.com.spp"), H(
+        "#include \"spp.hpp\"\n"
+        "page 1 {\n\tw(\"Hello, im Jack Wilder Dean. Im a software engineer based in Texes, I made this website and the internet explorer you're in.\");\n"
+        "l(1); l(2);\n}"
+        "// If I only added more stuff in spp. If only."
+        "page 2 {\n"
+        "\tw(\"My portfolio:|n - Internet Explorer|nThis is a piece of software I made that temporarily downloads files from a server, then after 10 minutes the files get wiped from your computer.|n\");\n"
+        "\tw(\"To protect from ACE, it uses a proxy server. This is a diagram of how it works:|n\");\n"
+        "\tw(\"I made it, yet it was stolen from me. I knew they had it for me. It was only a matter of time)\n"
+        "\tw(\""
+        "\t                    .-----.         .-----------.    \n"
+        "\t   .----.     Fire  |  P  |         |---Server--+ - +\n"
+        "\t   |$>_ | - - - - - |--R--|         `-----+-----'   |\n"
+        "\t __|____|__   Wall  |  O  | - - - - - - - |         |\n"
+        "\t|PC______--|        |--X--|         .-----+-----.   |\n"
+        "\t`-/.::::.\\-'     +-+  Y  +-+       |--Display--|   |\n"
+        "\t `--------'       | `-----' |       `-----+-----'   |\n"
+        "\t      |           |         |             |         |\n"
+        "\t      + - - - - - +         + - - - - - - + - - - - +\n"
+        "\t\");\nw(\"Software Employment:|n1990–1997 - Jack's Software Products|n1997–now - Head Software Engineer at Nuebine Incorporated Network|n\");\n\tl(1);\n}"
+        "page 3 {"
+        "\tw(\"You may have come here due to a legal notice you found in Nuebine's Network Internet Navigator.\n\");"
+        "\tw(\"This all started after I made Internet Explorer in 1997. It was a piece of software I liked a lot.\nBut after two months, Nuebine made a new product named \"Network Internet Navigator\". It looked the same as my software, just with some extra Nuebine stuff.\n\");\n"
+        "\tw(\"I contacted them and they lied to me.They told me they started working on it in 1996 and that I was making a false claim.\n\");"
+        "\tw(\"I know they lied because the proxy servers were getting requests from Nuebine.co.us.\n\");"
+        "\tw(\"I filed a legal notice demanding they show me their code.At first they told me no, but then decided to let me come in.\n\");"
+        "\tw(\"On that day I went into their office.After I saw my code on their computers, I told them I demanded a cut of the profit.\n\");"
+        "\tw(\"And you know what ? They agreed.They told me it was fine and let me get a job. (My self - employed ass took this as fast as I could.)\n\");"
+        "\tw(\"I now work as the head software engineer with them.\nMoral of the story : Don’t steal.\n\");"
+        "}"
+    ));
+    std::cout << H("My portfolio:\n - Internet Explorer\nThis is a piece of software I made that temporarily downloads files from a server, then after 10 minutes the files get wiped from your computer.\n");
+    std::cout << H("To protect from ACE, it uses a proxy server. This is a diagram of how it works:\n");
+std::cout << STATIC_DEF("                    .-----.         .-----------.    ") << '\n';
+    std::cout << H("   .----.     Fire  |  P  |         |---Server--+ - +") << '\n';
+    std::cout << H("   |$>_ | - - - - - |--R--|         `-----+-----'   |") << '\n';
+    std::cout << H(" __|____|__   Wall  |  O  | - - - - - - - |         |") << '\n';
+    std::cout << H("|PC______--|        |--X--|         .-----+-----.   |") << '\n';
+    std::cout << H("`-/.::::.\\-'      +-+  Y  +-+       |--Display--|   |") << '\n';
+    std::cout << H(" `--------'       | `-----' |       `-----+-----'   |") << '\n';
+    std::cout << H("      |           |         |             |         |") << '\n';
+    std::cout << H("      + - - - - - +         + - - - - - - + - - - - +") << '\n';
+    std::cout << STATIC_DEF("Software Employment:\n1990–1997 - Jack's Software Products\n1997–now - Head Software Engineer at Nuebine Incorporated Network\n");
+
     int choice = 1;
     int page = 1;
     while (true) {
         mkbg();
         switch (page) {
         case 1:
-            std::cout << H("Hello, im Jack Wilder Dean. Im a software engineer based in Texes, I made this website and the internet explorer you're in.\n");
-            std::cout << H("[1] Portfolio\n[2] Nuebine's theft and hire\n[3] Exit\n");
+            w(H("Hello, im Jack Wilder Dean. Im a software engineer based in Texes, I made this website and the internet explorer you're in."));
+            l(1, "Portfolio"); l(2, "Nuebine's theft and hire"); l(3, "Exit");
             std::cin >> choice;
             if (choice == 1) {
                 page = 2;
@@ -141,7 +210,7 @@ void wwwJackwddotcom() {
             std::cout << H("   |$>_ | - - - - - |--R--|         `-----+-----'   |") << '\n';
             std::cout << H(" __|____|__   Wall  |  O  | - - - - - - - |         |") << '\n';
             std::cout << H("|PC______--|        |--X--|         .-----+-----.   |") << '\n';
-           std::cout << H("`-/.::::.\\-'      +-+  Y  +-+       |--Display--|   |") << '\n';
+            std::cout << H("`-/.::::.\\-'      +-+  Y  +-+       |--Display--|   |") << '\n';
             std::cout << H(" `--------'       | `-----' |       `-----+-----'   |") << '\n';
             std::cout << H("      |           |         |             |         |") << '\n';
             std::cout << H("      + - - - - - +         + - - - - - - + - - - - +") << '\n';

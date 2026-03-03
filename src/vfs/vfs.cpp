@@ -1,9 +1,9 @@
 #include <util/obfstr.hpp>
+#include <util/text/longtexts.h>
 #include <vfs/vfs.hpp>
 #include <string>
 #include <sstream>
 #include <vector>
-#include <util/text/longtexts.h>
 std::unique_ptr<VNode> root;
 VNode* cwd;
 std::string cwdPath() {
@@ -35,13 +35,16 @@ VNode* resolvePath(const std::string& path) {
 	std::stringstream ss(path);
 	std::string part;
 	while (std::getline(ss, part, '/')) {
+		if (!cur) return nullptr;
 		if (part.empty() || part == ".") continue;
 		if (part == "..") {
 			if (cur->parent) cur = cur->parent;
 			continue;
 		}
 		auto it = cur->children.find(part);
-		if (it == cur->children.end()) return nullptr;
+		if (it == cur->children.end()) {
+			return nullptr;
+		}
 		cur = it->second.get();
 	}
 	return cur;
@@ -128,13 +131,16 @@ void initFS() {
 	auto etc = mkdirNode(root.get(), H("etc"));
 	auto proc = mkdirNode(root.get(), H("proc"));
 	auto home = mkdirNode(root.get(), H("home"));
+	auto tmp = mkdirNode(root.get(), H("tmp"));
 	//user folders
 	auto till = mkdirNode(home, H("till"));
 	lockDir(till, H("systemtilday"));
-	mkuserfiles(till);
+
 	auto tomm = mkdirNode(home, H("tomm"));
+	auto documentstomm = mkdirNode(tomm, H("documents"));
 	lockDir(tomm, H("4566"));
-	mkuserfiles(tomm);
+	mkfile(tomm, H("todo.txt"), H("1. wake up\n2. go to work\n3. buy stuff\n4. go to sleep"));
+	mkfile(documentstomm, H("main.cpp"), H("#include \"iostream\"\nint main(){\n\tstd::cout << \"L fdqw xqghuvwdqg zkb brx srnh durxqg lq pb ilohv. Wkhb duh plqh, qrw brxuv. vwrs uhdglqj sohdvh.\";\n}"));
 	//excs
 	mkfile(bin, H("nin-iexc.exc"), NINEX_EXC_TEXT);
 	mkfile(bin, H("nin-fexc.exc"), NINKILL_EXC_TEXT);
@@ -190,8 +196,9 @@ void initFS() {
 	auto sysconfig = mkdirNode(etc, H("sysconfig"));
 	mkfile(etc, H("hostname"), H("ninkill-live\n"));
 	mkfile(etc, H("hosts"), H("127.0.0.1 localhost\n127.0.1.1 ninkill-live\n"));
-	mkfile(etc, H("passwd"), H("root:x:0:0:root:/root:/bin/bash\n"));
+	mkfile(etc, H("passwd"), H("root:x:0:0:root:/root:/bin/bash\ntomm:4566:1:100:user:/home/tomm:/bin/bash\ntill:x:2:0:/home/till:/bin/bash\n"));
 	mkfile(etc, H("group"), H("root:x:0:\nusers:x:100:\n"));
+	mkfile(etc, H("shadow"), H("root:x:19424:0:99999:7:::\ntill:*:19424:0:99999:7:::\n"));
 	mkfile(etc, H("fstab"), H("/dev/fd0   /      mfs     defaults  0 0\n/dev/hda   /mnt   nffb    defaults  0 0\n"));
 	mkfile(etc, H("motd"), H("Welcome to NINKILL OS\nUnauthorized access prohibited\n"));
 	mkfile(etc, H("inittab"), H("id:3:initdefault:\nsi::sysinit:/etc/init.d/rcS\n"));
@@ -247,4 +254,6 @@ void initFS() {
 	mkfile(proc, H("cmdline"), H("root=/bin/bash rw"));
 	//mnt
 	mkfile(mnt, H("README.txt"), readme);
+	//temp
 }
+VNode* tmpDir = resolvePath("/tmp");

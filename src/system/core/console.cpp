@@ -195,7 +195,7 @@ int readcommand(const std::string& line) {
 	}
 	if (cmd == H("help")) {
 		if (args.size() == 1) {
-			std::cout << H("|Thank you for using NINKILL os!\n|We hope you enjoy your use of NINKILL os and send feedback to ://www.nuebine.com :)\n|");
+			std::cout << H("|Thank you for using NINKILL os!\n|We hope you enjoy your use of NINKILL os and send feedback to www.nuebine.com :)\n|");
 			std::cout << H("Use neon to use the package manager\n|Use nin-sys for system commands\n|All commands:\n");
 			for (const auto& [name, desc] : helpDB) {
 				std::cout << '|' << name << '\n';
@@ -316,6 +316,38 @@ int readcommand(const std::string& line) {
 			std::cout << H("All filesystem types:\nTYPENAME       Fullname\n");
 			std::cout << H("nffb           new formated filesystem blocks\n");
 			std::cout << H("mfs            managed file system\n");
+			return 0;
+			};
+		cmds[H("arr")] = [](auto& a) {
+			if (a.size() < 2) { std::cout << H("Usage: arr /dev/device\n"); return 0; }
+			auto dev = a[1];
+			if (!devices.count(dev)) {
+				std::cout << H("Unknown device\n");
+				return 0;
+			}
+			if (devices[dev] == 1) {
+				devices[dev] = 2;
+				std::cout << H("Filesystem arranged\n");
+			}
+			else
+				std::cout << H("Device not formatted\n");
+			return 0;
+			};
+		cmds[H("ifo")] = [](auto& a) {
+			if (a.size() < 2) { std::cout << H("Usage: ifo /dev/device\n"); return 0; }
+			auto dev = a[1];
+			if (!devices.count(dev)) {
+				std::cout << H("Unknown device\n");
+				return 0;
+			}
+			if (dev == H("/dev/hda") && devices[dev] == 2)
+				std::cout << H("5 Gigabite Hard disk\n");
+			else if (dev == H("/dev/fd0") && devices[dev] == 2)
+				std::cout << H("10 Megabite flopy\n");
+			else if (dev == H("/dev/vdd") && devices[dev] == 2)
+				std::cout << H("To: nin\nThe forums are becomeing unstable, we dont have moderators for this and I dont want to mod the forums on work.\nPlease talk to the higher-ups about this\n - Jack.W Dean\n");
+			else
+				std::cout << H("No readable info\n");
 			return 0;
 			};
 	}
