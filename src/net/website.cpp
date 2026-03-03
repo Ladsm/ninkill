@@ -143,7 +143,7 @@ void wwwNuebinedotcomLie() {
         "//bullshit, this man worked so litle here.\n"
         "//only four months, all he did was moderation on the forum and left on time.\n"
         "//he hated it, corprate were all ways talking about ways to get rid of him.\n"
-        "//HoienShaunDow@www.HoienDow.net\n" // todo continue here
+        "//HoienShaunDow@www.HoienDow.net\n"
         "#include \"spp.hpp\"\n"
         "page 1 {\n"
         "w(\"Jack is no longer with us.|nWe found jack yesterday, in his cubicle, passed out.|nWe rushed him to the hospital, but he didn't make it.|nWe contacted his family and told them the news|nWe hope you take this well.|nFrom nin:|n\");\n"
@@ -165,6 +165,42 @@ void wwwNuebinedotcomLie() {
             else {
                 std::cout << H("Not an option\n");
             }
+        }
+    }
+}
+void wwwhoiendowdotnet() {
+    if (tmpDir == nullptr) {
+        tmpDir = resolvePath("/tmp");
+    }
+    std::string password;
+    mkfile(tmpDir, H("www.hoiendow.net.spp"), H(
+        "#include \"spp.hpp\"\n"
+        "page 1 {\n"
+        "\tw(\"please enter nuebine systems password.|npassword:\"); gpass(\"************************\");\n"
+        "}"
+    ));
+    int choice = 1;
+    int page = 1;
+    while (true) {
+        std::cout << H("\033[32;40m");
+        std::cout << H("\033[2J\033[H");
+        switch (page) {
+        case 1:
+            w(H("please enter nuebine systems password.\npassword: "));
+            std::getline(std::cin >> std::ws, password);
+            if (password == H("DATAMINE***BRAKEING***NIN")) {
+                page = 2;
+            }
+            else if (password == H("exit")) {
+                return;
+            }
+            else {
+                std::cout << H("wrong password\n");
+                std::exit(1);
+            }
+            break;
+        case 2:
+            break;
         }
     }
 }
@@ -203,19 +239,6 @@ void wwwJackwddotcom() {
         "\tw(\"I now work as the head software engineer with them.\nMoral of the story : Don’t steal.\n\");"
         "}"
     ));
-    std::cout << H("My portfolio:\n - Internet Explorer\nThis is a piece of software I made that temporarily downloads files from a server, then after 10 minutes the files get wiped from your computer.\n");
-    std::cout << H("To protect from ACE, it uses a proxy server. This is a diagram of how it works:\n");
-std::cout << STATIC_DEF("                    .-----.         .-----------.    ") << '\n';
-    std::cout << H("   .----.     Fire  |  P  |         |---Server--+ - +") << '\n';
-    std::cout << H("   |$>_ | - - - - - |--R--|         `-----+-----'   |") << '\n';
-    std::cout << H(" __|____|__   Wall  |  O  | - - - - - - - |         |") << '\n';
-    std::cout << H("|PC______--|        |--X--|         .-----+-----.   |") << '\n';
-    std::cout << H("`-/.::::.\\-'      +-+  Y  +-+       |--Display--|   |") << '\n';
-    std::cout << H(" `--------'       | `-----' |       `-----+-----'   |") << '\n';
-    std::cout << H("      |           |         |             |         |") << '\n';
-    std::cout << H("      + - - - - - +         + - - - - - - + - - - - +") << '\n';
-    std::cout << STATIC_DEF("Software Employment:\n1990–1997 - Jack's Software Products\n1997–now - Head Software Engineer at Nuebine Incorporated Network\n");
-
     int choice = 1;
     int page = 1;
     while (true) {
@@ -307,16 +330,27 @@ void wwwnuedbcous() {
     ));
     int choice = 1;
     int page = 1;
+    std::string password;
     while (true) {
         mkbg();
         switch (page) {
         case 1:
-            l(1, "vdd");
-            l(2, "forum");
-            l(3, "vi");
-            l(4, "ninfetch");
-            l(5, "systemtillday");
-            l(6, "Exit");
+            std::cout << H("password: ");
+            std::getline(std::cin >> std::ws, password);
+            if (password == H("4566")) {
+                page = 2;
+            }
+            else {
+                std::cout << H("wrong password\n");
+            }
+            break;
+        case 2:
+            l(1, H("vdd"));
+            l(2, H("forum"));
+            l(3, H("vi"));
+            l(4, H("ninfetch"));
+            l(5, H("systemtillday"));
+            l(6, H("Exit"));
             std::cin >> choice;
             if (choice == 1) {
                 mkfile(tmpDir, H("vdd.ifo.exc"), H(
@@ -360,6 +394,7 @@ RouteTable buildRouter() {
         {H("www.readme.com"), wwwreadmedotcom},
         {H("www.nuebine.com/feedback"), wwwNuebinedotcomFeedback},
         {H("www.nuebine.com/lie"), wwwNuebinedotcomLie},
+        {H("www.hoiendow.net"), wwwhoiendowdotnet},
         {H("www.nuedb.co.us"), wwwnuedbcous},
     };
 }

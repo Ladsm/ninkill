@@ -31,6 +31,9 @@ struct Post {
         poster = y;
         replies = z;
         locked = f;
+        if (locked == true) {
+            title.append(H(" [LOCKED] "));
+        }
     }
 };
 struct Page {
