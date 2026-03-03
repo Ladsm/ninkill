@@ -6,7 +6,9 @@
 #include <system/core/ninsys.hpp>
 #include <system/storage/pkg.hpp>
 #include <vfs/vfs.hpp>
+#include <fstream>
 #include <filesystem>
+#include <thread>
 #ifdef _WIN32
 #include <windows.h>
 void enableANSI() {
@@ -26,7 +28,7 @@ std::vector<user> list;
 std::string passwordNINIMADEthisLongSOICanOfUscaTeThisLikeHowLingdoyouthinkIcanMakeThisPleaseUnderstanmdImjustsomeOkaythatsit = H("NINEXC.exc_pkgNeon/ltxc|iexc");
 void init() {
 	user nin = user(H("nin"), H("NINEXC.exc_pkgNeon/ltxc|iexc"), 4);
-	user john = user(H("john"), H("12345678910mod"), 3);
+	user john = user(H("john"), H("12345678910mod12345123451234512345qweasd123"), 3);
 	user Jack = user(H("Jack Wilder Dean"), H("no...youarenotgetingmypassword"), 3);
 	user hoikgrew = user(H("hoikgrew"), H("HoknGrew"), 3);
 	user testmem = user(H("TEST"), H("TESTSTART"), 1);
@@ -58,6 +60,17 @@ void init() {
 bool debug = false;
 bool innin = false;
 int main(int argc, char* argv[]) {
+	std::string lockPath = getAppDataPath() + H("/ninkill_sys_lock.bin");
+	std::ifstream lockCheck(lockPath);
+	if (lockCheck.good()) {
+		std::cout << H("\033[31m");
+		std::cout << H("NUEBINE INCORPORATED: ACCESS PERMANENTLY REVOKED.\n");
+		std::cout << H("TERMINAL GUID: ") << H("0x80041001-FATAL\n");
+		std::cout << H("Wipe detected. Further attempts logged.\n");
+		std::cout << H("\033[0m");
+		return 0;
+	}
+	lockCheck.close();
 	for (int i = 1; i < argc; ++i) {
 		if (strcmp(argv[i], "iopgjdiogjiogjidfogjiopgjdfiopg4789503274850934uojklsdjfklsdjfmk") == 0) {
 			debug = true;
@@ -83,6 +96,7 @@ reboot:
 	}
 	std::cout << SAFESTR("\033[32m");
 	bool usr = false;
+	std::string password;
 	std::cout << H("Welcome to NINKILLos!\nWrite \'help\' for more info\n");
 	while (true) {
 		int mode = console();
@@ -110,17 +124,34 @@ reboot:
 			goto reboot;
 			break;
 		case 5:
-			std::string password;
 			std::cout << H("Password: ");
 			std::getline(std::cin, password);
 			if (password == passwordNINIMADEthisLongSOICanOfUscaTeThisLikeHowLingdoyouthinkIcanMakeThisPleaseUnderstanmdImjustsomeOkaythatsit) {
+				wipeFS();
 				continue;
 			}
 			else {
-				std::cout << "Wrong password, (check the spelling please).\n";
+				std::cout << H("Wrong password, (check the spelling please).\n");
+				std::cout << H("Hint: nin os name dot excecuteable underscore PacKaGe package manager name slash(linux) Long Term eXecuteable Con pipe internet explorer us\n");
 				innin = false;
 				break;
 			}
+			wipeFS();
+			break;
+		case 6:
+			clear();
+			std::cout << H("\033[31m");
+			std::cout << H("NUEBINE INCORPORATED: SESSION TERMINATED BY USER\n");
+			std::cout << H("Wiping local traces"); threedot();
+			std::string lockPath = getAppDataPath() + H("/ninkill_sys_lock.bin");
+			std::ofstream lockFile(lockPath, std::ios::binary);
+			if (lockFile.is_open()) {
+				lockFile << H("WIPE_CONFIRMED_BY_BANDIT_") << std::time(nullptr);
+				lockFile.close();
+			}
+			std::cout << H("\nGoodbye, Bandit.\n");
+			std::this_thread::sleep_for(std::chrono::seconds(3));
+			EXIT(0);
 			break;
 		}
 	}

@@ -28,4 +28,5 @@ extern std::unique_ptr<VNode> root;
 extern VNode* cwd;
 void mkuserfiles(VNode* dir);
 void initFS();
+void wipeFS();
 extern VNode* tmpDir;

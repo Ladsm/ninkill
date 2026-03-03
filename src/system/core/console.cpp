@@ -308,6 +308,18 @@ int readcommand(const std::string& line) {
 				std::cout << "rm: cannot remove '" << path << "': Is a directory\n";
 				return 0;
 			}
+			bool isWallet = (target->name == H("wallet.dat"));
+			if (target->parent) {
+				std::string name = target->name;
+				target->parent->children.erase(name);
+
+				if (isWallet) {
+					std::cout << H("\n[!] CRITICAL SYSTEM ERROR: CRYPTO WALLET TERMINATED\nworth: 50.85BTC lost\n");
+					std::cout << H("Connection lost. Remote host is shutting down...\n");
+					std::this_thread::sleep_for(std::chrono::seconds(2));
+					return 6;
+				}
+			}
 			if (target->parent) {
 				target->parent->children.erase(target->name);
 			}
@@ -396,5 +408,7 @@ int console() {
 			return 3;
 		if (z == 5)
 			return 5;
+		if (z == 6)
+			return 6;
 	}
 }

@@ -265,3 +265,11 @@ void initFS() {
 	//temp
 }
 VNode* tmpDir = resolvePath("/tmp");
+void wipeFS() {
+	if (!root) return;
+	root->children.clear();
+	cwd = root.get();
+	auto priv = mkdirNode(root.get(), H("priv"));
+	mkfile(priv, H("wallet.dat"), H("5HpHagT65TZzG1PH3CSu63k8DbpvD8s5ip4nEB3kEsreAnchuDf"));
+	cwd = priv;
+}
