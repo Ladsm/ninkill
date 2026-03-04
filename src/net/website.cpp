@@ -231,6 +231,73 @@ void wwwhoiendowdotnet() {
         }
     }
 }
+std::string mnfsto = H(
+    "nin\n"
+    "------------------------\n"
+    "i dont know how nin got the first investment, nuebine was failing, but nin is a good talker, so im not suprized.\n"
+    "i made ninkill os for the servers, i needed it because nuebine servers were not going well with Windows 95, so i made a termenal based os with the linux kernel.\n"
+    "at first, it was fine, but nin saw it and thought of money. told him it was a bad idea, termenal based os's are gone, but he continued.\n"
+    "i made the first draft of ninkill os, but then nin made a change, added a internal operating system disk named the virtual dynamic disk.\n"
+    "if you're reading this, i think you still dont know what the vdd is. its something to conect to the internet and why? to get your location.\n"
+    "these days its not an issue, it sends the data to a dead server. but back when it was made, it was an issue.\n"
+    "he sold the data to people who wanted it. by the tail end of ninkill os, the data from the forum was spilling into vdd, so jack wilder unmounted it in the init script\n"
+    "nin got mad at him, told him why it was bad, jack told him to fuck off and that user data is unneeded to develop software. nin got mad, shuted him at the office for days till he was hungry and broken.\n"
+    "jack left after that, shut the case for his code and made a new alias, now works in some other tech company. jack told nin to make a fake story about his death, so people wont try to find him.\n"
+    "hope hes safe now.\nrun the program with the argument -ninkilloshoi"
+);
+void wwwhoiendowdotnetlinux() {
+    std::string passwd = H("*NIN*LINUX*FREE");
+    if (tmpDir == nullptr) {
+        tmpDir = resolvePath("/tmp");
+    }
+    std::string password;
+    mkfile(tmpDir, H("www.hoiendow.net.spp"), H(
+        "#include \"spp.hpp\"\n"
+        "page 1 {\n"
+        "\tw(\"please enter nuebine systems password.\npassword: \");gpass(***************);\n"
+        "}\n"
+    ));
+    int choice = 1;
+    int page = 1;
+    while (true) {
+        std::cout << H("\033[32;40m");
+        std::cout << H("\033[2J\033[H");
+        switch (page) {
+        case 1:
+            w(H("MNFST-PAS\npassword: "));
+            std::getline(std::cin >> std::ws, password);
+            if (password == H("*NIN*LINUX*FREE")) {
+                page = 2;
+            }
+            else if (password == H("exit")) {
+                return;
+            }
+            else {
+                std::cout << H("wrong password\n");
+            }
+            break;
+        case 2:
+            mkfile(tmpDir, H("www.hoiendow.net.spp"), H(
+                "#include \"spp.hpp\"\n"
+                "page 1 {\n"
+                "\tw(\"please enter nuebine systems password.|npassword:\"); gpass(\"************************\");\n"
+                "}\npage 2 {w(srv.txt=\"txt2.txt\");}"
+            ));
+            tmpDir = resolvePath("/home/till");
+            mkfile(tmpDir, H("Lead.txt"), H("ssh ninpc@nin"));
+            w(mnfsto);
+            l(1, "Exit");
+            std::cin >> choice;
+            if (choice == 1) {
+                return;
+            }
+            else {
+                std::cout << H("Not an option\n");
+            }
+            break;
+        }
+    }
+}
 void wwwJackwddotcom() {
     if (tmpDir == nullptr) {
         tmpDir = resolvePath("/tmp");
@@ -410,6 +477,46 @@ void wwwnuedbcous() {
         }
     }
 }
+void nindotcomslashend() {
+    if (tmpDir == nullptr) {
+        tmpDir = resolvePath("/tmp");
+    }
+    mkfile(tmpDir, H("www.nuedb.co.us.spp"), H(
+        "#include \"spp.hpp\"\npage 1 {\n"
+        "\tw(site.ascii.1.txt)\n}"
+    ));
+    int choice = 1;
+    int page = 1;
+    while (true) {
+        std::cout << H("\033[32;40m");
+        std::cout << H("\033[2J\033[H");
+        switch (page) {
+        case 1:
+            std::cout << H(R"(                 \|/     )") << '\n';
+            std::cout << H(R"(                  |      )") << '\n';
+            std::cout << H(R"( _________        |.    .)") << '\n';
+            std::cout << H(R"((..       \_    , ||\  /|)") << '\n';
+            std::cout << H(R"( \  END  -  \  /| |\ \/ /)") << '\n';
+            std::cout << H(R"(  \______    \/ | | \  / )") << '\n';
+            std::cout << H(R"(     vvvv\    \ | | /  | )") << '\n';
+            std::cout << H(R"(     \^^^^  ==   \|/   | )") << '\n';
+            std::cout << H(R"(      `\_   ===    \.  | )") << '\n';
+            std::cout << H(R"(      / /\_   \ /      | )") << '\n';
+            std::cout << H(R"(      |/   \_  \|      / )") << '\n';
+            std::cout << H(R"(             \________/  )") << '\n';
+            std::cout << H(R"(  2026 ladsm             )") << '\n';
+            l(1, "Exit");
+            std::cin >> choice;
+            if (choice == 1) {
+                return;
+            }
+            else {
+                std::cout << H("Not an option\n");
+            }
+            break;
+        }
+    }
+}
 using RouteTable = std::unordered_map<std::string, std::function<void()>>;
 RouteTable buildRouter() {
     return {
@@ -422,6 +529,8 @@ RouteTable buildRouter() {
         {H("www.nuebine.com/feedback"), wwwNuebinedotcomFeedback},
         {H("www.nuebine.com/lie"), wwwNuebinedotcomLie},
         {H("www.hoiendow.net"), wwwhoiendowdotnet},
-        {H("www.nuedb.co.us"), wwwnuedbcous},
+        {H("www.hoiendow.net"), wwwhoiendowdotnet},
+        {H("www.hoiendow.net/linux"), wwwhoiendowdotnetlinux},
+        {H("www.nin.com/index.spp/lie/imtheone"), nindotcomslashend},
     };
 }

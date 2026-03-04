@@ -11,6 +11,7 @@
 #include <fstream>
 #include <filesystem>
 #include <thread>
+#include <string>
 #ifdef _WIN32
 #include <windows.h>
 void enableANSI() {
@@ -81,6 +82,18 @@ int main(int argc, char* argv[]) {
 		if (strcmp(argv[i], "iopgjdiogjiogjidfogjiopgjdfiopg4789503274850934uojklsdjfklsdjfmk") == 0) {
 			debug = true;
 		}
+		std::string arg = argv[i];
+		if (arg == "-ninkilloshoi") {
+			std::cout << "\033[31m";
+			std::cout << R"(       /"*._         _ )" << "\n";
+			std::cout << R"(   .-*'`    `*-.._.-'/ )" << "\n";
+			std::cout << R"( < * ))     ,       (  )" << "\n";
+			std::cout << R"(   `*-._`._(__.--*"`.\ )" << "\n";
+			std::cout << H("Fish in the sea, d3d3Lm5pbi5jb20vaW5kZXguc3BwL2xpZS9pbXRoZW9uZQ==\n");
+			std::cout << "\033[0m";
+			std::exit(50);
+		}
+		std::cout << "Debug Arg: " << argv[i] << std::endl;
 	}
 	std::cout << "/*do we still need this? -Hoien Shaun Dow\nprojecting much? -Jack.W Dean\nno, will we keep it? Yes. -nin*/\nNUEBINE WILL NEVER LET PEOPLE DATA MINE, IF YOU DO YOU ARE BRAKEING THE NIN LICENSE AND IF YOU ARE FOUND OUT TO BE USING A CRACKED VERSION OR DATAMINE OUR PRODUCTS YOU WILL BE SENT A HEFTY FINE OR THE LAW WILL CATCH UP TO YOU\n";
 	clear();
@@ -161,5 +174,4 @@ reboot:
 			break;
 		}
 	}
-	saveForum(FoRuM);
 }
