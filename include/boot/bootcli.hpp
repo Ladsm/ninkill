@@ -1,0 +1,2 @@
+int bootcli();
+bool checkfile();

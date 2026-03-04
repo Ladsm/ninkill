@@ -5,6 +5,7 @@
 #include <system/storage/savefile.hpp>
 #include <system/core/ninsys.hpp>
 #include <system/storage/pkg.hpp>
+#include <boot/bootcli.hpp>
 #include <vfs/vfs.hpp>
 #include <ui/menu.hpp>
 #include <fstream>
@@ -26,7 +27,7 @@ void clear() {
 }
 std::vector<Page> FoRuM;
 std::vector<user> list;
-std::string passwordNINIMADEthisLongSOICanOfUscaTeThisLikeHowLingdoyouthinkIcanMakeThisPleaseUnderstanmdImjustsomeOkaythatsit = H("NINEXC.exc_pkgNeon/ltxc|iexc");
+std::string passwordNINIMADEthisLongSOICanOfUscaTeThisLikeHowLingdoyouthinkIcanMakeThisPleaseUnderstanmdImjustsomeOkaythatsit = SAFESTR("NINEXC.exc_pkgNeon/ltxc|iexc");
 void init() {
 	user nin = user(H("nin"), H("NINEXC.exc_pkgNeon/ltxc|iexc"), 4);
 	user john = user(H("john"), H("12345678910mod12345123451234512345qweasd123"), 3);
@@ -81,7 +82,7 @@ int main(int argc, char* argv[]) {
 			debug = true;
 		}
 	}
-	std::cout << "/*do we still need this? -Hoien Shaun Dow\nprojecting much? -Jack.W Dean\nno, will we keep it? Yes. -nin\nNUEBINE WILL NEVER LET PEOPLE DATA MINE, IF YOU DO YOU ARE BRAKEING THE NIN LICENSE AND IF YOU ARE FOUND OUT TO BE USING A CRACKED VERSION OR DATAMINE OUR PRODUCTS YOU WILL BE SENT A HEFTY FINE OR THE LAW WILL CATCH UP TO YOU\n";
+	std::cout << "/*do we still need this? -Hoien Shaun Dow\nprojecting much? -Jack.W Dean\nno, will we keep it? Yes. -nin*/\nNUEBINE WILL NEVER LET PEOPLE DATA MINE, IF YOU DO YOU ARE BRAKEING THE NIN LICENSE AND IF YOU ARE FOUND OUT TO BE USING A CRACKED VERSION OR DATAMINE OUR PRODUCTS YOU WILL BE SENT A HEFTY FINE OR THE LAW WILL CATCH UP TO YOU\n";
 	clear();
 #ifdef _WIN32
 	SetConsoleOutputCP(CP_UTF8);
@@ -92,10 +93,10 @@ int main(int argc, char* argv[]) {
 	init();
 reboot:
 	if (!debug) {
-		std::cout << SAFESTR("\033[32m");
 		showBootMenu();
 		std::cout << H("\ninitramfs"); threedot();
 		clear();
+		std::cout << SAFESTR("\033[32m");
 		bootanim();
 		clear();
 	}
