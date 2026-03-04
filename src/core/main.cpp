@@ -137,7 +137,7 @@ reboot:
 			}
 			else {
 				std::cout << H("Wrong password, (check the spelling please).\n");
-				std::cout << H("Hint: nin os name dot excecuteable underscore PacKaGe package manager name slash(linux) Long Term eXecuteable Con pipe internet explorer us\n");
+				std::cout << H("Hint: nin os name dot excecuteable underscore PacKaGe package manager name slash(linux) Long Term eXecuteable Con pipe internet explorer\n");
 				innin = false;
 				break;
 			}
