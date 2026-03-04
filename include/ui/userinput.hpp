@@ -16,7 +16,8 @@ enum class InputType {
     Top8,
     Top9,
     Enter,
-    Escape
+    Escape,
+    E
 };
 InputType GetPlayerInput();
 int readKey();

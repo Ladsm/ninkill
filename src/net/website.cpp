@@ -237,8 +237,8 @@ void wwwJackwddotcom() {
     }
     mkfile(tmpDir, H("www.jackwd.com.spp"), H(
         "#include \"spp.hpp\"\n"
-        "page 1 {\n\tw(\"Hello, im Jack Wilder Dean. Im a software engineer based in Texes, I made this website and the internet explorer you're in.\");\n"
-        "l(1); l(2);\n}"
+        "page 1 {\n\tw(\"Hello, im Jack Wilder Dean. Im a software engineer based in Texas, I made this website and the internet explorer you're in.\");\n"
+        "l(2); l(3);\n}"
         "// If I only added more stuff in spp. If only."
         "page 2 {\n"
         "\tw(\"My portfolio:|n - Internet Explorer|nThis is a piece of software I made that temporarily downloads files from a server, then after 10 minutes the files get wiped from your computer.|n\");\n"
@@ -263,7 +263,7 @@ void wwwJackwddotcom() {
         "\tw(\"I filed a legal notice demanding they show me their code.At first they told me no, but then decided to let me come in.\n\");"
         "\tw(\"On that day I went into their office.After I saw my code on their computers, I told them I demanded a cut of the profit.\n\");"
         "\tw(\"And you know what ? They agreed.They told me it was fine and let me get a job. (My self - employed ass took this as fast as I could.)\n\");"
-        "\tw(\"I now work as the head software engineer with them.\nMoral of the story : Don’t steal.\n\");"
+        "\tw(\"I now work as the head software engineer with them.\nMoral of the story : Don’t steal.\n\"); l(1);"
         "}"
     ));
     int choice = 1;

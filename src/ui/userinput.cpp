@@ -70,6 +70,7 @@ InputType GetPlayerInput() {
     case 's': case 'S': return InputType::MoveDown;
     case 'a': case 'A': return InputType::MoveLeft;
     case 'd': case 'D': return InputType::MoveRight;
+    case 'e': case 'E': return InputType::E;
     }
     return InputType::None;
 }

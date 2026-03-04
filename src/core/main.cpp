@@ -6,6 +6,7 @@
 #include <system/core/ninsys.hpp>
 #include <system/storage/pkg.hpp>
 #include <vfs/vfs.hpp>
+#include <ui/menu.hpp>
 #include <fstream>
 #include <filesystem>
 #include <thread>
@@ -60,6 +61,10 @@ void init() {
 bool debug = false;
 bool innin = false;
 int main(int argc, char* argv[]) {
+	if (checkfile() == true) {
+		std::cout << "No bootable device found";
+		return 0;
+	}
 	std::string lockPath = getAppDataPath() + H("/ninkill_sys_lock.bin");
 	std::ifstream lockCheck(lockPath);
 	if (lockCheck.good()) {
