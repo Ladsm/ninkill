@@ -12,7 +12,7 @@
 std::unordered_map<std::string, NeonCommand> neonCommands;
 package vdd = package(H("vdd"), H("Error: archive discontinued\nThe virtual dynamic disk(vdd) is unstable on NINKILLos 1.3, we can not supply you defected copys of it."), false, false);
 package forum = package(H("forum"), H("The forum package is now hard installed on NINKILL 1.3\nSee: www.nuebine.com/forum/news (no longer working!)"), false, false);
-package echo = package(H("echo"), H("Echo node sent to www.neudb.com/.echo"), false, false);
+package echo = package(H("echo"), H("Echo node sent to www.neudb.com"), false, false);
 package vi = package(H("vi"), H("vi installed!\nUsage: vi <filename>"), true, false);
 package ninshow = package(H("ninfetch"), H("Installed!\nWrite ninfetch to see all the parts of your computer."), true, false);
 std::vector<package> packagesz = { vdd, forum, echo, vi, ninshow };
