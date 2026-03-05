@@ -6,6 +6,7 @@
 #include <util/obfstr.hpp>
 #include <vfs/vfs.hpp>
 #include <ui/userinput.hpp>
+#include <boot/bootcli.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -236,6 +237,9 @@ int readcommand(const std::string& line) {
 			return 0;
 		}
 		devices[dev] = 1;
+		if ((dev == H("/dev/fd0") || dev == H("/dev/hda")) && devices[dev] == 1) {
+			makefile();
+		}
 		std::cout << H("Formatting ") << dev << H(" as ") << type << H(" filesystem... Done\n");
 		return 0;
 	}
@@ -245,6 +249,7 @@ int readcommand(const std::string& line) {
 		cmds[H("ls")] = [](auto&) { listdir(); return 0; };
 		cmds[H("dir")] = cmds[H("ls")];
 		cmds[H("ll")] = cmds[H("ls")];
+		cmds[H("mkfs")] = []() { std::cout << H("Usage: mkfs.<type> /dev/device\n"); return 0; };
 		cmds[H("pwd")] = [](auto&) { std::cout << cwdPath() << "\n"; return 0; };
 		cmds[H("clear")] = [](auto& a) { std::cout << H("\033[2J\033[H"); return 0; };
 		cmds[H("cls")] = cmds[H("clear")];

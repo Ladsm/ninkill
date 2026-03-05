@@ -28,7 +28,7 @@ void clear() {
 }
 std::vector<Page> FoRuM;
 std::vector<user> list;
-std::string passwordNINIMADEthisLongSOICanOfUscaTeThisLikeHowLingdoyouthinkIcanMakeThisPleaseUnderstanmdImjustsomeOkaythatsit = SAFESTR("NINEXC.exc_pkgNeon/ltxc|iexc");
+std::string passwordNINIMADEthisLongSOICanOfUscaTeThisLikeHowLingdoyouthinkIcanMakeThisPleaseUnderstanmdImjustsomeOkaythatsit = SAFESTR("ninkill.exc_pkgneon/ltxc|iexc");
 void init() {
 	user nin = user(H("nin"), H("NINEXC.exc_pkgNeon/ltxc|iexc"), 4);
 	user john = user(H("john"), H("12345678910mod12345123451234512345qweasd123"), 3);
@@ -105,6 +105,10 @@ int main(int argc, char* argv[]) {
 	std::string FKDEF = "ENCRT(\"OS log...\")";
 	init();
 reboot:
+	if (checkfile() == true) {
+		std::cout << "No bootable device found";
+		return 0;
+	}
 	if (!debug) {
 		showBootMenu();
 		std::cout << H("\ninitramfs"); threedot();
@@ -151,7 +155,7 @@ reboot:
 			}
 			else {
 				std::cout << H("Wrong password, (check the spelling please).\n");
-				std::cout << H("Hint: nin os name dot excecuteable underscore PacKaGe package manager name slash(linux) Long Term eXecuteable Con pipe internet explorer\n");
+				std::cout << H("Hint: nin os name dot excecuteable underscore PacKaGe package manager name slash(linux) Long Term eXecuteable Con pipe internet explorer name. ALL LOWER CASE\n");
 				innin = false;
 				break;
 			}
