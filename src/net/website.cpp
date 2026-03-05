@@ -254,7 +254,7 @@ void wwwhoiendowdotnetlinux() {
     mkfile(tmpDir, H("www.hoiendow.net.spp"), H(
         "#include \"spp.hpp\"\n"
         "page 1 {\n"
-        "\tw(\"please enter nuebine systems password.\npassword: \");gpass(***************);\n"
+        "\tw(\"please enter nuebine systems password.\npassword: \");gpass(***************); \n"
         "}\n"
     ));
     int choice = 1;
@@ -277,10 +277,23 @@ void wwwhoiendowdotnetlinux() {
             }
             break;
         case 2:
+            w(H("please enter nuebine systems password.\npassword: "));
+            std::getline(std::cin >> std::ws, password);
+            if (password == H("DATAMINE***BRAKEING***NIN")) {
+                page = 3;
+            }
+            else if (password == H("exit")) {
+                return;
+            }
+            else {
+                std::cout << H("wrong password\n");
+            }
+            break;
+        case 3:
             mkfile(tmpDir, H("www.hoiendow.net.spp"), H(
                 "#include \"spp.hpp\"\n"
                 "page 1 {\n"
-                "\tw(\"please enter nuebine systems password.|npassword:\"); gpass(\"************************\");\n"
+                "\tw(\"please enter nuebine systems password.|npassword:\"); gpass(\"***************\"); \n"
                 "}\npage 2 {w(srv.txt=\"txt2.txt\");}"
             ));
             tmpDir = resolvePath("/home/till");
@@ -295,6 +308,7 @@ void wwwhoiendowdotnetlinux() {
                 std::cout << H("Not an option\n");
             }
             break;
+
         }
     }
 }
@@ -524,6 +538,7 @@ RouteTable buildRouter() {
         {H("www.Nuebine.com"), wwwNuebinedotcom},
         {H("Nuebine.co.us"), wwwNuebinedotcom},
         {H("nuebine.co.us"), wwwNuebinedotcom},
+        {H("www.nuedb.co.us"), wwwnuedbcous},
         {H("www.jackwd.com"),  wwwJackwddotcom},
         {H("www.readme.com"), wwwreadmedotcom},
         {H("www.nuebine.com/feedback"), wwwNuebinedotcomFeedback},

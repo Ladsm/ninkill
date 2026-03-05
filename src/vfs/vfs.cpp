@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <iostream>
 std::unique_ptr<VNode> root;
 VNode* cwd;
 std::string cwdPath() {
@@ -124,7 +125,7 @@ std::string lawsuit = H(
 	"It happened, Jack, the softWare distributer for Jack's SoftWare Products, called us.\nI kneW this would happen, I knew it was a bad idea to copy his work, but it was too good to give up.\n"
 	"I WaNted to just let him try to sUe us, we overpowEr him with our power. But the last cuple of months have been bad for us.\n"
 	"NINKILL os is still in development, even after we crunched for the last three days. We made this just for a quick Buck, but he came for us.\n"
-	"\n\nI gave hIm a job wIth us, I kNew it would work, but I still nEed to know what to do with him. I'll do what COMs to mind.\n"
+	"\n\nI gave hIm a job wIth us, I kNew it would work, but I still nEed to know what to do with him. I'll do what COMes to mind.\n"
 	"I just wish / hope I dont Lose what I workEd for."
 );
 void initFS() {
@@ -272,4 +273,37 @@ void wipeFS() {
 	auto priv = mkdirNode(root.get(), H("priv"));
 	mkfile(priv, H("wallet.dat"), H("EA20F1877447D1B94A5EAE15FCF142878C41304DEF23F99EE9415A6FFFEE4817"));
 	cwd = priv;
+}
+void printTreeImpl(VNode* node, const std::string& prefix, bool last) {
+	if (!node) return;
+	std::cout << prefix;
+	if (!prefix.empty())
+		std::cout << (last ? "+-- " : "|-- ");
+	std::cout << node->name;
+	if (node->isDir) std::cout << "/";
+	if (node->locked)
+		std::cout << " [locked]";
+	std::cout << "\n";
+	if (node->locked)
+		return;
+	if (!node->isDir)
+		return;
+	size_t i = 0;
+	size_t count = node->children.size();
+	for (auto& [name, child] : node->children) {
+		i++;
+		std::string newPrefix = prefix;
+		newPrefix += (last ? "    " : "|   ");
+		printTreeImpl(child.get(), newPrefix, i == count);
+	}
+}
+void printTree(VNode* node) {
+	if (!node) return;
+	std::cout << node->name << "/\n";
+	size_t i = 0;
+	size_t count = node->children.size();
+	for (auto& [name, child] : node->children) {
+		i++;
+		printTreeImpl(child.get(), "", i == count);
+	}
 }

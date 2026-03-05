@@ -30,3 +30,4 @@ void mkuserfiles(VNode* dir);
 void initFS();
 void wipeFS();
 extern VNode* tmpDir;
+void printTree(VNode* node);

@@ -126,7 +126,7 @@ void printDevices() {
 		if (name == H("/dev/hda")) {
 			size = H("5.05GB");
 			type = H(" disk");
-			mount = H("              /mnt");
+			mount = H("              /");
 		}
 		else if (name == H("/dev/fd0")) {
 			size = H("10.3MB");
@@ -169,6 +169,7 @@ const std::unordered_map<std::string, std::string> helpDB = {
 	{H("ifo"),H("Displays information about device")},
 	{H("StartAnim"), H("Displays the start animation")},
 	{H("lsblk"),H("Shows block devices")},
+	{H("tree"), H("display directory tree")},
 	{H("rm"), H("Removes a file or empty directory")}
 };
 void EXIT(int code) {
@@ -278,6 +279,19 @@ int readcommand(const std::string& line) {
 				if (!unlockDir(dest, input)) { std::cout << H("Access denied\n"); return 0; }
 			}
 			cwd = dest;
+			return 0;
+			};
+			cmds[H("tree")] = [](auto& a) {
+			VNode* start = cwd;
+			if (a.size() > 1) {
+				VNode* n = resolvePath(a[1]);
+				if (!n) {
+					std::cout << "tree: path not found\n";
+					return 0;
+				}
+				start = n;
+			}
+			printTree(start);
 			return 0;
 			};
 		cmds[H("rm")] = [](auto& a) {
