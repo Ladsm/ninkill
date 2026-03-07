@@ -4,7 +4,7 @@
 
 try to find a shark with the text ladsm 2026.  
 something i made for FUN... <-lie  
-ie this is a small ctf made to learn linux commands and the console.
+ie this is a small ctf-like game made to learn linux commands and the console.
 
 ## this small program has:
 
