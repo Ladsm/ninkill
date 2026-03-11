@@ -90,6 +90,8 @@ void wwwNuebinedotcom() {
             std::cout << H(" - NINKILL Forums\nThe forums are an accessible way for people to talk online—no port forwarding or weird manual installs. Just load it up and enter the chat.\n");
             std::cout << H(" - NINKILL Internet Navigator\nA way to see things without needing to download them—just some temporary files, and when you finish using the content, the files get deleted.\n");
             std::cout << H("It uses a website maker named spp(Script++), it uses c++ to display text or get input.\n");
+            std::cout << H("To upload your own .spp scripts, visit the legacy portal:\n");
+            std::cout << H("https://ladsm.neocities.org/getonnue\n");
             std::cout << H("[1] Back\n");
             std::cin >> choice;
             if (choice == 1) {
