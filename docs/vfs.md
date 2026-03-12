@@ -90,7 +90,7 @@ The spilling of forum logs into this disk is a known bug and should be ignored b
 ## notice 2
 
 ```
-Use of this documentation for non program development means is prohibided and ilegel.
+Use of this documentation for non program development means is prohibited and illegal.
 ```
 
 ### (c)Nuebine Incorperated Network, 1998. All Rights Reserved
