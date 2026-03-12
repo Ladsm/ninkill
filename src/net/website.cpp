@@ -49,7 +49,9 @@ void wwwNuebinedotcom() {
         "page 3 {\n"
         "\tw(\"Our projects: - NINKILL OS|nNINKILL OS is a small Linux-based operating system made for home users. Load it with a floppy drive like DOS.\");"
         "\tw(\" - NINKILL Internet Navigator|nA way to see things without needing to download them—just some temporary files, and when you finish using the content, the files get deleted.|n\");\n"
-        "\tw(\"It uses a website maker named spp(Script++), it uses c++ to display text or get input.\");\n\tl(1);\n}"
+        "\tw(\"It uses a website maker named spp(Script++), it uses c++ to display text or get input.\");\n"
+        "\tw(\"To upload your own .spp scripts, visit the legacy portal:|nhttps://ladsm.neocities.org/getonnue\");"
+        "l(1); \n }"
         ));
     while (true) {
         mkbg();
