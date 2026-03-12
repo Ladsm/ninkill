@@ -36,7 +36,7 @@ SPP is a proprietary scripting language developed to simplify web design. In rea
 When a site is accessed, the engine uses the `mkfile` utility to write an .spp source file into the virtual `/tmp` directory. This allows advanced users to `cat` or `vi` the website's "source code" while the browser is active.
 
 **SPP Source Example:**
-```spp
+```cpp
 #include "spp.hpp"
 page 1 {
     w("Welcome to the Network.");
