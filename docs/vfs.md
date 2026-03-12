@@ -56,8 +56,8 @@ struct VNode {
 
 *   **void mkuserfiles(VNode* dir)**  
     A standard utility to generate a "Home" environment, creating `documents`, `downloads`, `audio`, `videos`, and `images` folders.  
-Note: Implementation of this utility is currently suspended per nin.  
-Originally intended for the 'Nuebine Interaction Manager' project (Cancelled Q3 1999).
+> **Note:** Implementation of this utility is currently suspended per nin.  
+> Originally intended for the 'Nuebine Interaction Manager' project (Cancelled Q3 1999).
 
 ### 3. Security & Access Control
 
