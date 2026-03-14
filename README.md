@@ -1,5 +1,7 @@
 # ninkillos
 
+**[Nuebine's website](https://ladsm.neocities.org/nuebine)**
+
 ## small arg-like game
 
 try to find a shark with the text ladsm 2026.  
